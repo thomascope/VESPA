@@ -1,0 +1,12 @@
+function DIRS = getdirs_psych
+DIRSa = pwd;
+DIRS.stimuli = strcat(DIRSa,{'\stimuli\'});
+DIRS.stimuli = char(DIRS.stimuli);
+DIRS.stimFigs = strcat(DIRSa,{'\stimfigs\'});
+DIRS.stimFigs = char(DIRS.stimFigs);
+DIRS.data = strcat(DIRSa,{'\data\'});
+DIRS.data = char(DIRS.data);
+DIRS.dataFigs = strcat(DIRSa,{'\datafigs\'});
+DIRS.dataFigs = char(DIRS.dataFigs);
+DIRS.feedback = strcat(DIRSa,{'\feedback\'});
+DIRS.feedback = char(DIRS.feedback);
