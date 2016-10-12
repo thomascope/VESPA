@@ -909,6 +909,7 @@ switch step
         
     case 'ICA_artifacts'
         
+        p.interpolatebadforICA = 0; % ZZZ HACK - I am not confident that the interpolation is working properly
         %addpath('/imaging/local/eeglab/');
         addpath(genpath('/home/tc02/matlab/eeglab13_3_2b')) %Put here the path of a version of EEGLAB that has the fileIO toolbox (currently imaging/local version is too old)
         rmpath('/home/tc02/matlab/eeglab13_3_2b/functions/octavefunc/signal') % Otherwise this overrides firls, causing a fail later.
