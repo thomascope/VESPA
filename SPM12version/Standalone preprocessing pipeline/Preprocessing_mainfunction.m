@@ -13,6 +13,8 @@ switch prevStep
         prevStep = 'run*.mat';
     case 'ICA_artifacts'
         prevStep = 'Mrun*.mat';
+    case 'ICA_artifacts_tf'
+        prevStep = 'Mrun*.mat';
     case 'downsample'
         prevStep = 'd*Mrun*.mat';
     case 'epoch'
@@ -1077,7 +1079,7 @@ switch step
                             ICA.PCA_EEGdim = 70;
                         end
                         
-                        remove{m} = interface_ADJ_noplot(EEG,'report');
+                        remove{m} = interface_ADJ_noplot_justblinks(EEG,'report');
                         %interface_ADJ(EEG,'report')
                         finalics  = setdiff([1:ICA.PCA_dim],remove{m});
                         iweights = pinv(weights{m});
@@ -1159,7 +1161,7 @@ switch step
                     % a cell matrix called remove{} containting a
                     % rejected component per cell
                     save(['ICs_for_' files(f).name])
-                    remove{m} = interface_ADJ_noplot(EEG,'report');
+                    remove{m} = interface_ADJ_noplot_justblinks(EEG,'report');
                     %interface_ADJ(EEG,'report')
                     
                     finalics  = setdiff([1:ICA.PCA_dim],remove{m});
