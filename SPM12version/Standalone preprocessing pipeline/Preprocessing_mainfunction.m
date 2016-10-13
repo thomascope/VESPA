@@ -1090,14 +1090,35 @@ switch step
                     end
                 else
                     m = m-1;
-                    if exist([pwd '/MEG_ICs_' num2str(m) '_' files(f).name])
-                        load (['MEG_ICs_' num2str(m) '_' files(f).name])
-                        
-                    elseif exist([pwd '/MEG_ICs_' m '_' files(f).name])
-                        load (['MEG_ICs_' m '_' files(f).name])
-                        
+                    try
+                        if exist([pwd '/MEG_ICs_' num2str(m) '_' files(f).name])
+                            load (['MEG_ICs_' num2str(m) '_' files(f).name])
+                            
+                        elseif exist([pwd '/MEG_ICs_' m '_' files(f).name])
+                            load (['MEG_ICs_' m '_' files(f).name])
+                            
+                        end
+                        m = m+1;
+                    catch
+                        disp('load error, reducing m by 1')
+                        while m ~= 1
+                            m = m-1;
+                            try
+                                if exist([pwd '/MEG_ICs_' num2str(m) '_' files(f).name])
+                                    load (['MEG_ICs_' num2str(m) '_' files(f).name])
+                                    
+                                elseif exist([pwd '/MEG_ICs_' m '_' files(f).name])
+                                    load (['MEG_ICs_' m '_' files(f).name])
+                                    
+                                end
+                                m = m+1;
+                                
+                            catch
+                                disp('load error, reducing m by 1')
+                            end
+                            
+                        end
                     end
-                    m = m+1;
                 end
                 ICA.mod = modalities(m);
                 %ICA.refs.spa = {arttopos.HEOG{m}', arttopos.VEOG{m}', arttopos.ECG{m}'};  % Assumes modalities ordered same way!!!
