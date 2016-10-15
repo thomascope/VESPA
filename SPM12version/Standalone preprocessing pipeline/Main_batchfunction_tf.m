@@ -26,6 +26,7 @@
 
 subjects_and_parameters; 
 pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/';
+source_directory = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/';
 
 %% Specify preprocessing parameters
 
@@ -203,23 +204,28 @@ end
 %    end
 % end
 
-todoarray = allrunsarray;
-todocomplete = zeros(1,size(todoarray,1));
-parfor todonumber = 1:size(todoarray,1)
-   cnt = todoarray(todonumber,1);
-   runtodo = todoarray(todonumber,2);
-   try
-   %Preprocessing_mainfunction('definetrials','maxfilter',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-   %Defining trials does not seem to work on .fif files in SPM12 for some reason. Will
-   %need to use SPM8 version for this or define after conversion.      
-       Preprocessing_mainfunction('ICA_artifacts','convert',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt,dates,blocksin,blocksout,rawpathstem, badeeg, badchannels, runtodo)
-       todocomplete(todonumber) = 1
-       fprintf('\n\nICA complete for subject number %d, run number %d\n\n',todoarray(todonumber,1), todoarray(todonumber,2));
-   catch
-       todocomplete(todonumber) = 0;
-       fprintf('\n\nICA failed for subject number %d, run number %d\n\n',todoarray(todonumber,1), todoarray(todonumber,2));
-   end
-end
+% I am assuming that you want to copy the data for TF after ICA denoising.
+% If not, uncomment the section below and comment out the ICA_artifacts_copy step below.
+
+
+
+% todoarray = allrunsarray;
+% todocomplete = zeros(1,size(todoarray,1));
+% parfor todonumber = 1:size(todoarray,1)
+%    cnt = todoarray(todonumber,1);
+%    runtodo = todoarray(todonumber,2);
+%    try
+%    %Preprocessing_mainfunction('definetrials','maxfilter',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+%    %Defining trials does not seem to work on .fif files in SPM12 for some reason. Will
+%    %need to use SPM8 version for this or define after conversion.      
+%        Preprocessing_mainfunction('ICA_artifacts','convert',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt,dates,blocksin,blocksout,rawpathstem, badeeg, badchannels, runtodo)
+%        todocomplete(todonumber) = 1
+%        fprintf('\n\nICA complete for subject number %d, run number %d\n\n',todoarray(todonumber,1), todoarray(todonumber,2));
+%    catch
+%        todocomplete(todonumber) = 0;
+%        fprintf('\n\nICA failed for subject number %d, run number %d\n\n',todoarray(todonumber,1), todoarray(todonumber,2));
+%    end
+% end
 
 % The first time you run through you should put a breakpoint on pause to check
 % that the ICA worked correctly by inspecting icaworkedcorrectly. The main
@@ -252,9 +258,11 @@ try
 catch
     fprintf([ '\n\nUnable to open up a worker pool - running serially rather than in parallel' ]);
 end
-
 parfor cnt = 1:size(subjects,2)
-    Preprocessing_mainfunction('downsample','ICA_artifacts',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+    Preprocessing_mainfunction('ICA_artifacts_copy','ICA_artifacts',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt,dates,blocksin,blocksout,rawpathstem, badeeg, badchannels, source_directory)
+end
+parfor cnt = 1:size(subjects,2)
+    Preprocessing_mainfunction('downsample','ICA_artifacts_copy',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
 parfor cnt = 1:size(subjects,2)
     Preprocessing_mainfunction('rereference','downsample',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
