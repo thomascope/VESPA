@@ -13,7 +13,7 @@ switch prevStep
         prevStep = 'run*.mat';
     case 'ICA_artifacts'
         prevStep = 'Mrun*.mat';
-    case 'ICA_artifacts_tf'
+    case 'ICA_artifacts_copy'
         prevStep = 'Mrun*.mat';
     case 'downsample'
         prevStep = 'd*Mrun*.mat';
@@ -907,6 +907,28 @@ switch step
         
         fprintf('\n\nData merged!\n\n');
         
+    case 'ICA_artifacts_copy'
+        filePath = [runtodo subjects];
+        cd(filePath);
+        
+        % search for input files
+        %filesdone = [];    %For debug
+        
+        files = dir(prevStep);
+        
+        currentDirectory = pwd;
+        [~, deepestFolder, ~] = fileparts(currentDirectory);
+        
+        for f=1:length(files)
+            
+            fprintf([ '\n\nProcessing ' files(f).name '...\n\n' ]);
+            S.D = files(f).name;
+            S.outfile = fullfile(pathstem, deepestFolder, S.D);
+            spm_eeg_copy(S);
+        end
+        
+        fprintf('\n\nData copied!\n\n');
+    
     case 'ICA_artifacts'
         
         p.interpolatebadforICA = 0; % ZZZ HACK - I am not confident that the interpolation is working properly
