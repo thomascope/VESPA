@@ -292,39 +292,39 @@ end
 parfor cnt = 1:size(subjects,2)
     Preprocessing_mainfunction('average','merge',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
-parfor cnt = 1:size(subjects,2)
-    Preprocessing_mainfunction('filter','average',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-end
-parfor cnt = 1:size(subjects,2) 
-    Preprocessing_mainfunction('combineplanar','fmceffbMdMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-end
-
-Preprocessing_mainfunction('grand_average','pfmceffbMdMr*.mat',p,pathstem, maxfilteredpathstem, subjects);
-% This saves the grand unweighted average file for each group in the folder of the
-% first member of that group. For convenience, you might want to move them
-% to separate folders.
-
-parfor cnt = 1:size(subjects,2)    
-   Preprocessing_mainfunction('weight','pfmceffbMdMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-end
-
-Preprocessing_mainfunction('grand_average','wpfmceffbMdMr*.mat',p,pathstem, maxfilteredpathstem, subjects);
-% This saves the grand weighted average file for each group in the folder of the
-% first member of that group. For convenience, you might want to move them
-% to separate folders.
-parfor cnt = 1:size(subjects,2)
-    Preprocessing_mainfunction('image','fmceffbMdMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-end
-parfor cnt = 1:size(subjects,2)
-    % The input for smoothing should be the same as the input used to make
-    % the image files.
-    Preprocessing_mainfunction('smooth','fmceffbMdMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-end
-for cnt = 1
-    % The input for smoothing should be the same as the input used to make
-    % the image files. Only need to do this for a single subject
-    Preprocessing_mainfunction('mask','fmceffbMdMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-end  
+% parfor cnt = 1:size(subjects,2)
+%     Preprocessing_mainfunction('filter','average',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+% end
+% parfor cnt = 1:size(subjects,2) 
+%     Preprocessing_mainfunction('combineplanar','fmceffbMdMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+% end
+% 
+% Preprocessing_mainfunction('grand_average','pfmceffbMdMr*.mat',p,pathstem, maxfilteredpathstem, subjects);
+% % This saves the grand unweighted average file for each group in the folder of the
+% % first member of that group. For convenience, you might want to move them
+% % to separate folders.
+% 
+% parfor cnt = 1:size(subjects,2)    
+%    Preprocessing_mainfunction('weight','pfmceffbMdMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+% end
+% 
+% Preprocessing_mainfunction('grand_average','wpfmceffbMdMr*.mat',p,pathstem, maxfilteredpathstem, subjects);
+% % This saves the grand weighted average file for each group in the folder of the
+% % first member of that group. For convenience, you might want to move them
+% % to separate folders.
+% parfor cnt = 1:size(subjects,2)
+%     Preprocessing_mainfunction('image','fmceffbMdMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+% end
+% parfor cnt = 1:size(subjects,2)
+%     % The input for smoothing should be the same as the input used to make
+%     % the image files.
+%     Preprocessing_mainfunction('smooth','fmceffbMdMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+% end
+% for cnt = 1
+%     % The input for smoothing should be the same as the input used to make
+%     % the image files. Only need to do this for a single subject
+%     Preprocessing_mainfunction('mask','fmceffbMdMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+% end  
 
 % now, if you want to simplify, you can move all of the smoothed nifti images into folders marked
 % controls/patients, either manually or with copyniftitofolder.py (you will
@@ -369,7 +369,7 @@ end
 %Now to do the higher frequencies with multitapers! - If you want to do
 %this, you must copy the merged files, to another folder appended with '_taper' and re-run from
 %the appropriate step above
-
+source_directory = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/';
 pathstem = [pathstem(1:end-1) '_taper/'] ; 
 p.method = 'mtmconvol'; 
 p.freqs = [30:2:90]; 
@@ -377,7 +377,41 @@ p.timeres = 200;
 p.timestep = 20; 
 p.freqres = 30; %Suggestion from Markus Bauer to use this very broad frequency smoothing. I guess it makes sense if we're expecting large individual differences in gamma frequency
 
-
-
+parfor cnt = 1:size(subjects,2)
+    Preprocessing_mainfunction('ICA_artifacts_copy','merge',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt,dates,blocksin,blocksout,rawpathstem, badeeg, badchannels, source_directory)
+end
+parfor cnt = 1:size(subjects,2)
+    Preprocessing_mainfunction('TF','merge',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+end
+parfor cnt = 1:size(subjects,2)
+    Preprocessing_mainfunction('average','TF_power',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+end
+p.robust = 0; %robust averaging doesn't work for phase data
+parfor cnt = 1:size(subjects,2)
+    Preprocessing_mainfunction('average','TF_phase',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+end
+p.robust = 1; % just in case we want to do any more averaging later
+%TF_rescale to baseline correct the induced power data only
+parfor cnt = 1:size(subjects,2)
+    Preprocessing_mainfunction('TF_rescale','mtf_c*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+end
+Preprocessing_mainfunction('grand_average','TF_rescale',p,pathstem, maxfilteredpathstem, subjects);
+parfor cnt = 1:size(subjects,2)    
+   Preprocessing_mainfunction('weight','TF_rescale',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+end
+Preprocessing_mainfunction('grand_average','wrmtf_c*.mat',p,pathstem, maxfilteredpathstem, subjects);
+parfor cnt = 1:size(subjects,2)
+    Preprocessing_mainfunction('image','TF_rescale',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+end
+parfor cnt = 1:size(subjects,2)
+    % The input for smoothing should be the same as the input used to make
+    % the image files.
+    Preprocessing_mainfunction('smooth','TF_rescale',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+end
+for cnt = 1
+    % The input for smoothing should be the same as the input used to make
+    % the image files. Only need to do this for a single subject
+    Preprocessing_mainfunction('mask','TF_rescale',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+end
 
 matlabpool 'close';
