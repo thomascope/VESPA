@@ -936,6 +936,8 @@ switch step
         
         % [�load up your SPM continuous file, eg D = spm_eeg_load(�filename.mat�)�]
         
+        pathstem_back = pathstem; %Fix bug where preprocessed ICs are imported from another file
+        
         try
             modalities = p.mod; % If you only want to ICA artifact the modalities you specify in the setup script
         catch
@@ -971,6 +973,7 @@ switch step
             % for debug
             %for f = 1
             D = spm_eeg_load(files(f).name);
+            D_back = D; %Fix bug where preprocessed ICs are imported from another file
             refs = []; % Reference signal for correlating with ICs
             for a = 1:length(ref_chans)
                 try % See which patient/control this fails on
@@ -1006,10 +1009,10 @@ switch step
                 if m > length(modalities)
                     if exist([pwd '/MEG_ICs_' num2str(m-1) '_' files(f).name])
                         load (['MEG_ICs_' num2str(m-1) '_' files(f).name])
-                        
+                        pathstem = pathstem_back; D=D_back; %Fix bug where preprocessed ICs are imported from another file
                     elseif exist([pwd '/MEG_ICs_' m-1 '_' files(f).name])
                         load (['MEG_ICs_' m-1 '_' files(f).name])
-                        
+                        pathstem = pathstem_back; D=D_back; %Fix bug where preprocessed ICs are imported from another file
                     end
                     break
                 end
@@ -1025,22 +1028,28 @@ switch step
                     if exist([pwd '/MEG_ICs_' num2str(m-1) '_' files(f).name])
                         if isfield(p,'interpolatebadforICA') && p.interpolatebadforICA == 1
                             load (['MEG_ICs_' num2str(m-2) '_' files(f).name])
+                            pathstem = pathstem_back; D=D_back; %Fix bug where preprocessed ICs are imported from another file
                             D(chans{m}(nonzeros(tointerpolate)),:) = ICA.d(nonzeros(tointerpolate),:); %Ensure that bad channels to not contribute to the montage - time consuming step
                             m=m+1; %Because m=1 should be loaded from the file!
                             load (['MEG_ICs_' num2str(m-1) '_' files(f).name])
+                            pathstem = pathstem_back; D=D_back; %Fix bug where preprocessed ICs are imported from another file
                             D(chans{m}(nonzeros(tointerpolate)),:) = ICA.d(nonzeros(tointerpolate),:); %Ensure that bad channels to not contribute to the montage - time consuming step
                         else
                             load (['MEG_ICs_' m-1 '_' files(f).name])
+                            pathstem = pathstem_back; D=D_back; %Fix bug where preprocessed ICs are imported from another file
                         end
                     elseif exist([pwd '/MEG_ICs_' m-1 '_' files(f).name])
                         if isfield(p,'interpolatebadforICA') && p.interpolatebadforICA == 1
                             load (['MEG_ICs_' m-2 '_' files(f).name])
+                            pathstem = pathstem_back; D=D_back; %Fix bug where preprocessed ICs are imported from another file
                             D(chans{m}(nonzeros(tointerpolate)),:) = ICA.d(nonzeros(tointerpolate),:); %Ensure that bad channels to not contribute to the montage - time consuming step
                             m=m+1;
                             load (['MEG_ICs_' m-1 '_' files(f).name])
+                            pathstem = pathstem_back; D=D_back; %Fix bug where preprocessed ICs are imported from another file
                             D(chans{m}(nonzeros(tointerpolate)),:) = ICA.d(nonzeros(tointerpolate),:); %Ensure that bad channels to not contribute to the montage - time consuming step
                         else
                             load (['MEG_ICs_' m-1 '_' files(f).name])
+                            pathstem = pathstem_back; D=D_back; %Fix bug where preprocessed ICs are imported from another file
                         end
                     end
                     break
@@ -1058,21 +1067,26 @@ switch step
                         if isfield(p,'interpolatebadforICA') && p.interpolatebadforICA == 1
                             if exist([pwd '/MEG_ICs_' num2str(m-1) '_' files(f).name])
                                 load (['MEG_ICs_' num2str(m-2) '_' files(f).name])
+                                pathstem = pathstem_back; D=D_back; %Fix bug where preprocessed ICs are imported from another file
                                 D(chans{m}(nonzeros(tointerpolate)),:) = ICA.d(nonzeros(tointerpolate),:); %Ensure that bad channels to not contribute to the montage - time consuming step
                                 m=m+1;
                                 load (['MEG_ICs_' num2str(m-1) '_' files(f).name])
+                                pathstem = pathstem_back; D=D_back; %Fix bug where preprocessed ICs are imported from another file
                                 D(chans{m}(nonzeros(tointerpolate)),:) = ICA.d(nonzeros(tointerpolate),:); %Ensure that bad channels to not contribute to the montage - time consuming step
                                 m=m+1;
                             elseif exist([pwd '/MEG_ICs_' m-1 '_' files(f).name])
                                 load (['MEG_ICs_' m-2 '_' files(f).name])
+                                pathstem = pathstem_back; D=D_back; %Fix bug where preprocessed ICs are imported from another file
                                 D(chans{m}(nonzeros(tointerpolate)),:) = ICA.d(nonzeros(tointerpolate),:); %Ensure that bad channels to not contribute to the montage - time consuming step
                                 m=m+1;
                                 load (['MEG_ICs_' m-1 '_' files(f).name])
+                                pathstem = pathstem_back; D=D_back; %Fix bug where preprocessed ICs are imported from another file
                                 D(chans{m}(nonzeros(tointerpolate)),:) = ICA.d(nonzeros(tointerpolate),:); %Ensure that bad channels to not contribute to the montage - time consuming step
                                 m=m+1;
                             end
                         end
                         load([['ICs_for_' files(f).name]])
+                        pathstem = pathstem_back; D=D_back; %Fix bug where preprocessed ICs are imported from another file
                         if isfield(p,'interpolatebadforICA') && p.interpolatebadforICA == 1
                             ICA.PCA_EEGdim = 50;                    % ADJUST suggests PCA dim as the same as number of channels, but I find this unstable when badchannels are interpolated, so would suggest reducing to 50 as below. I have modified ADJUST to accept this.
                             D(chans{m}(nonzeros(tointerpolate)),:) = ICA.d(nonzeros(tointerpolate),:); %Ensure that bad channels to not contribute to the montage - time consuming step 
@@ -1093,9 +1107,11 @@ switch step
                     try
                         if exist([pwd '/MEG_ICs_' num2str(m) '_' files(f).name])
                             load (['MEG_ICs_' num2str(m) '_' files(f).name])
+                            pathstem = pathstem_back; D=D_back; %Fix bug where preprocessed ICs are imported from another file
                             
                         elseif exist([pwd '/MEG_ICs_' m '_' files(f).name])
                             load (['MEG_ICs_' m '_' files(f).name])
+                            pathstem = pathstem_back; D=D_back; %Fix bug where preprocessed ICs are imported from another file
                             
                         end
                         m = m+1;
@@ -1106,9 +1122,11 @@ switch step
                             try
                                 if exist([pwd '/MEG_ICs_' num2str(m) '_' files(f).name])
                                     load (['MEG_ICs_' num2str(m) '_' files(f).name])
+                                    pathstem = pathstem_back; D=D_back; %Fix bug where preprocessed ICs are imported from another file
                                     
                                 elseif exist([pwd '/MEG_ICs_' m '_' files(f).name])
                                     load (['MEG_ICs_' m '_' files(f).name])
+                                    pathstem = pathstem_back; D=D_back; %Fix bug where preprocessed ICs are imported from another file
                                     
                                 end
                                 m = m+1;
