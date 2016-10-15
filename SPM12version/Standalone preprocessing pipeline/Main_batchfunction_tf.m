@@ -25,7 +25,7 @@
 %% Set up global variables
 
 subjects_and_parameters; 
-pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_thirdICA/';
+pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/';
 
 %% Specify preprocessing parameters
 
@@ -132,21 +132,35 @@ if memoryperworker*size(allrunsarray,1) >= 196 %I think you can't ask for more t
 else
     memoryrequired = num2str(memoryperworker*size(allrunsarray,1));
 end
-
 try
-    workerpool = cbupool(size(allrunsarray,1));
+    currentdr = pwd;
+    cd('/group/language/data/thomascope/vespa/SPM12version/')
+    workerpool = cbupool(workersrequested);
     workerpool.ResourceTemplate=['-l nodes=^N^,mem=' memoryrequired 'GB,walltime=168:00:00'];
     matlabpool(workerpool)
+    cd(currentdr)
 catch
     try
+        cd('/group/language/data/thomascope/vespa/SPM12version/')
         matlabpool 'close'
-        workerpool = cbupool(size(allrunsarray,1));
+        workerpool = cbupool(workersrequested);
         workerpool.ResourceTemplate=['-l nodes=^N^,mem=' memoryrequired 'GB,walltime=168:00:00'];
         matlabpool(workerpool)
+        cd(currentdr)
     catch
-        fprintf([ '\n\nUnable to open up a worker pool - running serially rather than in parallel' ]);
+        try
+            cd('/group/language/data/thomascope/vespa/SPM12version/')
+            workerpool = cbupool(workersrequested);
+            matlabpool(workerpool)
+            cd(currentdr)
+        catch
+            cd(currentdr)
+            fprintf([ '\n\nUnable to open up a cluster worker pool - opening a local cluster instead' ]);
+            matlabpool(12)
+        end
     end
 end
+
 
 %Preprocessing pipeline below. This should be fully modular and intuitive.
 %You will need to appropriately change the search terms at the start of the
@@ -227,9 +241,14 @@ try
         matlabpool 'close'
     catch
     end
+    currentdr = pwd;
+    cd('/group/language/data/thomascope/vespa/SPM12version/')
+    
     workerpool = cbupool(size(subjects,2));
     workerpool.ResourceTemplate=['-l nodes=^N^,mem=' memoryrequired 'GB,walltime=48:00:00'];
     matlabpool(workerpool)
+    cd(currentdr)
+
 catch
     fprintf([ '\n\nUnable to open up a worker pool - running serially rather than in parallel' ]);
 end
