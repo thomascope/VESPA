@@ -1734,6 +1734,8 @@ switch step
         
     case 'image' % assumes merged files (i.e. one per subject)
         
+        warning off MATLAB:TriScatteredInterp:DupPtsAvValuesWarnId % XXX ZZZ Dirty hack to suppress a warning message I don't understand.  Help resquested from SPM list.
+        
         % parameters for SPM function
         S.n = 32;
         S.interpolate_bad = 1;
