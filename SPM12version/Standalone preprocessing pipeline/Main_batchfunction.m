@@ -10,13 +10,13 @@
 % in this file, in the subjects_and_parameters script, and set the search terms in Preprocessing_mainfunction
 % You will also need to move the bundled es_montage_all, tec_montage_all
 % and MEGArtifactTemplateTopographies files to your pathstem folder.
-% 
+%
 % Prerequisites:
-% 
+%
 % A version of EEGLAB new enough to have the FileIO toolbox (the stock CBU version does not have this; I use 13_3_2b http://sccn.ucsd.edu/eeglab/downloadtoolbox.html )
 % NB: You need to set the path to this in the Preprocessing_mainfunction case 'ICA_artifacts'
 % The ADJUST toolbox for EEGLAB: (http://www.unicog.org/pm/pmwiki.php/MEG/RemovingArtifactsWithADJUST )
-% 
+%
 %
 % E-mail any questions to tec31@cam.ac.uk
 
@@ -24,8 +24,8 @@
 
 %% Set up global variables
 
-subjects_and_parameters; 
-pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fourthICA/';
+subjects_and_parameters;
+pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/';
 
 %% Specify preprocessing parameters
 
@@ -69,7 +69,7 @@ p.postBase = 0; % post baseline time (ms)
 % for combining planar gradiometer data
 p.correctPlanar = 0; % whether to baseline correct planar gradiometer data after RMSing (using baseline period specified in preBase and postBase)
 
-% for filtering 
+% for filtering
 p.filter = 'low'; % type of filter (lowpass or highpass)- never bandpass!
 p.freq = 40; % filter cutoff (Hz)
 %p.filter = 'high'; % type of filter (lowpass or highpass)- never bandpass!
@@ -127,18 +127,31 @@ else
 end
 
 try
+    currentdr = pwd;
+    cd('/group/language/data/thomascope/vespa/SPM12version/')
     workerpool = cbupool(workersrequested);
     workerpool.ResourceTemplate=['-l nodes=^N^,mem=' memoryrequired 'GB,walltime=168:00:00'];
     matlabpool(workerpool)
+    cd(currentdr)
 catch
     try
+        cd('/group/language/data/thomascope/vespa/SPM12version/')
         matlabpool 'close'
         workerpool = cbupool(workersrequested);
         workerpool.ResourceTemplate=['-l nodes=^N^,mem=' memoryrequired 'GB,walltime=168:00:00'];
         matlabpool(workerpool)
+        cd(currentdr)
     catch
-        fprintf([ '\n\nUnable to open up a cluster worker pool - opening a local cluster instead' ]);
-        matlabpool(12)
+        try
+            cd('/group/language/data/thomascope/vespa/SPM12version/')
+            workerpool = cbupool(workersrequested);
+            matlabpool(workerpool)
+            cd(currentdr)
+        catch
+            cd(currentdr)
+            fprintf([ '\n\nUnable to open up a cluster worker pool - opening a local cluster instead' ]);
+            matlabpool(12)
+        end
     end
 end
 
@@ -156,17 +169,17 @@ end
 % Any functions present in the mainfunction and not listed below have not
 % been optimised for SPM12 so will need some debugging before they will
 % work.
-    
+
 todoarray = allrunsarray;
 parfor todonumber = 1:size(todoarray,1)
-   cnt = todoarray(todonumber,1);
-   runtodo = todoarray(todonumber,2);
-   
-   %Preprocessing_mainfunction('definetrials','maxfilter',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-   %Defining trials does not seem to work on .fif files in SPM12 for some reason. Perhaps the function names have changed Will
-   %need to use SPM8 version for this or define after conversion.   
-   
-   Preprocessing_mainfunction('convert','maxfilter',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt,dates,blocksin,blocksout,rawpathstem, badeeg, badchannels, runtodo)
+    cnt = todoarray(todonumber,1);
+    runtodo = todoarray(todonumber,2);
+    
+    %Preprocessing_mainfunction('definetrials','maxfilter',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+    %Defining trials does not seem to work on .fif files in SPM12 for some reason. Perhaps the function names have changed Will
+    %need to use SPM8 version for this or define after conversion.
+    
+    Preprocessing_mainfunction('convert','maxfilter',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt,dates,blocksin,blocksout,rawpathstem, badeeg, badchannels, runtodo)
 end
 % icaworkedcorrectly = zeros(1,size(subjects,2));
 % parfor cnt = 1:size(subjects,2)
@@ -174,7 +187,7 @@ end
 %    %Preprocessing_mainfunction('definetrials','maxfilter',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 %    %Defining trials does not seem to work on .fif files in SPM12 for some reason. Will
 %    %need to use SPM8 version for this or define after conversion.
-%    
+%
 %       %Preprocessing_mainfunction('convert+epoch','maxfilter',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt,dates,blocksin,blocksout,rawpathstem, maxfilteredpathstembadeeg);
 %        Preprocessing_mainfunction('ICA_artifacts','convert',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt,dates,blocksin,blocksout,rawpathstem, badeeg)
 %        icaworkedcorrectly(cnt) = 1;
@@ -187,16 +200,16 @@ end
 todoarray = allrunsarray;
 todocomplete = zeros(1,size(todoarray,1));
 parfor todonumber = 1:size(todoarray,1)
-   cnt = todoarray(todonumber,1);
-   runtodo = todoarray(todonumber,2);
-   try
-       Preprocessing_mainfunction('ICA_artifacts','convert',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt,dates,blocksin,blocksout,rawpathstem, badeeg, badchannels, runtodo)
-       todocomplete(todonumber) = 1
-       fprintf('\n\nICA complete for subject number %d, run number %d\n\n',todoarray(todonumber,1), todoarray(todonumber,2));
-   catch
-       todocomplete(todonumber) = 0;
-       fprintf('\n\nICA failed for subject number %d, run number %d\n\n',todoarray(todonumber,1), todoarray(todonumber,2));
-   end
+    cnt = todoarray(todonumber,1);
+    runtodo = todoarray(todonumber,2);
+    try
+        Preprocessing_mainfunction('ICA_artifacts','convert',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt,dates,blocksin,blocksout,rawpathstem, badeeg, badchannels, runtodo)
+        todocomplete(todonumber) = 1
+        fprintf('\n\nICA complete for subject number %d, run number %d\n\n',todoarray(todonumber,1), todoarray(todonumber,2));
+    catch
+        todocomplete(todonumber) = 0;
+        fprintf('\n\nICA failed for subject number %d, run number %d\n\n',todoarray(todonumber,1), todoarray(todonumber,2));
+    end
 end
 
 % The first time you run through you should put a breakpoint on pause to check
@@ -211,22 +224,25 @@ end
 % This next bit is not yet fully parallelised (doesn't seem necessary
 % because it doesn't take so long), so re-open a smaller matlab pool with
 % one worker per subject to reduce occupation of the cluster
-
-memoryrequired = num2str(4*size(subjects,1));
-
-try
-    matlabpool 'close'
-    workerpool = cbupool(size(subjects,2));
-    workerpool.ResourceTemplate=['-l nodes=^N^,mem=' memoryrequired 'GB,walltime=48:00:00'];
-    matlabpool(workerpool)
-catch
-    fprintf([ '\n\nUnable to open up a cluster worker pool - opening a local cluster instead' ]);
-    matlabpool(12)
-end
+% 
+% memoryrequired = num2str(4*size(subjects,1));
+% 
+% try
+%     matlabpool 'close'
+%     currentdr = pwd;
+%     cd('/group/language/data/thomascope/vespa/SPM12version/')
+%     workerpool = cbupool(size(subjects,2));
+%     workerpool.ResourceTemplate=['-l nodes=^N^,mem=' memoryrequired 'GB,walltime=48:00:00'];
+%     matlabpool(workerpool)
+%     cd(currentdr)
+% catch
+%     fprintf([ '\n\nUnable to open up a cluster worker pool - opening a local cluster instead' ]);
+%     matlabpool(12)
+% end
 
 parfor cnt = 1:size(subjects,2)
     %Preprocessing_mainfunction('definetrials','convert',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-   Preprocessing_mainfunction('epoch','ICA_artifacts',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt,dates,blocksin,blocksout,rawpathstem, badeeg);
+    Preprocessing_mainfunction('epoch','ICA_artifacts',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt,dates,blocksin,blocksout,rawpathstem, badeeg);
 end
 parfor cnt = 1:size(subjects,2)
     Preprocessing_mainfunction('downsample','epoch',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
@@ -252,7 +268,7 @@ end
 parfor cnt = 1:size(subjects,2)
     Preprocessing_mainfunction('filter','average',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
-parfor cnt = 1:size(subjects,2) 
+parfor cnt = 1:size(subjects,2)
     Preprocessing_mainfunction('combineplanar','fmcfbMdeMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
 
@@ -261,8 +277,8 @@ Preprocessing_mainfunction('grand_average','pfmcfbMdeMr*.mat',p,pathstem, maxfil
 % first member of that group. For convenience, you might want to move them
 % to separate folders.
 
-parfor cnt = 1:size(subjects,2)    
-   Preprocessing_mainfunction('weight','pfmcfbMdeMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+parfor cnt = 1:size(subjects,2)
+    Preprocessing_mainfunction('weight','pfmcfbMdeMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
 
 Preprocessing_mainfunction('grand_average','wpfmcfbMdeMr*.mat',p,pathstem, maxfilteredpathstem, subjects);
@@ -270,18 +286,24 @@ Preprocessing_mainfunction('grand_average','wpfmcfbMdeMr*.mat',p,pathstem, maxfi
 % first member of that group. For convenience, you might want to move them
 % to separate folders.
 parfor cnt = 1:size(subjects,2)
-    Preprocessing_mainfunction('image','fmcfbMdeMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+    Preprocessing_mainfunction('combineplanar_spm','fmcfbMdeMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+end
+p.mod = {'MEGMAG' 'MEGCOMB' 'EEG'};
+parfor cnt = 1:size(subjects,2)
+    Preprocessing_mainfunction('image','PfmcfbMdeMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
 parfor cnt = 1:size(subjects,2)
     % The input for smoothing should be the same as the input used to make
     % the image files.
-    Preprocessing_mainfunction('smooth','fmcfbMdeMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+    Preprocessing_mainfunction('smooth','PfmcfbMdeMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
 for cnt = 1
     % The input for smoothing should be the same as the input used to make
     % the image files. Only need to do this for a single subject
-    Preprocessing_mainfunction('mask','fmcfbMdeMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-end  
+    Preprocessing_mainfunction('mask','PfmcfbMdeMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+end
+
+
 
 % now move all of the smoothed nifti images into folders marked
 % controls/patients, either manually or with copyniftitofolder.py (you will
