@@ -11,11 +11,11 @@
 
 filetype = 'fmcfbMdeMrun1_raw_ssst';
 filetypesplit = 'fmcfbMdeMrun1_1_raw_ssst';
-modality = {'MEG' 'MEGPLANAR' 'EEG'};
+modality = {'MEGMAG' 'MEGCOMB' 'EEG'};
 imagetype = {'sm_'};
 p.windows = [-100 900; 90 130; 180 240; 270 420; 450 700; 750 900];
 
-outputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/stats_third_ICA';
+outputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats';
 
 %mskname = '/imaging/local/spm/spm8/apriori/grey.nii'; % specify in modality loop below if multiple modalities are being estimated. Don't specify if not needed
 
