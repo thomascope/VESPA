@@ -1671,6 +1671,40 @@ switch step
         
         fprintf('\n\nTime-frequency analysis baseline corrected!\n\n');
         
+    case 'combineplanar_spm'
+        
+        for s=1:size(subjects,1)
+            
+            fprintf([ '\n\nCurrent subject = ' subjects '...\n\n' ]);
+            
+            % change to input directory
+            filePath = [pathstem subjects];
+            cd(filePath);
+            
+            % search for input files
+            files = dir(prevStep);
+            
+            for f=1:length(files)
+                
+                fprintf([ '\n\nProcessing ' files(f).name '...\n\n' ]);
+                
+                % set input file
+                S.D = files(f).name;
+                
+                % main process
+                S.D = spm_eeg_load(S.D);
+                S.mode = 'replace';
+                S.prefix = 'P';
+                
+                spm_eeg_combineplanar(S);
+                
+            end
+            
+        end % subjects
+        
+        fprintf('\n\nMEGPLANAR data SPM combined!\n\n');
+        
+    
     case 'combineplanar' % combine MEGPLANAR sensor pairs using RMS (if no MEGPLANAR sensors present,the resulting file is identical to the input file but filename is prepended with 'p')
         
         correct = p.correctPlanar;
