@@ -108,10 +108,11 @@ plot(-500:4:1500,zeros(1,length([-500:4:1500])),'k-')
 xlim([-100 900])
 
 threshold=tinv(0.95,(nsubj-2));
+allsigs = zeros(size(squeeze(squeeze(Y3{1}(x_loc,y_loc,:)))));
 for i = 1:size(Y3,2)
-    H = squeeze(squeeze(Y3{i}(x_loc,y_loc,:)))>threshold;
-    
-    jbfill(-500:4:1500,controltoplot,patienttoplot,H','r','none',[],0.5);
+    H{i} = squeeze(squeeze(Y3{i}(x_loc,y_loc,:)))>threshold;
+    allsigs = allsigs+H{i};
+    jbfill(-500:4:1500,controltoplot,patienttoplot,H{i}','r','none',[],0.5);
 end
 
 titlestr = strsplit(Y3_data{1}.descrip,'X');
@@ -129,6 +130,27 @@ set(gca,'fontsize',20)
 title([titlestr{2}(2:end) ' for ' modality ' at ' num2str(location)],'fontsize',20)
 legend({'Controls','Patients'})
 
+pv = [allsigs' 0];
+sv = [0 pv(1:(end-1))];
+ev = [pv(2:end) 0];
+starting = find( pv - sv >= 1 );
+ending = find( pv - ev >= 1 );
+times=[-500:4:1500];
+
+figHandles = findobj('Type','axes');
+contrastnumber = 2; %For Match-Mismatch]
+scales = zeros(2,length(starting));
+for i = 1:length(starting)
+    timewindow = [times(starting(i)) times(ending(i))];
+    fieldtrip_topoplot_highlight(timewindow,contrastnumber,location,modality)
+    scales(:,i) = caxis;
+end
+figHandles2 = findobj('Type','axes');
+newfigHandles = setdiff(figHandles2,figHandles);
+for i = 1:length(newfigHandles)
+caxis(newfigHandles(i),[min(min(scales)) max(max(scales))])
+end
+
 timewindow = input('\nPlease input a two element vector of milliseconds to plot the topographies for each group\n');
-contrastnumber = 2; %For Match-Mismatch
+
 fieldtrip_topoplot_highlight(timewindow,contrastnumber,location,modality)
