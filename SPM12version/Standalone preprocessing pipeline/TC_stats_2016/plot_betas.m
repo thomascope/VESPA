@@ -48,6 +48,7 @@ x_loc = round((location(1)-Y1_data.mat(1,4))/Y1_data.mat(1,1));
 y_loc = round((location(2)-Y1_data.mat(2,4))/Y1_data.mat(2,2));
 
 toplot = zeros(1,size(Y{1},3));
+
 for i = 1:length(contrast)
     Y{i} = Y{i}*contrast(i);
 end
@@ -127,3 +128,7 @@ set(gca,'fontsize',20)
 
 title([titlestr{2}(2:end) ' for ' modality ' at ' num2str(location)],'fontsize',20)
 legend({'Controls','Patients'})
+
+timewindow = input('\nPlease input a two element vector of milliseconds to plot the topographies for each group\n');
+contrastnumber = 2; %For Match-Mismatch
+fieldtrip_topoplot_highlight(timewindow,contrastnumber,location,modality)
