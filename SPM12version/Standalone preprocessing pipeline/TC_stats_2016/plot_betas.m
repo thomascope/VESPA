@@ -16,7 +16,7 @@
 %plot_betas([1:6],[-1 1 -1 1 -1 1],{'T_0017','T_0018'},22,[-38,-41],'MEGMAG')
 %MEGMAG (left posterior)
 
-function plot_betas(whichbetas,contrast,statspm,nsubj,location,modality)
+function plot_betas(whichbetas,contrast,statspm,nsubj,location,modality,varargin)
 
 pathstem = ['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_2sm_/combined_-100_900_' modality];
 
@@ -112,7 +112,9 @@ allsigs = zeros(size(squeeze(squeeze(Y3{1}(x_loc,y_loc,:)))));
 for i = 1:size(Y3,2)
     H{i} = squeeze(squeeze(Y3{i}(x_loc,y_loc,:)))>threshold;
     allsigs = allsigs+H{i};
-    jbfill(-500:4:1500,controltoplot,patienttoplot,H{i}','r','none',[],0.5);
+    if sum(H{i}) >= 7  %Account for smoothing - crude cluster correction by deletings 'significance' less than 25ms duration.
+        jbfill(-500:4:1500,controltoplot,patienttoplot,H{i}','r','none',[],0.5);
+    end
 end
 
 titlestr = strsplit(Y3_data{1}.descrip,'X');
@@ -141,9 +143,14 @@ figHandles = findobj('Type','axes');
 contrastnumber = 2; %For Match-Mismatch]
 scales = zeros(2,length(starting));
 for i = 1:length(starting)
-    timewindow = [times(starting(i)) times(ending(i))];
-    fieldtrip_topoplot_highlight(timewindow,contrastnumber,location,modality)
-    scales(:,i) = caxis;
+    if ending(i)-starting(i) >= 7 %Account for smoothing - crude cluster correction by deletings 'significance' less than 25ms duration.
+        timewindow = [times(starting(i)) times(ending(i))];
+        fieldtrip_topoplot_highlight(timewindow,contrastnumber,location,modality)
+        scales(:,i) = caxis;
+    else
+       starting(i) = [];
+       ending(i) = [];
+    end
 end
 figHandles2 = findobj('Type','axes');
 newfigHandles = setdiff(figHandles2,figHandles);
@@ -151,6 +158,11 @@ for i = 1:length(newfigHandles)
 caxis(newfigHandles(i),[min(min(scales)) max(max(scales))])
 end
 
-timewindow = input('\nPlease input a two element vector of milliseconds to plot the topographies for each group\n');
+%timewindow = input('\nPlease input a two element vector of milliseconds to plot the topographies for each group\n');
 
-fieldtrip_topoplot_highlight(timewindow,contrastnumber,location,modality)
+if isempty(varargin)
+    varargin{1} = [400 700];
+end
+for i = 1:length(varargin)
+    fieldtrip_topoplot_highlight(varargin{i},contrastnumber,location,modality)
+end
