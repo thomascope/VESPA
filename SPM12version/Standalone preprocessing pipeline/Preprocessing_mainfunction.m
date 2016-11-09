@@ -1565,6 +1565,11 @@ switch step
                 else
                     S.outfile = ['controls_grandmean'];
                 end
+                if strncmpi(prevStep,'wBc',3)
+                    S.outfile = ['controls_weighted_beamformed_grandmean'];
+                elseif strncmpi(prevStep,'Bc',2)
+                    S.outfile = ['controls_beamformed_grandmean'];
+                end
                 % main process
                 fprintf('\nAveraging controls\n');
                 spm_eeg_grandmean_vladedit(S);
@@ -1583,6 +1588,11 @@ switch step
                     S.outfile = ['patients_weighted_grandmean'];
                 else
                     S.outfile = ['patients_grandmean'];
+                end
+                if strncmpi(prevStep,'wBc',3)
+                    S.outfile = ['patients_weighted_beamformed_grandmean'];
+                elseif strncmpi(prevStep,'Bc',2)
+                    S.outfile = ['patients_beamformed_grandmean'];
                 end
                 % main process
                 fprintf('\nAveraging patients\n');
@@ -1768,7 +1778,10 @@ switch step
         
     case 'image' % assumes merged files (i.e. one per subject)
         
-        warning off MATLAB:TriScatteredInterp:DupPtsAvValuesWarnId % XXX ZZZ Dirty hack to suppress a warning message I don't understand.  Help resquested from SPM list.
+        %warning off MATLAB:TriScatteredInterp:DupPtsAvValuesWarnId % XXX ZZZ Dirty hack to suppress a warning message I don't understand.  Help resquested from SPM list.
+        %This warning was because the planar gradiometers need to be
+        %combined before image formation in evoked data. If you get it,
+        %better to use combine planar function.
         
         % parameters for SPM function
         S.n = 32;
