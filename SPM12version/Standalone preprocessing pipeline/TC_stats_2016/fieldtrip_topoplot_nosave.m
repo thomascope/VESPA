@@ -1,7 +1,7 @@
 % Plots the topoplot of the planar gradiometer grandmeans specified in a given timewindow for
 % a given contrastnumber. In this example Match-Mismatch is contrastnumber2
 
-function scales = fieldtrip_topoplot_highlight(timewindow,contrastnumber,location,modality)
+function scales = fieldtrip_topoplot_nosave(timewindow,contrastnumber,location,modality)
 
 timewindow = timewindow/1000; %time window input in ms, but fieldtrip needs it in seconds
 
@@ -34,7 +34,7 @@ if strcmp(modality,'MEGCOMB') || strcmp(modality,'MEGPLANAR')
         layout = ft_prepare_layout(cfg,planardata);
         cfg.layout = layout;
         cfg.xlim = timewindow;
-        cfg.gridscale = 300; %Can increase to 600 for better quality, but takes 30seconds per image.
+        cfg.gridscale = 30; %Can increase to 600 for better quality, but takes 30seconds per image.
         cfg.style = 'straight';
         cfg.colorbar = 'yes';
         cfg.marker = 'off';
@@ -64,16 +64,9 @@ if strcmp(modality,'MEGCOMB') || strcmp(modality,'MEGPLANAR')
         caxis(newfigHandles(i),[min(min(scales)) max(max(scales))])
 
     end
-        
-    figure(controlfig)
-    save_string = ['./Significant_peaks/Controls topoplot for planar gradiometers, contrast ' num2str(contrastnumber) ' time window ' num2str(timewindow(1)) ' to ' num2str(timewindow(2)) '.pdf'];
-    eval(['export_fig ''' save_string ''' -transparent'])
-    close(controlfig)
-    figure(patientfig)
-    save_string = ['./Significant_peaks/Patients topoplot for planar gradiometers, contrast ' num2str(contrastnumber) ' time window ' num2str(timewindow(1)) ' to ' num2str(timewindow(2)) '.pdf'];
-    eval(['export_fig ''' save_string ''' -transparent'])
-    close(patientfig)
     
+    close(controlfig)
+    close(patientfig)
     
 elseif strcmp(modality,'MEGMAG') || strcmp(modality,'MEG')
     figHandles = findobj('Type','axes');
@@ -85,7 +78,7 @@ elseif strcmp(modality,'MEGMAG') || strcmp(modality,'MEG')
         layout = ft_prepare_layout(cfg,planardata);
         cfg.layout = layout;
         cfg.xlim = timewindow;
-        cfg.gridscale = 300;
+        cfg.gridscale = 30;
         cfg.style = 'straight';
         cfg.colorbar = 'yes';
         cfg.marker = 'off';
@@ -114,13 +107,7 @@ elseif strcmp(modality,'MEGMAG') || strcmp(modality,'MEG')
         caxis(newfigHandles(i),[min(min(scales)) max(max(scales))])
     end
     
-    figure(controlfig)
-    save_string = ['./Significant_peaks/Controls topoplot for magnetometers, contrast ' num2str(contrastnumber) ' time window ' num2str(timewindow(1)) ' to ' num2str(timewindow(2)) '.pdf'];
-    eval(['export_fig ''' save_string ''' -transparent'])
     close(controlfig)
-    figure(patientfig)
-    save_string = ['./Significant_peaks/Patients topoplot for magnetometers, contrast ' num2str(contrastnumber) ' time window ' num2str(timewindow(1)) ' to ' num2str(timewindow(2)) '.pdf'];
-    eval(['export_fig ''' save_string ''' -transparent'])
     close(patientfig)
     
 elseif strcmp(modality,'EEG')
@@ -133,7 +120,7 @@ elseif strcmp(modality,'EEG')
         layout = ft_prepare_layout(cfg,planardata);
         cfg.layout = layout;
         cfg.xlim = timewindow;
-        cfg.gridscale = 300;
+        cfg.gridscale = 30;
         cfg.style = 'straight';
         cfg.colorbar = 'yes';
         cfg.marker = 'off';
@@ -161,12 +148,6 @@ elseif strcmp(modality,'EEG')
         caxis(newfigHandles(i),[min(min(scales)) max(max(scales))])
     end
     
-    figure(controlfig)
-    save_string = ['./Significant_peaks/Controls topoplot for EEG, contrast ' num2str(contrastnumber) ' time window ' num2str(timewindow(1)) ' to ' num2str(timewindow(2)) '.pdf'];
-    eval(['export_fig ''' save_string ''' -transparent'])
     close(controlfig)
-    figure(patientfig)
-    save_string = ['./Significant_peaks/Patients topoplot for EEG, contrast ' num2str(contrastnumber) ' time window ' num2str(timewindow(1)) ' to ' num2str(timewindow(2)) '.pdf'];
-    eval(['export_fig ''' save_string ''' -transparent'])
     close(patientfig)
 end

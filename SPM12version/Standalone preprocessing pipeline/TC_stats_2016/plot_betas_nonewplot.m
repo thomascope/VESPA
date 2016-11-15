@@ -16,8 +16,8 @@
 %plot_betas([1:6],[-1 1 -1 1 -1 1],{'T_0017','T_0018'},22,[-38,-41],'MEGMAG')
 %MEGMAG (left posterior)
 
-function plot_betas(whichbetas,contrast,statspm,nsubj,location,modality,varargin)
-
+function plot_betas_nonewplot(whichbetas,contrast,statspm,nsubj,location,modality,plotnum,varargin)
+hold on
 pathstem = ['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_2sm_/combined_-100_900_' modality];
 
 Y = cell(1,length(whichbetas));
@@ -39,8 +39,8 @@ if ischar(statspm)
     Y3_data{1} = spm_vol(spm_vol([pathstem '/' 'spm' statspm '.img']));
 else
     for i = 1:size(statspm,2)
-        Y3{i}=spm_read_vols(spm_vol([pathstem '/' 'spm' statspm{i} '.img']));
-        Y3_data{i} = spm_vol(spm_vol([pathstem '/' 'spm' statspm{i} '.img']));
+      Y3{i}=spm_read_vols(spm_vol([pathstem '/' 'spm' statspm{i} '.img']));  
+      Y3_data{i} = spm_vol(spm_vol([pathstem '/' 'spm' statspm{i} '.img']));
     end
 end
 
@@ -63,8 +63,12 @@ for i = 1:size(Y{1},3)
 end
 
 controltoplot = mean(datatoplot,1);
-figure
-plot(-500:4:1500,controltoplot,'g','LineWidth',4)
+%figure
+if plotnum == 1
+    plot(-500:4:1500,controltoplot,'g','LineWidth',4)
+else
+    plot(-500:4:1500,controltoplot,'g--','LineWidth',4)
+end
 hold on
 
 whichbetas = whichbetas+6;
@@ -103,8 +107,12 @@ end
 
 patienttoplot = mean(datatoplot,1);
 
-plot(-500:4:1500,patienttoplot,'r','LineWidth',4)
-plot(-500:4:1500,zeros(1,length([-500:4:1500])),'k-')
+if plotnum == 1
+    plot(-500:4:1500,patienttoplot,'r','LineWidth',4)
+else
+    plot(-500:4:1500,patienttoplot,'r--','LineWidth',4)
+end
+plot(-500:4:1500,zeros(1,length([-500:4:1500])),'k--')
 xlim([-100 900])
 
 threshold=tinv(0.95,(nsubj-2));
@@ -112,7 +120,7 @@ allsigs = zeros(size(squeeze(squeeze(Y3{1}(x_loc,y_loc,:)))));
 for i = 1:size(Y3,2)
     H{i} = squeeze(squeeze(Y3{i}(x_loc,y_loc,:)))>threshold;
     allsigs = allsigs+H{i};
-
+    
 end
 
 titlestr = strsplit(Y3_data{1}.descrip,'X');
@@ -130,6 +138,7 @@ set(gca,'fontsize',20)
 title([titlestr{2}(2:end) ' for ' modality ' at ' num2str(location)],'fontsize',20)
 legend({'Controls','Patients'})
 
+
 pv = [allsigs' 0];
 sv = [0 pv(1:(end-1))];
 ev = [pv(2:end) 0];
@@ -145,8 +154,7 @@ elseif isequal(contrast,[-1 -1 0 0 1 1])
 elseif isequal(contrast,[0 1 0 1 0 1]) || isequal(contrast,[1 0 1 0 1 0]) || isequal(contrast,[1 1 0 0 0 0]) || isequal(contrast,[0 0 0 0 1 1])
     contrastnumber = 1; %For Overall Power
 end
-    
-    scales = zeros(2,length(starting));
+scales = zeros(2,length(starting));
 i = 1;
 for j = 1:length(starting)
     if ending(i)-starting(i) >= 7 %Account for smoothing - crude cluster correction by deletings 'significance' less than 25ms duration.
@@ -160,8 +168,11 @@ for j = 1:length(starting)
 end
 jbfill(-500:4:1500,controltoplot,patienttoplot,allsigs','r','none',[],0.5);
 
-save_string = ['./Significant_peaks/' titlestr{2}(2:end) ', contrast ' num2str(contrast) ' for ' modality ' at ' num2str(location) '.pdf'];
-eval(['export_fig ''' save_string ''' -transparent'])
+if plotnum == 2
+    save_string = ['./Significant_peaks/Overall_' titlestr{2}(2:end) ', contrast ' num2str(contrastnumber) ' for ' modality ' at ' num2str(location) '.pdf'];
+    eval(['export_fig ''' save_string ''' -transparent'])
+end
+
 
 for i = 1:length(starting)
     timewindow = [times(starting(i)) times(ending(i))];
@@ -177,7 +188,7 @@ end
 %timewindow = input('\nPlease input a two element vector of milliseconds to plot the topographies for each group\n');
 
 if isempty(varargin)
-    varargin{1} = [400 700];
+    varargin{1} = [-100 900];
 end
 for i = 1:length(varargin)
     fieldtrip_topoplot_highlight(varargin{i},contrastnumber,location,modality)

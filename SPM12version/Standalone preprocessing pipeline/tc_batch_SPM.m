@@ -9,13 +9,14 @@
 % contrast_weights = [1, 1, 1, 1, 1, 1; -1, -1, 1, -1, 1, 1; -1, -1, 0, 0, 1, 1; -1, 1, 0, 0, 1, -1];    
 %% Configure
 
-filetype = 'fmcfbMdeMrun1_raw_ssst';
-filetypesplit = 'fmcfbMdeMrun1_1_raw_ssst';
+filetype = 'PfmcfbMdeMrun1_raw_ssst';
+filetypesplit = 'PfmcfbMdeMrun1_1_raw_ssst';
 modality = {'MEGMAG' 'MEGCOMB' 'EEG'};
 imagetype = {'sm_'};
-p.windows = [-100 900; 90 130; 180 240; 270 420; 450 700; 750 900];
+%p.windows = [-100 900; 90 130; 180 240; 270 420; 450 700; 750 900];
+p.windows = [-100 900; 250 600];
 
-outputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats';
+outputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_2';
 
 %mskname = '/imaging/local/spm/spm8/apriori/grey.nii'; % specify in modality loop below if multiple modalities are being estimated. Don't specify if not needed
 
@@ -107,24 +108,34 @@ contrasts{cnt}.c = kron([1 0],[0 -1 0 0 0 1]);
 contrasts{cnt}.type = 'F';
 
 cnt = cnt + 1;
-contrasts{cnt}.name = 'Contop Group X Match-Mismatch';
+contrasts{cnt}.name = 'Group X Match-Mismatch';
 contrasts{cnt}.c = kron([1 -1],kron([1/3 1/3 1/3],[-1 1]));
 contrasts{cnt}.type = 'F';
 
 cnt = cnt + 1;
-contrasts{cnt}.name = 'Contop Group X Sensory Detail';
+contrasts{cnt}.name = 'Group X Sensory Detail';
 contrasts{cnt}.c = kron([1 -1],kron(orth(diff(eye(3))')',[1/2 1/2]));
 contrasts{cnt}.type = 'F';
 
 cnt = cnt + 1;
 contrasts{cnt}.name = 'Pattop Group X Match-Mismatch';
-contrasts{cnt}.c = kron([-1 1],kron([1/3 1/3 1/3],[-1 1]));
-contrasts{cnt}.type = 'F';
+contrasts{cnt}.c = kron([1 -1],kron([1/3 1/3 1/3],[-1 1]));
+contrasts{cnt}.type = 'T';
 
 cnt = cnt + 1;
-contrasts{cnt}.name = 'Pattop Group X Sensory Detail';
-contrasts{cnt}.c = kron([-1 1],kron(orth(diff(eye(3))')',[1/2 1/2]));
-contrasts{cnt}.type = 'F';
+contrasts{cnt}.name = 'Contop Group X Match-Mismatch';
+contrasts{cnt}.c = kron([-1 1],kron([1/3 1/3 1/3],[-1 1]));
+contrasts{cnt}.type = 'T';
+
+cnt = cnt + 1;
+contrasts{cnt}.name = 'Pattop Group X Clear-Unclear';
+contrasts{cnt}.c = kron([1 -1],[-0.5 -0.5 0 0 0.5 0.5]);
+contrasts{cnt}.type = 'T';
+
+cnt = cnt + 1;
+contrasts{cnt}.name = 'Contop Group X Clear-Unclear';
+contrasts{cnt}.c = kron([-1 1],[-0.5 -0.5 0 0 0.5 0.5]);
+contrasts{cnt}.type = 'T';
 
 %% Estimate models
 

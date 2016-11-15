@@ -92,7 +92,7 @@ p.preImageMask = -100; % pre image time (ms)
 p.postImageMask = 950; % post image time (ms)
 
 % time windows over which to average for 'first-level' contrasts (ms)
-p.windows = [90 130; 180 240; 270 420; 450 700;];
+p.windows = [90 130; 180 240; 270 420; 450 700; 750 900];
 
 % set groups to input
 p.group = group;
@@ -133,6 +133,8 @@ if memoryperworker*size(allrunsarray,1) >= 196 %I think you can't ask for more t
 else
     memoryrequired = num2str(memoryperworker*size(allrunsarray,1));
 end
+
+workersrequested = size(subjects,2);
 try
     currentdr = pwd;
     cd('/group/language/data/thomascope/vespa/SPM12version/')
@@ -366,10 +368,33 @@ for cnt = 1
     Preprocessing_mainfunction('mask','TF_rescale',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
 
-%Now to do the higher frequencies with multitapers! - If you want to do
+%% New test section to contrast extracted LFPs from beaformer. Need to have run LCMV_source_extraction_2016 for this to work
+
+
+Preprocessing_mainfunction('grand_average','Bceff*.mat',p,pathstem, maxfilteredpathstem, subjects);
+parfor cnt = 1:size(subjects,2)    
+   Preprocessing_mainfunction('weight','Bceff*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+end
+Preprocessing_mainfunction('grand_average','wBceff*.mat',p,pathstem, maxfilteredpathstem, subjects);
+parfor cnt = 1:size(subjects,2)
+    Preprocessing_mainfunction('image','Bceff*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+end
+parfor cnt = 1:size(subjects,2)
+    % The input for smoothing should be the same as the input used to make
+    % the image files.
+    Preprocessing_mainfunction('smooth','Bceff*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+end
+for cnt = 1
+    % The input for smoothing should be the same as the input used to make
+    % the image files. Only need to do this for a single subject
+    Preprocessing_mainfunction('mask','Bceff*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+end
+
+
+%%Now to do the higher frequencies with multitapers! - If you want to do
 %this, you must copy the merged files, to another folder appended with '_taper' and re-run from
 %the appropriate step above
-source_directory = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/';
+source_directory = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/';
 pathstem = [pathstem(1:end-1) '_taper/'] ; 
 p.method = 'mtmconvol'; 
 p.freqs = [30:2:90]; 
@@ -386,11 +411,11 @@ end
 parfor cnt = 1:size(subjects,2)
     Preprocessing_mainfunction('average','TF_power',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
-p.robust = 0; %robust averaging doesn't work for phase data
-parfor cnt = 1:size(subjects,2)
-    Preprocessing_mainfunction('average','TF_phase',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-end
-p.robust = 1; % just in case we want to do any more averaging later
+% p.robust = 0; %robust averaging doesn't work for phase data
+% parfor cnt = 1:size(subjects,2)
+%     Preprocessing_mainfunction('average','TF_phase',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+% end
+% p.robust = 1; % just in case we want to do any more averaging later
 %TF_rescale to baseline correct the induced power data only
 parfor cnt = 1:size(subjects,2)
     Preprocessing_mainfunction('TF_rescale','mtf_c*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
@@ -413,5 +438,8 @@ for cnt = 1
     % the image files. Only need to do this for a single subject
     Preprocessing_mainfunction('mask','TF_rescale',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
+
+
+
 
 matlabpool 'close';

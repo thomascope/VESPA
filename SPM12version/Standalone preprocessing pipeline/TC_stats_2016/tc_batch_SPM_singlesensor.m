@@ -10,19 +10,30 @@ subjects_and_parameters;
 % contrast_weights = [1, 1, 1, 1, 1, 1; -1, -1, 1, -1, 1, 1; -1, -1, 0, 0, 1, 1; -1, 1, 0, 0, 1, -1];    
 %% Configure
 
-filetype = 'fmcfbMdeMrun1_raw_ssst';
-filetypesplit = 'fmcfbMdeMrun1_1_raw_ssst';
+filetype = 'PfmcfbMdeMrun1_raw_ssst';
+filetypesplit = 'PfmcfbMdeMrun1_1_raw_ssst';
 modality = {'MEG' 'MEGPLANAR' 'EEG'};
 imagetype = {'channel_'};
-p.windows = [-100 900; 90 130; 180 240; 270 420; 450 700; 750 900];
+%p.windows = [-100 900; 90 130; 180 240; 270 420; 450 700; 750 900];
+p.windows = [-100 900];
 
       %Channel order: MEG overall - control - patient, Planar overall -
       %control - patient, EEG posterior overall, anterior overall -
       %posterior control, anterior control - patient (only anterior)
-channels = {'MEG0211' 'MEG0211' 'MEG0131' 'MEG0132' 'MEG0243' 'MEG0132' 'EEG057' 'EEG019' 'EEG046' 'EEG019' 'EEG005'};
+%channels = {'MEG0211' 'MEG0211' 'MEG0131' 'MEG0132' 'MEG0243' 'MEG0132' 'EEG057' 'EEG019' 'EEG046' 'EEG019' 'EEG005'};
 
-pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/';
-outputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/stats_best_sensor';
+      %Channel order defined from SPM contrast FWE peaks: M-MM first MEG  400ms both, 532ms both, 456ms both;
+      %Planar 464ms control, 464ms patients; EEG 700ms both, 644ms
+      %controls, 644ms patients, 288ms controls, 288ms patients
+      %Then main effect sensory detail MEG 188ms both, 380ms controls,
+      %380ms patients; planar 96ms both, 552ms controls, 552ms patients;
+      %EEG 868ms both, 396ms both, 852ms both.
+
+channels = {'MEG0211' 'MEG1321' 'MEG1641' 'MEG0243' 'MEG0132' 'EEG047' 'EEG009' 'EEG019' 'EEG032' 'EEG031' 'MEG1621' 'MEG2231' 'MEG2221' 'MEG0243' 'MEG2312' 'MEG2433' 'EEG017' 'EEG065' 'EEG032'};
+
+
+pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/';
+outputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_best_sensor_combinedplanar';
 
 %mskname = '/imaging/local/spm/spm8/apriori/grey.nii'; % specify in modality loop below if multiple modalities are being estimated. Don't specify if not needed
 
@@ -30,18 +41,24 @@ outputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/stats_best_senso
 cnt = 0;
 clear contrasts
 
+
+
 %% Contrasts (Combined SPM for patients/controls)
 
 cnt = cnt + 1;
 contrasts{cnt}.name = 'Match-Mismatch';
 contrasts{cnt}.c = kron([1/3 1/3 1/3],[-1 1]);
 
+cnt = cnt + 1;
+contrasts{cnt}.name = 'Main effect of sensory detail(All)';
+contrasts{cnt}.c = kron(orth(diff(eye(3))')',[1/2 1/2]);
+
 %% Collate datafiles
 
 overalldata = struct();
 %for img=1:length(imagetype)
 img = 1;
-for wind = 1:length(p.windows)
+for wind = 1:size(p.windows,1)
     for m=1:length(channels)
     %for m = 3
         files = {};
@@ -179,10 +196,19 @@ for wind = 1:length(p.windows)
                 for subjnum = 1:size(files{1},2)
                     clear thischandata D 
                     D = spm_eeg_load(files{groups}{subjnum}{1});
+                    
+                    if strncmp(channels{m},'EEG',3)
+                        IndexC = strfind(D.chanlabels,channels{m});
+                        Thischan = find(not(cellfun('isempty', IndexC)));
+                    else
+                        IndexC = strfind(D.chanlabels,channels{m}(4:end));
+                        Thischan = find(not(cellfun('isempty', IndexC)));
+                    end
+                   
                     extractedsensor.time{groups}{subjnum} = D.time(not(abs(sign(sign(p.windows(wind,1)/1000 - D.time) + sign(p.windows(wind,2)/1000 - D.time)))));
-                    extractedsensor.chantype{groups}{subjnum} = D.chantype(D.selectchannels(channels{m}));
+                    extractedsensor.chantype{groups}{subjnum} = D.chantype(Thischan);
                     for conds = 1:length(conditions)
-                        thischandata(:,conds) = D(D.selectchannels(channels{m}),:,D.indtrial(conditions{conds}));
+                        thischandata(:,conds) = D(Thischan,:,D.indtrial(conditions{conds}));
                     end
                     extractedsensor.sensordata{groups}{subjnum} = thischandata(not(abs(sign(sign(p.windows(wind,1)/1000 - D.time) + sign(p.windows(wind,2)/1000 - D.time)))),:);
                     for cnt = 1:length(contrasts)
@@ -204,9 +230,9 @@ for wind = 1:length(p.windows)
                     clear thischandata D 
                     D = spm_eeg_load(files{groups}{subjnum}{1});
                     extractedsensor.time{groups}{subjnum} = D.time(not(abs(sign(sign(p.windows(wind,1)/1000 - D.time) + sign(p.windows(wind,2)/1000 - D.time)))));
-                    extractedsensor.chantype{groups}{subjnum} = D.chantype(D.selectchannels(channels{m}));
+                    extractedsensor.chantype{groups}{subjnum} = D.chantype(Thischan);
                     for conds = 1:length(conditions)
-                        thischandata(:,conds) = D(D.selectchannels(channels{m}),:,D.indtrial(conditions{conds}));
+                        thischandata(:,conds) = D(Thischan,:,D.indtrial(conditions{conds}));
                     end
                     extractedsensor.sensordata{groups}{subjnum} = thischandata(not(abs(sign(sign(p.windows(wind,1)/1000 - D.time) + sign(p.windows(wind,2)/1000 - D.time)))),:);
                     for cnt = 1:length(contrasts)
@@ -246,11 +272,62 @@ save([outputstem '/overalldata.mat'],'overalldata')
 %% Display significant contrasts (uncorrected)
 
 for i = 1:length(overalldata.channels)
-for wind = 1:length(overalldata.windows)
+for wind = 1:size(overalldata.windows,1)
     if cell2mat(overalldata.significant{i}{wind}) == 1
    disp((['\nSignificant difference at p=' num2str(cell2mat(overalldata.pvals{i}{wind})) ' in sensor ' cell2mat(overalldata.channels(i)) ' in timewindow ' num2str(overalldata.windows(wind,1)) 'ms to ' num2str(overalldata.windows(wind,2)) 'ms']))
         
     end
 end
 end
+
+%% Plot time series and significant windows (uncorrected) for each sensor
+
+for wind = 1
+    for m=1:length(channels)
+        
+        thisfilefullpath = [outputstem '/combined_' num2str(p.windows(wind,1)) '_' num2str(p.windows(wind,2)) '_' channels{m}];
+        
+        load([thisfilefullpath '/extractedsensordata.mat'],'extractedsensor') 
+        
+        for comparison = 1:length(extractedsensor.contrastdata)
+            
+            controlthisdata=zeros(size(extractedsensor.contrastdata{comparison}.data{1},2),size(extractedsensor.contrastdata{comparison}.data{1}{1},2));
+            for i = 1:size(extractedsensor.contrastdata{comparison}.data{1},2)
+                controlthisdata(i,:)=extractedsensor.contrastdata{comparison}.data{1}{i};
+            end
+            
+            patientthisdata=zeros(size(extractedsensor.contrastdata{comparison}.data{2},2),size(extractedsensor.contrastdata{comparison}.data{2}{1},2));
+            for i = 1:size(extractedsensor.contrastdata{comparison}.data{2},2)
+                patientthisdata(i,:)=extractedsensor.contrastdata{comparison}.data{2}{i};
+            end
+            
+            for i = 1:size(extractedsensor.contrastdata{comparison}.data{1}{1},2)
+                [H(i),P(i)] = ttest2(controlthisdata(:,i),patientthisdata(:,i),'vartype', 'unequal');
+            end
+            
+            figure
+            plot(extractedsensor.time{1}{1,1},mean(controlthisdata),'g');
+            hold on
+            plot(extractedsensor.time{1}{1,1},mean(patientthisdata),'r');
+            jbfill(extractedsensor.time{1}{1,1},mean(controlthisdata),mean(patientthisdata),H,'r','k',[],0.5);
+            
+            title(['Uncorrected significant group difference at ' channels{m} ' for contrast ' extractedsensor.contrastdata{comparison}.name])
+            xlabel(['Time /ms'])
+            if strcmp(extractedsensor.chantype{1}{1},'MEGMAG')
+                ylabel(['fT'])
+            elseif strcmp(extractedsensor.chantype{1}{1},'MEGPLANAR') || strcmp(extractedsensor.chantype{1}{1},'MEGCOMB')
+                ylabel(['fT/mm'])
+            elseif strcmp(extractedsensor.chantype{1}{1},'EEG')
+                ylabel(['uV'])
+            end
+            
+            
+        end
+        
+    end
+end
+
+        
+
+
 

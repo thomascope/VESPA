@@ -16,9 +16,9 @@
 %plot_betas([1:6],[-1 1 -1 1 -1 1],{'T_0017','T_0018'},22,[-38,-41],'MEGMAG')
 %MEGMAG (left posterior)
 
-function plot_betas(whichbetas,contrast,statspm,nsubj,location,modality,varargin)
+function plot_betas_tf(whichbetas,contrast,statspm,nsubj,frequency,modality,varargin)
 
-pathstem = ['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_2sm_/combined_-100_900_' modality];
+pathstem = ['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_tfsm_/combined_-100_950_' modality];
 
 Y = cell(1,length(whichbetas));
 for i = 1:length(whichbetas)
@@ -44,8 +44,8 @@ else
     end
 end
 
-x_loc = round((location(1)-Y1_data.mat(1,4))/Y1_data.mat(1,1));
-y_loc = round((location(2)-Y1_data.mat(2,4))/Y1_data.mat(2,2));
+x_loc = (frequency(1)/2)-1;
+y_loc = (frequency(2)/2)-1;
 
 toplot = zeros(1,size(Y{1},3));
 
@@ -54,10 +54,10 @@ for i = 1:length(contrast)
 end
 
 datatoplot = zeros(length(contrast),size(Y{1},3));
-for i = 1:size(Y{1},3)
+for i = 1:size(Y{1},2)
     
     for j = 1:length(contrast)
-        datatoplot(j,i) = Y{j}(x_loc,y_loc,i);
+        datatoplot(j,i) = mean(Y{j}([x_loc:y_loc],i),1);
     end
     
 end
@@ -84,23 +84,20 @@ else
     Y1_data = spm_vol(spm_vol([pathstem '/' 'beta_00' num2str(whichbetas(i)) '.img']));
 end
 
-x_loc = round((location(1)-Y1_data.mat(1,4))/Y1_data.mat(1,1));
-y_loc = round((location(2)-Y1_data.mat(2,4))/Y1_data.mat(2,2));
-
 toplot = zeros(1,size(Y{1},3));
+
 for i = 1:length(contrast)
     Y{i} = Y{i}*contrast(i);
 end
 
 datatoplot = zeros(length(contrast),size(Y{1},3));
-for i = 1:size(Y{1},3)
+for i = 1:size(Y{1},2)
     
     for j = 1:length(contrast)
-        datatoplot(j,i) = Y{j}(x_loc,y_loc,i);
+        datatoplot(j,i) = mean(Y{j}([x_loc:y_loc],i),1);
     end
     
 end
-
 patienttoplot = mean(datatoplot,1);
 
 plot(-500:4:1500,patienttoplot,'r','LineWidth',4)
@@ -110,7 +107,7 @@ xlim([-100 900])
 threshold=tinv(0.95,(nsubj-2));
 allsigs = zeros(size(squeeze(squeeze(Y3{1}(x_loc,y_loc,:)))));
 for i = 1:size(Y3,2)
-    H{i} = squeeze(squeeze(Y3{i}(x_loc,y_loc,:)))>threshold;
+    H{i} = mean(Y3{i}(x_loc:y_loc,:))>threshold;
     allsigs = allsigs+H{i};
 
 end
@@ -127,10 +124,10 @@ elseif strcmp(modality,'EEG')
 end
 set(gca,'fontsize',20)
 
-title([titlestr{2}(2:end) ' for ' modality ' at ' num2str(location)],'fontsize',20)
+title([titlestr{2}(2:end) ' for ' modality ' at ' num2str(frequency)],'fontsize',20)
 legend({'Controls','Patients'})
 
-pv = [allsigs' 0];
+pv = [allsigs 0];
 sv = [0 pv(1:(end-1))];
 ev = [pv(2:end) 0];
 starting = find( pv - sv >= 1 );
@@ -145,8 +142,7 @@ elseif isequal(contrast,[-1 -1 0 0 1 1])
 elseif isequal(contrast,[0 1 0 1 0 1]) || isequal(contrast,[1 0 1 0 1 0]) || isequal(contrast,[1 1 0 0 0 0]) || isequal(contrast,[0 0 0 0 1 1])
     contrastnumber = 1; %For Overall Power
 end
-    
-    scales = zeros(2,length(starting));
+scales = zeros(2,length(starting));
 i = 1;
 for j = 1:length(starting)
     if ending(i)-starting(i) >= 7 %Account for smoothing - crude cluster correction by deletings 'significance' less than 25ms duration.
@@ -160,12 +156,12 @@ for j = 1:length(starting)
 end
 jbfill(-500:4:1500,controltoplot,patienttoplot,allsigs','r','none',[],0.5);
 
-save_string = ['./Significant_peaks/' titlestr{2}(2:end) ', contrast ' num2str(contrast) ' for ' modality ' at ' num2str(location) '.pdf'];
+save_string = ['./Significant_peaks/tf_' titlestr{2}(2:end) ', contrast ' num2str(contrast) ' for ' modality ' at ' num2str(frequency) ' Hz.pdf'];
 eval(['export_fig ''' save_string ''' -transparent'])
 
 for i = 1:length(starting)
     timewindow = [times(starting(i)) times(ending(i))];
-    fieldtrip_topoplot_highlight(timewindow,contrastnumber,location,modality)
+    fieldtrip_topoplot_highlight_tf(timewindow,contrastnumber,frequency,modality)
     scales(:,i) = caxis;
 end
 figHandles2 = findobj('Type','axes');
@@ -177,8 +173,8 @@ end
 %timewindow = input('\nPlease input a two element vector of milliseconds to plot the topographies for each group\n');
 
 if isempty(varargin)
-    varargin{1} = [400 700];
+    varargin{1} = [-100 950];
 end
 for i = 1:length(varargin)
-    fieldtrip_topoplot_highlight(varargin{i},contrastnumber,location,modality)
+    fieldtrip_topoplot_highlight_tf(varargin{i},contrastnumber,frequency,modality)
 end

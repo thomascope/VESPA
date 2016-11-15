@@ -1,7 +1,7 @@
 % Plots the topoplot of the planar gradiometer grandmeans specified in a given timewindow for
 % a given contrastnumber. In this example Match-Mismatch is contrastnumber2
 
-function scales = fieldtrip_topoplot_highlight(timewindow,contrastnumber,location,modality)
+function fieldtrip_topoplot_thresholded(timewindow,contrastnumber,threshold,modality)
 
 timewindow = timewindow/1000; %time window input in ms, but fieldtrip needs it in seconds
 
@@ -51,7 +51,7 @@ if strcmp(modality,'MEGCOMB') || strcmp(modality,'MEGPLANAR')
         ft_topoplotER(cfg,timelock);
         colorbar
         title(title_text)
-
+        
         scales(:,dataset) = caxis;
         %         hold on
         %         h = plot(loctohighlight(1),loctohighlight(2),'wo','MarkerSize',12);
@@ -61,19 +61,29 @@ if strcmp(modality,'MEGCOMB') || strcmp(modality,'MEGPLANAR')
     newfigHandles = setdiff(figHandles2,figHandles);
     for i = 1:length(newfigHandles)
        
-        caxis(newfigHandles(i),[min(min(scales)) max(max(scales))])
+        caxis(newfigHandles(i),[threshold(1) threshold(2)])
 
     end
-        
-    figure(controlfig)
-    save_string = ['./Significant_peaks/Controls topoplot for planar gradiometers, contrast ' num2str(contrastnumber) ' time window ' num2str(timewindow(1)) ' to ' num2str(timewindow(2)) '.pdf'];
-    eval(['export_fig ''' save_string ''' -transparent'])
-    close(controlfig)
-    figure(patientfig)
-    save_string = ['./Significant_peaks/Patients topoplot for planar gradiometers, contrast ' num2str(contrastnumber) ' time window ' num2str(timewindow(1)) ' to ' num2str(timewindow(2)) '.pdf'];
-    eval(['export_fig ''' save_string ''' -transparent'])
-    close(patientfig)
     
+    figure(controlfig)
+    save_string = ['./Significant_peaks/Controls topoplot for planar gradiometers, contrast ' num2str(contrastnumber) ' time window ' num2str(timewindow(1)) ' to ' num2str(timewindow(2)) '_thresholded'];
+    eval(['export_fig ''' save_string '.pdf'' -transparent'])
+    ch=findall(gcf,'Interpreter','tex');
+    delete(ch)
+    ch=findall(gcf,'tag','Colorbar');
+    delete(ch)
+    eval(['export_fig ''' save_string '.png'' -transparent -m2'])
+    close(controlfig)
+    
+    figure(patientfig)
+    save_string = ['./Significant_peaks/Patients topoplot for planar gradiometers, contrast ' num2str(contrastnumber) ' time window ' num2str(timewindow(1)) ' to ' num2str(timewindow(2)) '_thresholded'];
+    eval(['export_fig ''' save_string '.pdf'' -transparent'])
+    ch=findall(gcf,'Interpreter','tex');
+    delete(ch)
+    ch=findall(gcf,'tag','Colorbar');
+    delete(ch)
+    eval(['export_fig ''' save_string '.png'' -transparent -m2'])
+    close(patientfig)
     
 elseif strcmp(modality,'MEGMAG') || strcmp(modality,'MEG')
     figHandles = findobj('Type','axes');
@@ -111,16 +121,27 @@ elseif strcmp(modality,'MEGMAG') || strcmp(modality,'MEG')
     figHandles2 = findobj('Type','axes');
     newfigHandles = setdiff(figHandles2,figHandles);
     for i = 1:length(newfigHandles)
-        caxis(newfigHandles(i),[min(min(scales)) max(max(scales))])
+        caxis(newfigHandles(i),[threshold(1) threshold(2)])
     end
     
     figure(controlfig)
-    save_string = ['./Significant_peaks/Controls topoplot for magnetometers, contrast ' num2str(contrastnumber) ' time window ' num2str(timewindow(1)) ' to ' num2str(timewindow(2)) '.pdf'];
-    eval(['export_fig ''' save_string ''' -transparent'])
+    save_string = ['./Significant_peaks/Controls topoplot for magnetometers, contrast ' num2str(contrastnumber) ' time window ' num2str(timewindow(1)) ' to ' num2str(timewindow(2)) '_thresholded'];
+    eval(['export_fig ''' save_string '.pdf'' -transparent'])
+    ch=findall(gcf,'Interpreter','tex');
+    delete(ch)
+    ch=findall(gcf,'tag','Colorbar');
+    delete(ch)
+    eval(['export_fig ''' save_string '.png'' -transparent -m2'])
     close(controlfig)
+    
     figure(patientfig)
-    save_string = ['./Significant_peaks/Patients topoplot for magnetometers, contrast ' num2str(contrastnumber) ' time window ' num2str(timewindow(1)) ' to ' num2str(timewindow(2)) '.pdf'];
-    eval(['export_fig ''' save_string ''' -transparent'])
+    save_string = ['./Significant_peaks/Patients topoplot for magnetometers, contrast ' num2str(contrastnumber) ' time window ' num2str(timewindow(1)) ' to ' num2str(timewindow(2)) '_thresholded'];
+    eval(['export_fig ''' save_string '.pdf'' -transparent'])
+    ch=findall(gcf,'Interpreter','tex');
+    delete(ch)
+    ch=findall(gcf,'tag','Colorbar');
+    delete(ch)
+    eval(['export_fig ''' save_string '.png'' -transparent -m2'])
     close(patientfig)
     
 elseif strcmp(modality,'EEG')
@@ -138,7 +159,7 @@ elseif strcmp(modality,'EEG')
         cfg.colorbar = 'yes';
         cfg.marker = 'off';
         timelock = ft_timelockanalysis(cfg, planardata);
-                if dataset == 1
+        if dataset == 1
             figure(controlfig)
             title_text = ['Controls topoplot for EEG, contrast ' num2str(contrastnumber) ' time window ' num2str(timewindow(1)) ' to ' num2str(timewindow(2))];
         else
@@ -158,15 +179,26 @@ elseif strcmp(modality,'EEG')
     figHandles2 = findobj('Type','axes');
     newfigHandles = setdiff(figHandles2,figHandles);
     for i = 1:length(newfigHandles)
-        caxis(newfigHandles(i),[min(min(scales)) max(max(scales))])
+        caxis(newfigHandles(i),[threshold(1) threshold(2)])
     end
     
     figure(controlfig)
-    save_string = ['./Significant_peaks/Controls topoplot for EEG, contrast ' num2str(contrastnumber) ' time window ' num2str(timewindow(1)) ' to ' num2str(timewindow(2)) '.pdf'];
-    eval(['export_fig ''' save_string ''' -transparent'])
+    save_string = ['./Significant_peaks/Controls topoplot for EEG, contrast ' num2str(contrastnumber) ' time window ' num2str(timewindow(1)) ' to ' num2str(timewindow(2)) '_thresholded'];
+    eval(['export_fig ''' save_string '.pdf'' -transparent'])
+    ch=findall(gcf,'Interpreter','tex');
+    delete(ch)
+    ch=findall(gcf,'tag','Colorbar');
+    delete(ch)
+    eval(['export_fig ''' save_string '.png'' -transparent -m2'])
     close(controlfig)
+    
     figure(patientfig)
-    save_string = ['./Significant_peaks/Patients topoplot for EEG, contrast ' num2str(contrastnumber) ' time window ' num2str(timewindow(1)) ' to ' num2str(timewindow(2)) '.pdf'];
-    eval(['export_fig ''' save_string ''' -transparent'])
+    save_string = ['./Significant_peaks/Patients topoplot for EEG, contrast ' num2str(contrastnumber) ' time window ' num2str(timewindow(1)) ' to ' num2str(timewindow(2)) '_thresholded'];
+    eval(['export_fig ''' save_string '.pdf'' -transparent'])
+    ch=findall(gcf,'Interpreter','tex');
+    delete(ch)
+    ch=findall(gcf,'tag','Colorbar');
+    delete(ch)
+    eval(['export_fig ''' save_string '.png'' -transparent -m2'])
     close(patientfig)
 end

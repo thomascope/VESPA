@@ -16,7 +16,7 @@ imagetype = {'sm_'};
 %p.windows = [-100 800; 90 130; 180 240; 270 420; 450 700;];
 p.windows = [-100 950];
 
-outputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/stats_4_tf';
+outputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_tf';
 
 %mskname = '/imaging/local/spm/spm8/apriori/grey.nii'; % specify in modality loop below if multiple modalities are being estimated. Don't specify if not needed
 
@@ -123,12 +123,34 @@ contrasts{cnt}.c = kron([1 -1],kron(orth(diff(eye(3))')',[1/2 1/2]));
 contrasts{cnt}.type = 'F';
 
 
+cnt = cnt + 1;
+contrasts{cnt}.name = 'Pattop Group X Match-Mismatch';
+contrasts{cnt}.c = kron([1 -1],kron([1/3 1/3 1/3],[-1 1]));
+contrasts{cnt}.type = 'T';
+
+cnt = cnt + 1;
+contrasts{cnt}.name = 'Contop Group X Match-Mismatch';
+contrasts{cnt}.c = kron([-1 1],kron([1/3 1/3 1/3],[-1 1]));
+contrasts{cnt}.type = 'T';
+
+cnt = cnt + 1;
+contrasts{cnt}.name = 'Pattop Group X Clear-Unclear';
+contrasts{cnt}.c = kron([1 -1],[-0.5 -0.5 0 0 0.5 0.5]);
+contrasts{cnt}.type = 'T';
+
+cnt = cnt + 1;
+contrasts{cnt}.name = 'Contop Group X Clear-Unclear';
+contrasts{cnt}.c = kron([-1 1],[-0.5 -0.5 0 0 0.5 0.5]);
+contrasts{cnt}.type = 'T';
+
+
+
 %% Estimate models
 
 
 %for img=1:length(imagetype)
 img = 1;
-for wind = 1:length(p.windows)
+for wind = 1:size(p.windows,1)
     for m=1:length(modality)
     %for m = 3
         files = {};

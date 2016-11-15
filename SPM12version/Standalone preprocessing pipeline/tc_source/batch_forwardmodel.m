@@ -29,27 +29,27 @@ mrilist = {
                                                  '/imaging/tc02/vespa/preprocess/meg14_0222_vp11/MRI/Recent_Structural/vp11_Structural.nii,1'
                                                  '/imaging/tc02/vespa/preprocess/meg14_0506_vp12/MRI/Recent_Structural/vp12_Structural.nii,1'};
 meglist = {                                              
-                                                '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_thirdICA/meg14_0072_vc1/fmcfbMdeMrun1_raw_ssst.mat'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_thirdICA/meg14_0093_vc2/fmcfbMdeMrun1_raw_ssst.mat'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_thirdICA/meg14_0096_vc3/fmcfbMdeMrun1_raw_ssst.mat'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_thirdICA/meg14_0114_vc4/fmcfbMdeMrun1_raw_ssst.mat'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_thirdICA/meg14_0320_vc5/fmcfbMdeMrun1_raw_ssst.mat'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_thirdICA/meg14_0140_vc6/fmcfbMdeMrun1_raw_ssst.mat'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_thirdICA/meg14_0434_vc7/fmcfbMdeMrun1_raw_ssst.mat'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_thirdICA/meg14_0218_vc9/fmcfbMdeMrun1_raw_ssst.mat'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_thirdICA/meg14_0234_vc10/fmcfbMdeMrun1_raw_ssst.mat'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_thirdICA/meg14_0242_vc11/fmcfbMdeMrun1_raw_ssst.mat'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_thirdICA/meg14_0253_vc12/fmcfbMdeMrun1_raw_ssst.mat'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_thirdICA/meg14_0085_vp1/fmcfbMdeMrun1_raw_ssst.mat'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_thirdICA/meg14_0087_vp2/fmcfbMdeMrun1_raw_ssst.mat'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_thirdICA/meg14_0121_vp5/fmcfbMdeMrun1_1_raw_ssst.mat'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_thirdICA/meg14_0130_vp6/fmcfbMdeMrun1_raw_ssst.mat'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_thirdICA/meg14_0135_vp7/fmcfbMdeMrun1_raw_ssst.mat'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_thirdICA/meg14_0150_vp8/fmcfbMdeMrun1_1_raw_ssst.mat'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_thirdICA/meg14_0184_vp9/fmcfbMdeMrun1_1_raw_ssst.mat'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_thirdICA/meg14_0205_vp10/fmcfbMdeMrun1_raw_ssst.mat'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_thirdICA/meg14_0222_vp11/fmcfbMdeMrun1_raw_ssst.mat'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_thirdICA/meg14_0506_vp12/fmcfbMdeMrun1_raw_ssst.mat'};
+                                                '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/meg14_0072_vc1/fmcfbMdeMrun1_raw_ssst.mat'
+                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/meg14_0093_vc2/fmcfbMdeMrun1_raw_ssst.mat'
+                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/meg14_0096_vc3/fmcfbMdeMrun1_raw_ssst.mat'
+                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/meg14_0114_vc4/fmcfbMdeMrun1_raw_ssst.mat'
+                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/meg14_0320_vc5/fmcfbMdeMrun1_raw_ssst.mat'
+                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/meg14_0140_vc6/fmcfbMdeMrun1_raw_ssst.mat'
+                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/meg14_0434_vc7/fmcfbMdeMrun1_raw_ssst.mat'
+                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/meg14_0218_vc9/fmcfbMdeMrun1_raw_ssst.mat'
+                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/meg14_0234_vc10/fmcfbMdeMrun1_raw_ssst.mat'
+                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/meg14_0242_vc11/fmcfbMdeMrun1_raw_ssst.mat'
+                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/meg14_0253_vc12/fmcfbMdeMrun1_raw_ssst.mat'
+                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/meg14_0085_vp1/fmcfbMdeMrun1_raw_ssst.mat'
+                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/meg14_0087_vp2/fmcfbMdeMrun1_raw_ssst.mat'
+                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/meg14_0121_vp5/fmcfbMdeMrun1_1_raw_ssst.mat'
+                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/meg14_0130_vp6/fmcfbMdeMrun1_raw_ssst.mat'
+                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/meg14_0135_vp7/fmcfbMdeMrun1_raw_ssst.mat'
+                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/meg14_0150_vp8/fmcfbMdeMrun1_1_raw_ssst.mat'
+                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/meg14_0184_vp9/fmcfbMdeMrun1_1_raw_ssst.mat'
+                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/meg14_0205_vp10/fmcfbMdeMrun1_raw_ssst.mat'
+                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/meg14_0222_vp11/fmcfbMdeMrun1_raw_ssst.mat'
+                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/meg14_0506_vp12/fmcfbMdeMrun1_raw_ssst.mat'};
 
 
 load('/imaging/tc02/vespa/preprocess/controls_mni');
@@ -68,7 +68,7 @@ for crun = 1:nrun
     inputs{5, crun} = allmni{crun}{2}(3,:); % Head model specification: Type MRI coordinates - cfg_entry
 end
 
-%% First make sure that misplaced channels are marked as bad (digitised to wrong location, maybe could interpolate if want to keep them?)
+%% First make sure that misplaced channels are marked as bad (I initially thought that these were digitised to wrong location, but actually seems to be a maxfilter problem - maybe could interpolate if want to keep them?)
 load('/imaging/tc02/vespa/preprocess/controls_badeegloc','controlsbadeegloc');
 load('/imaging/tc02/vespa/preprocess/patients_badeegloc','patientsbadeegloc');
 allbadeegloc = [controlsbadeegloc; patientsbadeegloc];

@@ -13,7 +13,7 @@
 %for val = [5]
 % for vprime = [1,5,6,7,2,3,8,9]
 for vprime = [5]
-
+    
     %val = vprime+20;
     %val = vprime+10;
     val = vprime;
@@ -21,18 +21,18 @@ for vprime = [5]
     subjects_and_parameters;
     pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/';
     %pathstem = '/imaging/tc02/vespa/preprocess/testinversion/';
-
+    
     if vprime == 1 || vprime == 2 || vprime == 3
         invtype = 'MSPgroup'; % label for inversion
-    elseif vprime == 4 || vprime == 5 || vprime == 6 || vprime == 7 || vprime == 8 || vprime == 9 
+    elseif vprime == 4 || vprime == 5 || vprime == 6 || vprime == 7 || vprime == 8 || vprime == 9
         invtype = 'LORgroup'; % label for inversion
     end
-
+    
     % val = 2; % which field in 'inv' structure to store inversion
     if val < 10 || val > 20
         group_recon = 1; % whether group inversion should be used (0- single subject, 1- group)
     elseif val > 10
-        group_recon = 0; 
+        group_recon = 0;
     end
     targetfile = 'fmcfbMdeMrun1_raw_ssst';
     targetfilesplit = 'fmcfbMdeMrun1_1_raw_ssst';
@@ -86,7 +86,7 @@ for vprime = [5]
             D{s}.inv{val} = D2.inv{1};
         catch
             pause %Breakpoint here for debug
-        end        
+        end
         D{s}.inv{val}.gainmat = {}; %Re-compute this each time
         fieldstogo = {'xyz','pQ','rad'};
         try D{s}.inv{val}.inverse = rmfield(D{s}.inv{val}.inverse,fieldstogo); end
@@ -112,14 +112,14 @@ for vprime = [5]
             backup_badmeg{s} = [intersect(D{s}.indchantype('MEGPLANAR'),D{s}.badchannels) intersect(D{s}.indchantype('MEG'),D{s}.badchannels)];
             D{s} = D{s}.badchannels([backup_badmeg{s}],0);
         end
-%         if val == 1
-%             %Source priors based on Sohoglu 2012
-%             D{s}.inv{val}.inverse.xyz = [];
-%             D{s}.inv{val}.inverse.pQ = {};
-%             D{s}.inv{val}.inverse.xyz(1,:) = [-54, 18, 20]; %Inferior frontal gyrus, early time window
-%             D{s}.inv{val}.inverse.xyz(2,:) = [-56,-24, 4]; %STG, late time window
-%             D{s}.inv{val}.inverse.rad = 32;
-%         end
+        %         if val == 1
+        %             %Source priors based on Sohoglu 2012
+        %             D{s}.inv{val}.inverse.xyz = [];
+        %             D{s}.inv{val}.inverse.pQ = {};
+        %             D{s}.inv{val}.inverse.xyz(1,:) = [-54, 18, 20]; %Inferior frontal gyrus, early time window
+        %             D{s}.inv{val}.inverse.xyz(2,:) = [-56,-24, 4]; %STG, late time window
+        %             D{s}.inv{val}.inverse.rad = 32;
+        %         end
         if ~group_recon
             fprintf('\nComputing individual inversions using %s ...\n',D{s}.inv{val}.inverse.type);
             D{s} = spm_eeg_invert(D{s});
@@ -224,27 +224,37 @@ for vprime = [5]
     
     %% Compute grand-average of source images
     if val > 20
-            imagetype = {
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
-        };
-    imagetype_split = {
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
-        };
+        imagetype = {
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
+            };
+        imagetype_split = {
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
+            };
     else
-    imagetype = {
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t90_130_f1_40*'];
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t270_420_f1_40*'];
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t750_900_f1_40*'];
-        };
-    imagetype_split = {
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t90_130_f1_40*'];
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t270_420_f1_40*'];
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t750_900_f1_40*'];
-        };
+        imagetype = {
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t90_150_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t200_280_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t290_440_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t710_860_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t90_130_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t270_420_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t750_900_f1_40*'];
+            };
+        imagetype_split = {
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t90_150_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t200_280_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t290_440_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t710_860_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t90_130_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t270_420_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t750_900_f1_40*'];
+            };
     end
     
     %outputstem = '/imaging/es03/P3E1/sourceimages2/';
@@ -258,7 +268,7 @@ for vprime = [5]
             
             imgs = cell(0,length(subjects));
             for s=1:length(subjects)
-                if subjectsplit(s) == 0                    
+                if subjectsplit(s) == 0
                     file = dir([pathstem subjects{s} '/Source/' imagetype{im} '_' conid '.nii']);
                     if isempty(file)
                         file = dir([pathstem subjects{s} '/Source/' imagetype{im} '_' conid '.gii']);
@@ -291,29 +301,39 @@ for vprime = [5]
     
     %% Compute contrasts of grand-averaged source images
     
-        if val > 20
-            imagetype = {
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
-        };
-    imagetype_split = {
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
-        };
+    if val > 20
+        imagetype = {
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
+            };
+        imagetype_split = {
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
+            };
     else
-    imagetype = {
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t90_130_f1_40*'];
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t270_420_f1_40*'];
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t750_900_f1_40*'];
-        };
-    imagetype_split = {
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t90_130_f1_40*'];
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t270_420_f1_40*'];
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t750_900_f1_40*'];
-        };
-        end
+        imagetype = {
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t90_150_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t200_280_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t290_440_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t710_860_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t90_130_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t270_420_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t750_900_f1_40*'];
+            };
+        imagetype_split = {
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t90_150_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t200_280_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t290_440_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t710_860_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t90_130_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t270_420_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t750_900_f1_40*'];
+            };
+    end
     
     %inputstem = '/imaging/es03/P3E1/sourceimages2/';
     inputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/source/';
@@ -354,51 +374,61 @@ for vprime = [5]
     
     %% Compute group-average of source images
     
-     
-     % Define groups
-     controls2average = {};
-     patients2average = {};
-     controls2averageplit = [];
-     patients2averageplit = [];
-     for s=1:size(subjects,2) % for multiple subjects
-         
-         fprintf([ '\n\nCurrent subject = ' subjects{s} '...\n\n' ]);
-         
-         if group(s) == 1
-             fprintf([ '\nIdentified as a control. \n' ]);
-             controls2average{end+1} = subjects{s};
-             controls2averageplit(end+1) = subjectsplit(s);
-             
-         elseif group(s) == 2
-             fprintf([ '\nIdentified as a patient. \n' ]);
-             patients2average{end+1} = subjects{s};
-             patients2averageplit(end+1) = subjectsplit(s);
-         end
-         
-     end
-     if val > 20
-            imagetype = {
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
-        };
-    imagetype_split = {
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
-        };
-    else      
-    imagetype = {
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t90_130_f1_40*'];
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t270_420_f1_40*'];
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t750_900_f1_40*'];
-        };
-    imagetype_split = {
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t90_130_f1_40*'];
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t270_420_f1_40*'];
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t750_900_f1_40*'];
-        };
-     end
+    
+    % Define groups
+    controls2average = {};
+    patients2average = {};
+    controls2averageplit = [];
+    patients2averageplit = [];
+    for s=1:size(subjects,2) % for multiple subjects
+        
+        fprintf([ '\n\nCurrent subject = ' subjects{s} '...\n\n' ]);
+        
+        if group(s) == 1
+            fprintf([ '\nIdentified as a control. \n' ]);
+            controls2average{end+1} = subjects{s};
+            controls2averageplit(end+1) = subjectsplit(s);
+            
+        elseif group(s) == 2
+            fprintf([ '\nIdentified as a patient. \n' ]);
+            patients2average{end+1} = subjects{s};
+            patients2averageplit(end+1) = subjectsplit(s);
+        end
+        
+    end
+    if val > 20
+        imagetype = {
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
+            };
+        imagetype_split = {
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
+            };
+    else
+        imagetype = {
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t90_150_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t200_280_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t290_440_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t710_860_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t90_130_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t270_420_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t750_900_f1_40*'];
+            };
+        imagetype_split = {
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t90_150_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t200_280_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t290_440_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t710_860_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t90_130_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t270_420_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t750_900_f1_40*'];
+            };
+    end
     
     %outputstem = '/imaging/es03/P3E1/sourceimages2/';
     inputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/source/';
@@ -470,30 +500,40 @@ for vprime = [5]
     end
     
     %% Compute contrasts of group-averaged source images
-        if val > 20
-            imagetype = {
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
-        };
-    imagetype_split = {
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
-        };
+    if val > 20
+        imagetype = {
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
+            };
+        imagetype_split = {
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
+            };
     else
-    imagetype = {
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t90_130_f1_40*'];
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t270_420_f1_40*'];
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t750_900_f1_40*'];
-        };
-    imagetype_split = {
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t90_130_f1_40*'];
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t270_420_f1_40*'];
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t750_900_f1_40*'];
-        };
-        end
-        
+        imagetype = {
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t90_150_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t200_280_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t290_440_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t710_860_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t90_130_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t270_420_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t750_900_f1_40*'];
+            };
+        imagetype_split = {
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t90_150_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t200_280_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t290_440_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t710_860_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t90_130_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t270_420_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t750_900_f1_40*'];
+            };
+    end
+    
     %inputstem = '/imaging/es03/P3E1/sourceimages2/';
     inputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/source/';
     
@@ -566,30 +606,40 @@ for vprime = [5]
     end
     
     %% Compute single-subject contrasts of source images
-        if val > 20
-            imagetype = {
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
-        };
-    imagetype_split = {
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
-        };
+    if val > 20
+        imagetype = {
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
+            };
+        imagetype_split = {
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
+            };
     else
-    imagetype = {
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t90_130_f1_40*'];
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t270_420_f1_40*'];
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
-        ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t750_900_f1_40*'];
-        };
-    imagetype_split = {
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t90_130_f1_40*'];
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t270_420_f1_40*'];
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
-        ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t750_900_f1_40*'];
-        };
-        end
-        
+        imagetype = {
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t90_150_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t200_280_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t290_440_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t710_860_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t90_130_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t270_420_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
+            ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t750_900_f1_40*'];
+            };
+        imagetype_split = {
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t90_150_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t200_280_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t290_440_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t710_860_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t90_130_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t270_420_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t450_700_f1_40*'];
+            ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t750_900_f1_40*'];
+            };
+    end
+    
     %outputstem = '/imaging/es03/P3E1/sourceimages2/';
     outputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/source/';
     
@@ -642,63 +692,63 @@ for vprime = [5]
     end
     
     %% Inspect inversions
-%     
-%     windows = [90 130; 180 240; 270 420; 450 700];
-%     inversions = [1,2,3,5,6,7,8,9,11,12,13,15,16,17,18,19];
-%     
-%     evidence = [];
-%     variance_explained = [];
-%     for s=1:length(subjects)
-%     
-%         for w=1:length(windows)
-%     
-%             for i=1:length(inversions)
-%     
-%         if exist([pathstem subjects{s} '/' targetfile '.mat']);
-%             D = spm_eeg_load([pathstem subjects{s} '/' targetfile]);
-%             subjectsplit(s) = 0;
-%         elseif exist([pathstem subjects{s} '/' targetfilesplit '.mat'])
-%             D = spm_eeg_load([pathstem subjects{s} '/' targetfilesplit]);
-%             subjectsplit(s) = 1;
-%         else
-%             error([pathstem subjects{s} '/' targetfile ' does not seem to exist'])
-%         end
-%     
-%                 D.val = inversions(i);
-%                 spm_eeg_invert_display(D,windows(w,1)+(windows(w,2)-windows(w,1)));
-%                 pause;
-%     
-%             end
-%     
-%         end
-%     
-%     end
+    %
+    %     windows = [90 130; 180 240; 270 420; 450 700];
+    %     inversions = [1,2,3,5,6,7,8,9,11,12,13,15,16,17,18,19];
+    %
+    %     evidence = [];
+    %     variance_explained = [];
+    %     for s=1:length(subjects)
+    %
+    %         for w=1:length(windows)
+    %
+    %             for i=1:length(inversions)
+    %
+    %         if exist([pathstem subjects{s} '/' targetfile '.mat']);
+    %             D = spm_eeg_load([pathstem subjects{s} '/' targetfile]);
+    %             subjectsplit(s) = 0;
+    %         elseif exist([pathstem subjects{s} '/' targetfilesplit '.mat'])
+    %             D = spm_eeg_load([pathstem subjects{s} '/' targetfilesplit]);
+    %             subjectsplit(s) = 1;
+    %         else
+    %             error([pathstem subjects{s} '/' targetfile ' does not seem to exist'])
+    %         end
+    %
+    %                 D.val = inversions(i);
+    %                 spm_eeg_invert_display(D,windows(w,1)+(windows(w,2)-windows(w,1)));
+    %                 pause;
+    %
+    %             end
+    %
+    %         end
+    %
+    %     end
     
 end
 %% Collate model evaluations (% variance explained and log-evidence)
-    
-    inversions = [1,2,3,4,5,6,7,8,9];
-    
-    evidence = [];
-    variance_explained = [];
-    for s=1:length(subjects)
-        s
-        if exist([pathstem subjects{s} '/' targetfile '.mat']);
-            D = spm_eeg_load([pathstem subjects{s} '/' targetfile]);
-            subjectsplit(s) = 0;
-        elseif exist([pathstem subjects{s} '/' targetfilesplit '.mat'])
-            D = spm_eeg_load([pathstem subjects{s} '/' targetfilesplit]);
-            subjectsplit(s) = 1;
-        else
-            error([pathstem subjects{s} '/' targetfile ' does not seem to exist'])
-        end
-    
-        for i=1:length(inversions)
-    
-            evidence(s,i) = D.inv{inversions(i)}.inverse.F;
-            variance_explained(s,i) = D.inv{inversions(i)}.inverse.R2;
-    
-        end
-    
+
+inversions = [1,2,3,4,5,6,7,8,9];
+
+evidence = [];
+variance_explained = [];
+for s=1:length(subjects)
+    s
+    if exist([pathstem subjects{s} '/' targetfile '.mat']);
+        D = spm_eeg_load([pathstem subjects{s} '/' targetfile]);
+        subjectsplit(s) = 0;
+    elseif exist([pathstem subjects{s} '/' targetfilesplit '.mat'])
+        D = spm_eeg_load([pathstem subjects{s} '/' targetfilesplit]);
+        subjectsplit(s) = 1;
+    else
+        error([pathstem subjects{s} '/' targetfile ' does not seem to exist'])
     end
+    
+    for i=1:length(inversions)
+        
+        evidence(s,i) = D.inv{inversions(i)}.inverse.F;
+        variance_explained(s,i) = D.inv{inversions(i)}.inverse.R2;
+        
+    end
+    
+end
 variance_explained

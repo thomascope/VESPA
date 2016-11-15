@@ -1,4 +1,4 @@
-function tc_batch_beamformer_spm(val)
+function tc_batch_beamformer_spm(~)
 
 %% Average source images across time-windows
 %es_batch_init;
@@ -6,7 +6,8 @@ subjects_and_parameters
 
 %%
 addpath(pwd);
-time_windows = [300 450; 525 675; 750 900];
+time_windows = [90 130; 180 240; 270 420; 450 700; 750 900];
+%time_windows = [300 450; 525 675; 750 900];
 % imagetype = {
 %              ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t90_130_f1_40*'];
 %              ['fmcfbMdeMrun1_raw_ssst_' num2str(val) '_t180_240_f1_40*'];
@@ -68,7 +69,7 @@ time_windows = [300 450; 525 675; 750 900];
 
 % inputstem = '/imaging/es03/P3E1/sourceimages2_averagetime/';
 % outputstem = '/imaging/es03/P3E1/stats2_source_averagetime/';
-inputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/testbeamforming/final_LCMV_trunkated_restricted/';
+inputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/final_LCMV_trunkated_restricted/';
 outputstem = [inputstem 'stats/'];
 %mskname = [];
 mskname = '/imaging/local/spm/spm8/apriori/grey.nii'; % set to [] if not needed
@@ -199,16 +200,6 @@ contrasts{cnt}.type = 'F';
 cnt = cnt + 1;
 contrasts{cnt}.name = 'Contop Group X Sensory Detail';
 contrasts{cnt}.c = kron([1 -1],kron(orth(diff(eye(3))')',[1/2 1/2]));
-contrasts{cnt}.type = 'F';
-
-cnt = cnt + 1;
-contrasts{cnt}.name = 'Pattop Group X Match-Mismatch';
-contrasts{cnt}.c = kron([-1 1],kron([1/3 1/3 1/3],[-1 1]));
-contrasts{cnt}.type = 'F';
-
-cnt = cnt + 1;
-contrasts{cnt}.name = 'Pattop Group X Sensory Detail';
-contrasts{cnt}.c = kron([-1 1],kron(orth(diff(eye(3))')',[1/2 1/2]));
 contrasts{cnt}.type = 'F';
 
 % % 
