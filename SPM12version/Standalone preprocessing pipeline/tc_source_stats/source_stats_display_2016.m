@@ -682,13 +682,17 @@ cfg.threshold = [1.65 3.15]; %p=0.05
 
 for i = 1:length(windows)
   
-    jp_spm8_surfacerender2_version_tc(['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/' num2str(windows(i,1)) '_' num2str(windows(i,2)) '/spmT_0008.nii'],'jet',cfg)
-    savepath = ['./Source_Reconstructions/Controls_2016_SPM_16-4_' num2str(i)];
+    jp_spm8_surfacerender2_version_tc(['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/' num2str(windows(i,1)) '_' num2str(windows(i,2)) '/spmT_0007.nii'],'jet',cfg)
+    savepath = ['./Source_Reconstructions/Combined_2016_SPM_16-4_' num2str(i)];
     eval(['export_fig ' savepath '.png -transparent -m2.5'])
-    
-    jp_spm8_surfacerender2_version_tc(['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/' num2str(windows(i,1)) '_' num2str(windows(i,2)) '/spmT_0009.nii'],'jet',cfg)
-    savepath = ['./Source_Reconstructions/Patients_2016_SPM_16-4_' num2str(i)];
-    eval(['export_fig ' savepath '.png -transparent -m2.5'])
+%     
+%     jp_spm8_surfacerender2_version_tc(['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/' num2str(windows(i,1)) '_' num2str(windows(i,2)) '/spmT_0008.nii'],'jet',cfg)
+%     savepath = ['./Source_Reconstructions/Controls_2016_SPM_16-4_' num2str(i)];
+%     eval(['export_fig ' savepath '.png -transparent -m2.5'])
+%     
+%     jp_spm8_surfacerender2_version_tc(['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/' num2str(windows(i,1)) '_' num2str(windows(i,2)) '/spmT_0009.nii'],'jet',cfg)
+%     savepath = ['./Source_Reconstructions/Patients_2016_SPM_16-4_' num2str(i)];
+%     eval(['export_fig ' savepath '.png -transparent -m2.5'])
 
 end
 
@@ -813,6 +817,88 @@ for i = 1:length(windows)
 
 end
 
+%% Now Main Effect of Clarity Combined
+
+figure
+[image_to_add, ~, image_alphas] = imread('./Source_Reconstructions/Combined_2016_SPM_16-4_1.png');
+%Assume that all images are the same size
+imagearray = uint8(zeros(size(image_to_add,1), ceil(size(image_to_add,2)*5.3), 3));
+imagearray_alphas = uint8(zeros(size(image_to_add,1), ceil(size(image_to_add,2)*5.3), 1));
+imagearray = imagearray+204;
+imagearray(1:size(image_to_add,1),1:size(image_to_add,2),:) = image_to_add;
+imagearray_alphas(1:size(image_to_add,1),1:size(image_to_add,2),:) = image_alphas;
+
+for imagenumber = 2:4
+[image_to_add, ~, image_alphas] = imread(['./Source_Reconstructions/Combined_2016_SPM_16-4_' num2str(imagenumber) '.png']);
+%Assume that all images are the same size
+imagearray(1:size(image_to_add,1),1+(imagenumber-1)*size(image_to_add,2):imagenumber*size(image_to_add,2),:) = image_to_add;
+imagearray_alphas(1:size(image_to_add,1),1+(imagenumber-1)*size(image_to_add,2):imagenumber*size(image_to_add,2),1) = image_alphas;
+end
+
+[image_to_add, ~, image_alphas] = imread('./Source_Reconstructions/Combined_2016_SPM_16-4_Overall_1.png');
+imagearray(1:size(image_to_add,1),end+1-size(image_to_add,2):end,:) = image_to_add;
+imagearray_alphas(1:size(image_alphas,1),end+1-size(image_alphas,2):end,1) = image_alphas;
+
+f = imshow(imagearray);
+set(f, 'AlphaData', imagearray_alphas);
+
+savepath = ['./Source_Reconstructions/thresholded_2016_SPM_combined_16-4_total.png'];
+imwrite(imagearray,savepath,'png','Alpha',imagearray_alphas)
+
+imagearray_3d = zeros(size(imagearray_alphas,1),size(imagearray_alphas,2),3);
+imagearray_3d = logical(imagearray_3d);
+for i = 1:3
+    imagearray_3d(:,:,i)=imagearray_alphas==0;
+end
+
+imagearray(imagearray_3d)=255;
+savepath = ['./Source_Reconstructions/thresholded_2016_SPM_combined_16-4_total_white.png'];
+imwrite(imagearray,savepath,'png')
+
+
+figure
+[image_to_add, ~, image_alphas] = imread('./Source_Reconstructions/Combined_2016_SPM_16-4_6.png');
+%Assume that all images are the same size
+imagearray = uint8(zeros(size(image_to_add,1), ceil(size(image_to_add,2)*5.3), 3));
+imagearray_alphas = uint8(zeros(size(image_to_add,1), ceil(size(image_to_add,2)*5.3), 1));
+imagearray = imagearray+204;
+imagearray(1:size(image_to_add,1),1:size(image_to_add,2),:) = image_to_add;
+imagearray_alphas(1:size(image_to_add,1),1:size(image_to_add,2),:) = image_alphas;
+
+for imagenumber = 2:4
+[image_to_add, ~, image_alphas] = imread(['./Source_Reconstructions/Combined_2016_SPM_16-4_' num2str(imagenumber+5) '.png']);
+%Assume that all images are the same size
+imagearray(1:size(image_to_add,1),1+(imagenumber-1)*size(image_to_add,2):imagenumber*size(image_to_add,2),:) = image_to_add;
+imagearray_alphas(1:size(image_to_add,1),1+(imagenumber-1)*size(image_to_add,2):imagenumber*size(image_to_add,2),1) = image_alphas;
+end
+
+[image_to_add, ~, image_alphas] = imread('./Source_Reconstructions/Combined_2016_SPM_16-4_Overall_1.png');
+imagearray(1:size(image_to_add,1),end+1-size(image_to_add,2):end,:) = image_to_add;
+imagearray_alphas(1:size(image_alphas,1),end+1-size(image_alphas,2):end,1) = image_alphas;
+
+imagearray_alphas = imagearray_alphas(1:size(imagearray,1),1:size(imagearray,2));
+
+f = imshow(imagearray);
+set(f, 'AlphaData', imagearray_alphas);
+
+savepath = ['./Source_Reconstructions/thresholded_2016_SPM_combined_newtimewindows_16-4_total.png'];
+imwrite(imagearray,savepath,'png','Alpha',imagearray_alphas)
+
+imagearray_3d = zeros(size(imagearray_alphas,1),size(imagearray_alphas,2),3);
+imagearray_3d = logical(imagearray_3d);
+for i = 1:3
+    imagearray_3d(:,:,i)=imagearray_alphas==0;
+end
+
+imagearray(imagearray_3d)=255;
+savepath = ['./Source_Reconstructions/thresholded_2016_SPM_combined_newtimewindows_16-4_total_white.png'];
+imwrite(imagearray,savepath,'png')
+
+
+
+
+
+
 
 cfg.normalise = 0;
 cfg.threshold = [1.65 3.15]; %p=0.05
@@ -844,6 +930,24 @@ for i = bf_windows
   
     jp_spm8_surfacerender2_version_tc(['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/final_LCMV_trunkated_restricted/stats/' char(i) '/spmT_0005.nii'],'jet',cfg)
     savepath = ['./Source_Reconstructions/BF_contrast_2016_' char(i)];
+    eval(['export_fig ' savepath '.png -transparent -m2.5'])
+    
+end
+
+cfg.plots = [1];
+cfg.symmetricity = 'symmetrical';
+% cfg.normalise = 1;
+% cfg.threshold = [5 40];
+cfg.inflate = 10;
+
+addpath([pwd '/ojwoodford-export_fig-216b30e'])
+cfg.normalise = 0;
+cfg.threshold = [3.18 4.61]; %p=0.001
+bf_windows = {'early','mid','late'};
+for i = bf_windows
+  
+    jp_spm8_surfacerender2_version_tc(['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/final_eLORETA_trunkated_restricted/stats/' char(i) '/spmT_0005.nii'],'jet',cfg)
+    savepath = ['./Source_Reconstructions/BF_eLORETA_contrast_2016_' char(i)];
     eval(['export_fig ' savepath '.png -transparent -m2.5'])
     
 end

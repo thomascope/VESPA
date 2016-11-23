@@ -16,7 +16,7 @@ imagetype = {'sm_'};
 %p.windows = [-100 800; 90 130; 180 240; 270 420; 450 700;];
 p.windows = [-100 950];
 
-outputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_tf';
+outputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_tf_newcontrasts';
 
 %mskname = '/imaging/local/spm/spm8/apriori/grey.nii'; % specify in modality loop below if multiple modalities are being estimated. Don't specify if not needed
 
@@ -59,7 +59,7 @@ contrasts{cnt}.type = 'F';
 
 cnt = cnt + 1;
 contrasts{cnt}.name = 'Main effect of sensory detail(All)';
-contrasts{cnt}.c = kron([0 1],kron(orth(diff(eye(3))')',[1/2 1/2]));
+contrasts{cnt}.c = kron([1 1],kron(orth(diff(eye(3))')',[1/2 1/2]));
 contrasts{cnt}.type = 'F';
 
 cnt = cnt + 1;
@@ -142,6 +142,16 @@ cnt = cnt + 1;
 contrasts{cnt}.name = 'Contop Group X Clear-Unclear';
 contrasts{cnt}.c = kron([-1 1],[-0.5 -0.5 0 0 0.5 0.5]);
 contrasts{cnt}.type = 'T';
+
+cnt = cnt + 1;
+contrasts{cnt}.name = 'Congruency by Clarity Interaction';
+contrasts{cnt}.c = kron([1,1],kron(orth(diff(eye(3))')',[1,-1]));
+contrasts{cnt}.type = 'F';
+
+cnt = cnt + 1;
+contrasts{cnt}.name = 'Three way Interaction';
+contrasts{cnt}.c = kron([1,-1],kron(orth(diff(eye(3))')',[1,-1]));
+contrasts{cnt}.type = 'F';
 
 
 

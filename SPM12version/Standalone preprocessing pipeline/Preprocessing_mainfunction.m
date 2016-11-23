@@ -125,7 +125,74 @@ switch step
         
         fprintf('\n\nData copied!\n\n');
         
-    case 'definetrials'
+    case 'definetrials_newbaseline'
+        
+        % parameters for SPM function
+        fs = p.fs_new; % assumes that you are applying this to data that has already been downsampled
+        S.pretrig = p.preEpoch;
+        S.posttrig = p.postEpoch;
+        S.reviewtrials = 0;
+        S.save = 0;
+        
+        % other parameters
+        conditions = p.conditions;
+        triggers = p.triggers;
+        if isfield(p,'stimuli_list_fname')
+            stimuli_list_fname = [pathstem p.stimuli_list_fname];
+        end
+        
+        % setup input structure (define trigger labels)
+        for c=1:length(conditions)
+            S.trialdef(c).conditionlabel = conditions{c};
+            S.trialdef(c).eventtype = 'STI101_up';
+            S.trialdef(c).eventvalue = triggers(c);
+        end
+        
+        fprintf([ '\n\nCurrent subject = ' subjects '...\n\n' ]);
+        
+        % change to input directory
+        filePath = [pathstem subjects];
+        cd(filePath);
+        
+        % search for input files
+        files = dir(prevStep);
+        
+        for f=1:length(files)
+            
+            fprintf([ '\n\nProcessing ' files(f).name '...\n\n' ]);
+            
+            % set input file
+            S.D = files(f).name;
+            S.timewin = [p.preEpoch p.postEpoch];
+            
+            % main process
+            trials = [];
+            [trials.trl trials.labels] = spm_eeg_definetrial(S);
+            fprintf('\n%d trigger events found...',length(trials.trl));
+            
+            % correct for trigger-to-sound delay
+            if isfield(p,'delay')
+                trials.trl(:,1:2) = trials.trl(:,1:2) + ceil((p.delay/1000)*fs);
+            end
+            
+            % incorporate event information for P6E1 (if stimulus list
+            % filename supplied)
+            if exist('stimuli_list_fname','var')
+                trials = es_get_events_P6E1(subjects,files(f).name,trials,stimuli_list_fname);
+                fprintf('\n%d trigger events remaining after matching triggers to stimuli list...',length(trials.trl));
+            end
+            
+            % save to file
+            fname = strtok(files(f).name,'.');
+            save(['trlDef_' fname],'trials');
+            
+        end % blocks
+        
+        
+        
+        fprintf('\n\nTrials defined!\n\n');
+        
+        case 'definetrials'
         
         % parameters for SPM function
         fs = p.fs; % assumes maxfilter HASN'T downsampled data
@@ -707,6 +774,72 @@ switch step
                 temp = spm_eeg_load(S.D);
                 S.trl = round(S.trl*(temp.fsample/p.fs)); % to account for downsampling
                 clear temp
+                S.conditionlabels = trials.labels;
+                
+                % main process
+                D = spm_eeg_epochs(S);
+                
+                % set bad trials (if EOG artefacts present)
+                if isfield(trials,'artefact_eog')
+                    
+                    [discard ind] = intersect(trials.trl(:,1,1),trials.artefact_eog);
+                    D = D.reject(ind,1);
+                    D.save;
+                    
+                end
+                
+                % set bad trials (if muscle artefacts present)
+                if isfield(trials,'artefact_muscle')
+                    
+                    [discard ind] = intersect(trials.trl(:,1,1),trials.artefact_muscle);
+                    D = D.reject(ind,1);
+                    D.save;
+                    
+                end
+                
+                % add additional event info (if any)
+                if isfield(trials,'events_custom')
+                    
+                    D.events_custom = trials.events_custom;
+                    D.save;
+                    
+                end
+                
+            end % blocks
+            
+        end % subjects
+        
+        fprintf('\n\nData epoched!\n\n');
+        
+    case 'epoch_newbaseline'
+        
+        % parameters for SPM function
+        S.bc = 0;
+        
+        for s=1:size(subjects,1)
+            
+            fprintf([ '\n\nCurrent subject = ' subjects '...\n\n' ]);
+            
+            % change to input directory
+            filePath = [pathstem subjects];
+            cd(filePath);
+            
+            % search for input files
+            files = dir(prevStep);
+            filesTrlDef = dir('trlDef*.mat');
+            
+            for f=1:length(files)
+                
+                fprintf([ '\n\nProcessing ' files(f).name '...\n\n' ]);
+                
+                % set input file
+                S.D = files(f).name;
+                
+                % load trial structure
+                load(filesTrlDef(f).name); % loads trial structure
+                
+                % set trial definition
+                S.trl = trials.trl;
                 S.conditionlabels = trials.labels;
                 
                 % main process

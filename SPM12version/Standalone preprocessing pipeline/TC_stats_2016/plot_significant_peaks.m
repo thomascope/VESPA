@@ -100,6 +100,13 @@ save_string = ['./Significant_peaks/Overall power in planar gradiometers at -47 
 eval(['export_fig ''' save_string ''' -transparent'])
 
 figure
+plot_betas_nonewplot([1:6],[1 1 0 0 0 0],{'T_0017','T_0018'},22,[47,-9],'MEGCOMB',1)
+
+plot_betas_nonewplot([1:6],[0 0 0 0 1 1],{'T_0017','T_0018'},22,[47,-9],'MEGCOMB',2)
+save_string = ['./Significant_peaks/Overall power in planar gradiometers at 47 -9.pdf'];
+eval(['export_fig ''' save_string ''' -transparent'])
+
+figure
 plot_betas_nonewplot([1:6],[1 1 0 0 0 0],{'T_0019','T_0020'},22,[38,-30],'MEGCOMB',1)
 
 plot_betas_nonewplot([1:6],[0 0 0 0 1 1],{'T_0019','T_0020'},22,[38,-30],'MEGCOMB',2)
@@ -287,3 +294,16 @@ plot_betas_tf_thresholded([-1.9 1.9], [1:6],[-1 1 -1 1 -1 1],{'T_0018','T_0019'}
 plot_betas_tf_thresholded([-2.3 2.3], [1:6],[-1 1 -1 1 -1 1],{'T_0018','T_0019'},22,[8 14],'MEGPLANAR',[364 364], [472 600], [868 868]); %The defined time window is where there is no difference in activity.
 
 windows = [90 130; 180 240; 270 420; 450 700; 750 900; 90 150; 200 280; 290 440; 450 700; 710 860];
+
+%Now threshold clarity rating
+
+plot_betas_thresholded([-2.65 2.65],[1:6],[-1 -1 0 0 1 1],{'T_0019','T_0020'},22,[-47,2],'MEGCOMB',[80 96])
+
+plot_betas_thresholded([-2.65 2.65],[1:6],[-1 -1 0 0 1 1],{'T_0019','T_0020'},22,[47,-9],'MEGCOMB',[80 96])
+
+plot_betas_thresholded([-1.11 1.11],[1:6],[-1 -1 0 0 1 1],{'T_0019','T_0020'},22,[34,-30],'MEGCOMB',[552 552])
+
+plot_betas_thresholded([-78.5 78.5],[1:6],[-1 -1 0 0 1 1],{'T_0019','T_0020'},22,[30, -9],'MEGMAG',[312 550])
+
+plot_betas_thresholded([-2.64 2.64],[1:6],[-1 -1 0 0 1 1],{'T_0019','T_0020'},22,[38, -68],'EEG',[350 500])
+
