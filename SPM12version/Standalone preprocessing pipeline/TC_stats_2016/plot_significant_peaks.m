@@ -307,3 +307,7 @@ plot_betas_thresholded([-78.5 78.5],[1:6],[-1 -1 0 0 1 1],{'T_0019','T_0020'},22
 
 plot_betas_thresholded([-2.64 2.64],[1:6],[-1 -1 0 0 1 1],{'T_0019','T_0020'},22,[38, -68],'EEG',[350 500])
 
+
+%Now look in with the TF baseline corrected to written word
+
+plot_betas_tf_taper_newbaseline([1:6],[1 1 1 1 1 1],{'T_0024','T_0025'},22,[68 90],'MEGPLANAR',[440 740]); %The defined time window is where there is no difference in activity.

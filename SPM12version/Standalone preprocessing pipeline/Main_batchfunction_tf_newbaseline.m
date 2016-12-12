@@ -89,7 +89,7 @@ p.zSmooth = 10; % smooth for z (time) dimension (ms)
 
 % for making image mask
 p.preImageMask = -100; % pre image time (ms)
-p.postImageMask = 950; % post image time (ms)
+p.postImageMask = 2100; % post image time (ms)
 
 % time windows over which to average for 'first-level' contrasts (ms)
 p.windows = [90 130; 180 240; 270 420; 450 700; 750 900];
@@ -119,7 +119,7 @@ p.tf.subsample = 5; %subsample by a factor of 5 - mainly to save disk space and 
 % You should pilot one subject and see how much memory is required. This
 % currently asks for 8Gb per subject
 
-memoryrequired = num2str(4*size(subjects,1));
+memoryrequired = num2str(8*size(subjects,1));
 
 try
     try
@@ -130,7 +130,7 @@ try
     cd('/group/language/data/thomascope/vespa/SPM12version/')
     
     workerpool = cbupool(size(subjects,2));
-    workerpool.ResourceTemplate=['-l nodes=^N^,mem=' memoryrequired 'GB,walltime=48:00:00'];
+    workerpool.ResourceTemplate=['-l nodes=^N^,mem=' memoryrequired 'GB,walltime=168:00:00'];
     matlabpool(workerpool)
     cd(currentdr)
 
@@ -201,9 +201,13 @@ end
 parfor cnt = 1:size(subjects,2)
     Preprocessing_mainfunction('TF','merge',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
+% parfor cnt = 1:size(subjects,2)
+%     Preprocessing_mainfunction('average','TF_power',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+% end
 parfor cnt = 1:size(subjects,2)
-    Preprocessing_mainfunction('average','TF_power',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+    Preprocessing_mainfunction('resume_average','TF_power',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
+
 p.robust = 0; %robust averaging doesn't work for phase data
 % parfor cnt = 1:size(subjects,2)
 %     Preprocessing_mainfunction('average','TF_phase',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
@@ -213,7 +217,7 @@ p.robust = 1; % just in case we want to do any more averaging later
 parfor cnt = 1:size(subjects,2)
     Preprocessing_mainfunction('TF_rescale','mtf_c*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
-Preprocessing_mainfunction('grand_average','TF_rescale',p,pathstem, maxfilteredpathstem, subjects);
+%Preprocessing_mainfunction('grand_average','TF_rescale',p,pathstem, maxfilteredpathstem, subjects);
 parfor cnt = 1:size(subjects,2)    
    Preprocessing_mainfunction('weight','TF_rescale',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
@@ -233,33 +237,33 @@ for cnt = 1
 end
 
 %% New test section to contrast extracted LFPs from beaformer. Need to have run LCMV_source_extraction_2016 for this to work
-
-
-Preprocessing_mainfunction('grand_average','Bceff*.mat',p,pathstem, maxfilteredpathstem, subjects);
-parfor cnt = 1:size(subjects,2)    
-   Preprocessing_mainfunction('weight','Bceff*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-end
-Preprocessing_mainfunction('grand_average','wBceff*.mat',p,pathstem, maxfilteredpathstem, subjects);
-parfor cnt = 1:size(subjects,2)
-    Preprocessing_mainfunction('image','Bceff*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-end
-parfor cnt = 1:size(subjects,2)
-    % The input for smoothing should be the same as the input used to make
-    % the image files.
-    Preprocessing_mainfunction('smooth','Bceff*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-end
-for cnt = 1
-    % The input for smoothing should be the same as the input used to make
-    % the image files. Only need to do this for a single subject
-    Preprocessing_mainfunction('mask','Bceff*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-end
+% 
+% 
+% Preprocessing_mainfunction('grand_average','Bceff*.mat',p,pathstem, maxfilteredpathstem, subjects);
+% parfor cnt = 1:size(subjects,2)    
+%    Preprocessing_mainfunction('weight','Bceff*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+% end
+% Preprocessing_mainfunction('grand_average','wBceff*.mat',p,pathstem, maxfilteredpathstem, subjects);
+% parfor cnt = 1:size(subjects,2)
+%     Preprocessing_mainfunction('image','Bceff*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+% end
+% parfor cnt = 1:size(subjects,2)
+%     % The input for smoothing should be the same as the input used to make
+%     % the image files.
+%     Preprocessing_mainfunction('smooth','Bceff*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+% end
+% for cnt = 1
+%     % The input for smoothing should be the same as the input used to make
+%     % the image files. Only need to do this for a single subject
+%     Preprocessing_mainfunction('mask','Bceff*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+% end
 
 
 %%Now to do the higher frequencies with multitapers! - If you want to do
 %this, you must copy the merged files, to another folder appended with '_taper' and re-run from
 %the appropriate step above
-source_directory = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/';
-pathstem = [pathstem(1:end-1) '_taper/'] ; 
+source_directory = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_newbaseline_fixedICA/';
+pathstem = [pathstem(1:end-1) '_newbaseline_taper/'] ; 
 p.method = 'mtmconvol'; 
 p.freqs = [30:2:90]; 
 p.timeres = 200; 
@@ -303,7 +307,34 @@ for cnt = 1
     Preprocessing_mainfunction('mask','TF_rescale',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
 
+%% A quick average just to take a look
 
+parfor cnt = 1:size(subjects,2)
+    Preprocessing_mainfunction('quickaverage','TF_power',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+end
+
+%TF_rescale to baseline correct the induced power data only
+parfor cnt = 1:size(subjects,2)
+    Preprocessing_mainfunction('TF_rescale','quick/mtf_c*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+end
+Preprocessing_mainfunction('grand_average','rmtf_c*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects);
+parfor cnt = 1:size(subjects,2)    
+   Preprocessing_mainfunction('weight','rmtf_c*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+end
+Preprocessing_mainfunction('grand_average','wrmtf_c*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects);
+parfor cnt = 1:size(subjects,2)
+    Preprocessing_mainfunction('image','rmtf_c*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+end
+parfor cnt = 1:size(subjects,2)
+    % The input for smoothing should be the same as the input used to make
+    % the image files.
+    Preprocessing_mainfunction('smooth','rmtf_c*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+end
+for cnt = 1
+    % The input for smoothing should be the same as the input used to make
+    % the image files. Only need to do this for a single subject
+    Preprocessing_mainfunction('mask','rmtf_c*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+end
 
 
 matlabpool 'close';

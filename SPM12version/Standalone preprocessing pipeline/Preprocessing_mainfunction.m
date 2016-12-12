@@ -37,6 +37,8 @@ switch prevStep
         prevStep = 'b*Mrun*.mat';
     case 'average'
         prevStep = 'm*Mrun*.mat';
+    case 'quickaverage'
+        prevStep = 'quick/m*Mrun*.mat';
     case 'weight'
         prevStep = 'w*Mrun*.mat';
     case 'combineplanar'
@@ -1571,6 +1573,116 @@ switch step
                         spm_eeg_average(S);
                     else
                         S.prefix = 'm'; %Bug in spm_eeg_average_TF - crashes if this isn't defined.
+                        spm_eeg_average_TF(S);
+                    end
+                    
+                end
+            else
+                fprintf(['\n\nData already averaged for ' subjects '!\n\n']);
+            end
+            
+            
+        end % subjects
+        
+        fprintf('\n\nData averaged!\n\n');
+        
+        case 'resume_average' % average data
+        
+        % parameters for SPM function
+        if p.robust == 1;
+            S.robust.savew = 0; % Robust averaging
+            S.robust.bycondition = 0;
+            S.robust.ks = 3;
+            S.robust.removebad = 0; %This messes up later visualisation, but is safer. Sets badchannel data to NaN
+        else
+            S.robust = 0; % No robust averaging
+        end
+        S.circularise = 1; % gives phase locking value (PLV) when averaging phase values of TF data
+        
+        for s=1:size(subjects,1)
+            
+            fprintf([ '\n\nCurrent subject = ' subjects '...\n\n' ]);
+            
+            % change to input directory
+            filePath = [pathstem subjects];
+            cd(filePath);
+            
+            % search for input files
+            files = [];
+            %files = dir(['m' prevStep]);    %Check if already done!
+            donefiles = dir(['m' prevStep]);
+            inprogress = spm_eeg_load(donefiles(1).name);
+           
+            if isempty(files) && strcmp(inprogress.conditions(1),'Undefined')
+                clear inprogress;
+                fprintf(['\n\nData not yet averaged for ' subjects ' - resuming!\n\n']);
+                files = dir(prevStep);
+                
+                for f=1:length(files)
+                    
+                    fprintf([ '\n\nProcessing ' files(f).name '...\n\n' ]);
+                    
+                    % load input file
+                    S.D = spm_eeg_load(files(f).name);
+                    
+                    % main process
+                    if strcmp(S.D.transformtype,'time')
+                        spm_eeg_average(S);
+                    else
+                        S.prefix = 'm'; %Bug in spm_eeg_average_TF - crashes if this isn't defined.
+                        
+                        resume_spm_eeg_average_TF(S);
+                    end
+                    
+                end
+            else
+                fprintf(['\n\nData already averaged for ' subjects '!\n\n']);
+            end
+            
+            
+        end % subjects
+        
+        fprintf('\n\nData averaged!\n\n');
+        
+    case 'quickaverage' % average data
+        
+        % parameters for SPM function
+
+        S.robust = 0; % No robust averaging
+        S.prefix = 'quick/m'; %Bug in spm_eeg_average_TF - crashes if this isn't defined.
+
+        S.circularise = 1; % gives phase locking value (PLV) when averaging phase values of TF data
+        
+        for s=1:size(subjects,1)
+            
+            fprintf([ '\n\nCurrent subject = ' subjects '...\n\n' ]);
+            
+            % change to input directory
+            filePath = [pathstem subjects];
+            cd(filePath);
+            if ~exist([filePath '/quick'],'dir')
+                mkdir([filePath '/quick'])
+            end
+            
+            % search for input files
+            files = [];
+            %files = dir(['m' prevStep]);    %Check if already done!
+            if isempty(files)
+                files = dir(prevStep);
+                
+                for f=1:length(files)
+                    
+                    fprintf([ '\n\nProcessing ' files(f).name '...\n\n' ]);
+                    
+                    % load input file
+                    S.D = spm_eeg_load(files(f).name);
+                    
+                    
+                    % main process
+                    if strcmp(S.D.transformtype,'time')
+                        spm_eeg_average(S);
+                    else
+                        
                         spm_eeg_average_TF(S);
                     end
                     
