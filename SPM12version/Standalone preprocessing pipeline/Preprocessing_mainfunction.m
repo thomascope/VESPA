@@ -1192,7 +1192,7 @@ switch step
                             pathstem = pathstem_back; D=D_back; %Fix bug where preprocessed ICs are imported from another file
                             D(chans{m}(nonzeros(tointerpolate)),:) = ICA.d(nonzeros(tointerpolate),:); %Ensure that bad channels to not contribute to the montage - time consuming step
                         else
-                            load (['MEG_ICs_' m-1 '_' files(f).name])
+                            load (['MEG_ICs_' num2str(m-1) '_' files(f).name])
                             pathstem = pathstem_back; D=D_back; %Fix bug where preprocessed ICs are imported from another file
                         end
                     elseif exist([pwd '/MEG_ICs_' m-1 '_' files(f).name])
