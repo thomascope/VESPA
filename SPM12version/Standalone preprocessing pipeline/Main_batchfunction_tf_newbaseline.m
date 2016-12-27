@@ -217,7 +217,7 @@ p.robust = 1; % just in case we want to do any more averaging later
 parfor cnt = 1:size(subjects,2)
     Preprocessing_mainfunction('TF_rescale','mtf_c*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
-%Preprocessing_mainfunction('grand_average','TF_rescale',p,pathstem, maxfilteredpathstem, subjects);
+Preprocessing_mainfunction('grand_average','TF_rescale',p,pathstem, maxfilteredpathstem, subjects);
 parfor cnt = 1:size(subjects,2)    
    Preprocessing_mainfunction('weight','TF_rescale',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end

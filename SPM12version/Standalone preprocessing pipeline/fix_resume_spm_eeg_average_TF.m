@@ -103,6 +103,7 @@ if D.nsamples > 100, Ibar = floor(linspace(1, D.nsamples, 100));
 else Ibar = [1:D.nsamples]; end
 %XXX added - define progress to date
 firstzero = find(squeeze(Dnew(size(Dnew,1),size(Dnew,2),:,size(Dnew,4)))==0,1);
+
 [c, index] = min(abs(Ibar-firstzero));
 if Ibar(index) > firstzero
     spm_progress_bar('Set', Ibar(index-1))
@@ -110,8 +111,8 @@ else
     spm_progress_bar('Set', Ibar(index-1))
 end
 
-%Now resume from first uncompleted sample
-for j = firstzero:D.nsamples
+%Now fix the zero
+for j = firstzero
      if robust && ~bycondition
          Y       = D(:, :, j, goodtrials);
          if removebad
