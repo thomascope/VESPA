@@ -108,7 +108,7 @@ subjects{cnt} = 'meg14_0114_vc4';
 dates{cnt} = '140314';
 blocksin{cnt} = {'vespa_first', 'vespa_second', 'vespa_third'};
 blocksout{cnt} = {'run1', 'run2', 'run3'};
-badchannels{cnt, 1} = {'0813','1211','2323','1731'}; badchannels{cnt, 2} = {'0813','1222','1223','0521','0342','2141','1731','2143'}; badchannels{cnt, 3} = {'0813','1222','1223','0521','0342','2141','1731','2143'}; badchannels{cnt, 4} = {'0813','1222','1223','0521','0342','2141','1731','2143'}; badchannels{cnt, 5} = {'0813','1222','1223','0521','0342','2141','1731','2143'}; badchannels{cnt, 6} = {}; badchannels{cnt, 7} = {}; % define bad MEG (not EEG) channels here (if there are any)
+badchannels{cnt, 1} = {'0813','1211','2323','1731'}; badchannels{cnt, 2} = {'0813','1211','2323','1731'}; badchannels{cnt, 3} = {'0813','1211','2323','1731'}; badchannels{cnt, 4} = {'0813','1211','2323','1731'}; badchannels{cnt, 5} = {'0813','1211','2323','1731'}; badchannels{cnt, 6} = {}; badchannels{cnt, 7} = {}; % define bad MEG (not EEG) channels here (if there are any)
 badeeg{cnt} = {'29','31','32','39','43'};
 group(cnt) = 1;
 rejecteeg{cnt} = 0;
@@ -288,36 +288,40 @@ badchannels{cnt, 1} = {'0333'}; badchannels{cnt, 2} = {'0333'}; badchannels{cnt,
 badeeg{cnt} = {};
 group(cnt) = 3;
 rejecteeg{cnt} = 0;
+
+%Error in acquisition meant that the first few runs were performed with no
+%triggers at all. Therefore run 3 is treated as run 1. Sleepy and I pressed
+%the buttons
+cnt = cnt + 1;
+subjects{cnt} = 'meg14_0085_vp1';
+dates{cnt} = '160428';
+blocksin{cnt} = {'vespa_fup_third', 'vespa_fup_fourth'};
+blocksout{cnt} = {'run1', 'run2'};
+badchannels{cnt, 1} = {'1412', '0333'}; badchannels{cnt, 2} = {'1412', '0333'}; badchannels{cnt, 3} = {'1412', '0333'}; badchannels{cnt, 4} = {'1412', '0333'}; badchannels{cnt, 5} = {}; badchannels{cnt, 6} = {}; badchannels{cnt, 7} = {}; % define bad MEG (not EEG) channels here (if there are any)
+badeeg{cnt} = {'7','19','38'};
+group(cnt) = 4;
+rejecteeg{cnt} = 0;
 % 
-% cnt = cnt + 1;
-% subjects{cnt} = 'meg14_0085_vp1';
-% dates{cnt} = '140228';
-% blocksin{cnt} = {'vespa_first', 'vespa_second'};
-% blocksout{cnt} = {'run1', 'run2'};
-% badchannels{cnt, 1} = {'0933', '1721', '1731', '1412', '0813'}; badchannels{cnt, 2} = {'0933', '1721', '1731', '1412', '0813'}; badchannels{cnt, 3} = {'0933', '1721', '1731', '1412', '0813'}; badchannels{cnt, 4} = {'0933', '1721', '1731', '1412', '0813'}; badchannels{cnt, 5} = {}; badchannels{cnt, 6} = {}; badchannels{cnt, 7} = {}; % define bad MEG (not EEG) channels here (if there are any)
-% badeeg{cnt} = {'72'};
-% group(cnt) = 2;
-% rejecteeg{cnt} = 0;
-% 
-% cnt = cnt + 1;
-% subjects{cnt} = 'meg14_0087_vp2';
-% dates{cnt} = '140303';
-% blocksin{cnt} = {'vespa_first', 'vespa_second', 'vespa_third'};
-% blocksout{cnt} = {'run1', 'run2', 'run3'};
-% badchannels{cnt, 1} = {'0933', '1731', '0813'}; badchannels{cnt, 2} = {'0933', '1731', '0813'}; badchannels{cnt, 3} = {'0933', '1731', '0813'}; badchannels{cnt, 4} = {'0933', '1731', '0813'}; badchannels{cnt, 5} = {'0933', '1731', '0813'}; badchannels{cnt, 6} = {}; badchannels{cnt, 7} = {}; % define bad MEG (not EEG) channels here (if there are any)
-% badeeg{cnt} = {'7','17','37','39'};
-% group(cnt) = 2;
-% rejecteeg{cnt} = 0;
-% 
-% cnt = cnt + 1;
-% subjects{cnt} = 'meg14_0093_vc2';
-% dates{cnt} = '140306';
-% blocksin{cnt} = {'vespa_first', 'vespa_second', 'vespa_third'};
-% blocksout{cnt} = {'run1', 'run2', 'run3'};
-% badchannels{cnt, 1} = {'1731', '2342', '0813', '0932'}; badchannels{cnt, 2} = {'1731', '2342', '0813', '0932'}; badchannels{cnt, 3} = {'1731', '2342', '0813', '0932'}; badchannels{cnt, 4} = {'1731', '2342', '0813', '0932'}; badchannels{cnt, 5} = {'1731', '2342', '0813', '0932'}; badchannels{cnt, 6} = {}; badchannels{cnt, 7} = {}; % define bad MEG (not EEG) channels here (if there are any)
-% badeeg{cnt} = {'73', '29'};
-% group(cnt) = 1;
-% rejecteeg{cnt} = 0;
+cnt = cnt + 1;
+subjects{cnt} = 'meg14_0087_vp2';
+dates{cnt} = '160411';
+blocksin{cnt} = {'vespa_fup_first', 'vespa_fup_second','vespa_fup_third'};  % vespa_fup_rest; vespa_fup_MMN
+blocksout{cnt} = {'run1', 'run2','run3'};
+badchannels{cnt, 1} = {'0333'}; badchannels{cnt, 2} = {'0333'}; badchannels{cnt, 3} = {'0333'}; badchannels{cnt, 4} = {'0333'}; badchannels{cnt, 5} = {'0333'}; badchannels{cnt, 6} = {}; badchannels{cnt, 7} = {}; % define bad MEG (not EEG) channels here (if there are any)
+badeeg{cnt} = {'16','29','39','55','69'};
+group(cnt) = 4;
+rejecteeg{cnt} = 0;
+
+%Note did an old version of the experiment (?still OK?)
+cnt = cnt + 1;
+subjects{cnt} = 'meg14_0093_vc2';
+dates{cnt} = '160404';
+blocksin{cnt} = {'vespa_fup_first','vespa_fup_first_1' 'vespa_fup_second','vespa_fup_second_1'};  % vespa_fup_rest; vespa_fup_MMN
+blocksout{cnt} = {'run1', 'run1_1', 'run2', 'run2_1'};
+badchannels{cnt, 1} = {'0813'}; badchannels{cnt, 2} = {'0813'}; badchannels{cnt, 3} = {'0813'}; badchannels{cnt, 4} = {'0813'}; badchannels{cnt, 5} = {'0813'}; badchannels{cnt, 6} = {}; badchannels{cnt, 7} = {}; % define bad MEG (not EEG) channels here (if there are any)
+badeeg{cnt} = {'73', '29'};
+group(cnt) = 3;
+rejecteeg{cnt} = 0;
 % 
 % cnt = cnt + 1;
 % subjects{cnt} = 'meg14_0096_vc3';
@@ -340,15 +344,15 @@ rejecteeg{cnt} = 0;
 % % group(cnt) = 2;
 % % rejecteeg{cnt} = 0;
 % 
-% cnt = cnt + 1;
-% subjects{cnt} = 'meg14_0114_vc4';
-% dates{cnt} = '140314';
-% blocksin{cnt} = {'vespa_first', 'vespa_second', 'vespa_third'};
-% blocksout{cnt} = {'run1', 'run2', 'run3'};
-% badchannels{cnt, 1} = {'0813','1211','2323','1731'}; badchannels{cnt, 2} = {'0813','1222','1223','0521','0342','2141','1731','2143'}; badchannels{cnt, 3} = {'0813','1222','1223','0521','0342','2141','1731','2143'}; badchannels{cnt, 4} = {'0813','1222','1223','0521','0342','2141','1731','2143'}; badchannels{cnt, 5} = {'0813','1222','1223','0521','0342','2141','1731','2143'}; badchannels{cnt, 6} = {}; badchannels{cnt, 7} = {}; % define bad MEG (not EEG) channels here (if there are any)
-% badeeg{cnt} = {'29','31','32','39','43'};
-% group(cnt) = 1;
-% rejecteeg{cnt} = 0;
+cnt = cnt + 1;
+subjects{cnt} = 'meg14_0114_vc4';
+dates{cnt} = '160405';
+blocksin{cnt} = {'vespa_fup_first', 'vespa_fup_second','vespa_fup_third'};  % vespa_fup_rest; vespa_fup_MMN
+blocksout{cnt} = {'run1', 'run2','run3'};
+badchannels{cnt, 1} = {'0813'}; badchannels{cnt, 2} = {'0813'}; badchannels{cnt, 3} = {'0813'}; badchannels{cnt, 4} = {'0813'}; badchannels{cnt, 5} = {'0813'}; badchannels{cnt, 6} = {}; badchannels{cnt, 7} = {}; % define bad MEG (not EEG) channels here (if there are any)
+badeeg{cnt} = {'3','4','37','38','41','48','59','72'};
+group(cnt) = 3;
+rejecteeg{cnt} = 0;
 % 
 % % VP4 ONLY DID REST, SO NOT REPRESENTED HERE
 % 
@@ -373,15 +377,15 @@ rejecteeg{cnt} = 0;
 % group(cnt) = 1;
 % rejecteeg{cnt} = 0;
 % 
-% cnt = cnt + 1;
-% subjects{cnt} = 'meg14_0130_vp6';
-% dates{cnt} = '140324';
-% blocksin{cnt} = {'vespa_first', 'vespa_second'};
-% blocksout{cnt} = {'run1', 'run2'};
-% badchannels{cnt, 1} = {'1211','1731'}; badchannels{cnt, 2} = {'1211','1731'}; badchannels{cnt, 3} = {'1211','1731'}; badchannels{cnt, 4} = {'1211','1731'}; badchannels{cnt, 5} = {'1211','1731'}; badchannels{cnt, 6} = {'1211','1731'}; badchannels{cnt, 7} = {}; % define bad MEG (not EEG) channels here (if there are any)
-% badeeg{cnt} = {'21','55','65','73'};
-% group(cnt) = 2;
-% rejecteeg{cnt} = 0;
+cnt = cnt + 1;
+subjects{cnt} = 'meg14_0130_vp6';
+dates{cnt} = '160412';
+blocksin{cnt} = {'vespa_fup_first', 'vespa_fup_second','vespa_fup_second_1','vespa_fup_third'}; % vespa_fup_rest; vespa_fup_MMN
+blocksout{cnt} = {'run1', 'nobuttons', 'nobuttons_second','nobuttons_third'};
+badchannels{cnt, 1} = {'2141','0333','1731'}; badchannels{cnt, 2} = {'2141','0333','1731'}; badchannels{cnt, 3} = {'2141','0333','1731'}; badchannels{cnt, 4} = {'2141','0333','1731'}; badchannels{cnt, 5} = {'2141','0333','1731'}; badchannels{cnt, 6} = {'2141','0333','1731'}; badchannels{cnt, 7} = {}; % define bad MEG (not EEG) channels here (if there are any)
+badeeg{cnt} = {'4','6','28','34','43','65','68'};
+group(cnt) = 4;
+rejecteeg{cnt} = 0;
 % 
 % cnt = cnt + 1;
 % subjects{cnt} = 'meg14_0135_vp7';
@@ -393,25 +397,26 @@ rejecteeg{cnt} = 0;
 % group(cnt) = 2;
 % rejecteeg{cnt} = 0;
 % 
-% cnt = cnt + 1;
-% subjects{cnt} = 'meg14_0140_vc6';
-% dates{cnt} = '140327';
-% blocksin{cnt} = {'vespa_first', 'vespa_second','vespa_third'};
-% blocksout{cnt} = {'run1', 'run2','run3'};
-% badchannels{cnt, 1} = {'0813','1731','0343'}; badchannels{cnt, 2} = {'0813','1731','0343'}; badchannels{cnt, 3} = {'0813','1731','0343'}; badchannels{cnt, 4} = {'0813','1731','0343'}; badchannels{cnt, 5} = {'0813','1731','0343'}; badchannels{cnt, 6} = {}; badchannels{cnt, 7} = {}; % define bad MEG (not EEG) channels here (if there are any)
-% badeeg{cnt} = {};
-% group(cnt) = 1;
-% rejecteeg{cnt} = 0;
-% 
-% cnt = cnt + 1;
-% subjects{cnt} = 'meg14_0434_vc7';
-% dates{cnt} = '140331';
-% blocksin{cnt} = {'vespa_first', 'vespa_second','vespa_third'};
-% blocksout{cnt} = {'run1', 'run2','run3'};
-% badchannels{cnt, 1} = {'0813','1731'}; badchannels{cnt, 2} = {'0813','1731'}; badchannels{cnt, 3} = {'0813','1731'}; badchannels{cnt, 4} = {'0813','1731'}; badchannels{cnt, 5} = {'0813','1731'}; badchannels{cnt, 6} = {}; badchannels{cnt, 7} = {}; % define bad MEG (not EEG) channels here (if there are any)
-% badeeg{cnt} = {};
-% group(cnt) = 1;
-% rejecteeg{cnt} = 0;
+cnt = cnt + 1;
+subjects{cnt} = 'meg14_0140_vc6';
+dates{cnt} = '160422';
+blocksin{cnt} = {'vespa_fup_first', 'vespa_fup_second','vespa_fup_third'};  % vespa_fup_rest; vespa_fup_MMN
+blocksout{cnt} = {'run1', 'run2','run3'};
+badchannels{cnt, 1} = {'0813'}; badchannels{cnt, 2} = {'0813'}; badchannels{cnt, 3} = {'0813'}; badchannels{cnt, 4} = {'0813'}; badchannels{cnt, 5} = {'0813'}; badchannels{cnt, 6} = {}; badchannels{cnt, 7} = {}; % define bad MEG (not EEG) channels here (if there are any)
+badeeg{cnt} = {};
+group(cnt) = 3;
+rejecteeg{cnt} = 0;
+
+%Breathing artifact
+cnt = cnt + 1;
+subjects{cnt} = 'meg14_0434_vc7';
+dates{cnt} = '160429';
+blocksin{cnt} = {'vespa_fup_first', 'vespa_fup_second','vespa_fup_third','vespa_fup_nobuttons'}; % vespa_fup_rest; vespa_fup_MMN
+blocksout{cnt} = {'run1', 'run2','run3','nobuttons'};
+badchannels{cnt, 1} = {'0813','2323','0333','1412'}; badchannels{cnt, 2} = {'0813','2323','0333','1412'}; badchannels{cnt, 3} = {'0813','2323','0333','1412'}; badchannels{cnt, 4} = {'0813','2323','0333','1412'}; badchannels{cnt, 5} = {'0813','2323','0333','1412'}; badchannels{cnt, 6} = {}; badchannels{cnt, 7} = {}; % define bad MEG (not EEG) channels here (if there are any)
+badeeg{cnt} = {'48','56','68'};
+group(cnt) = 3;
+rejecteeg{cnt} = 0;
 % 
 % cnt = cnt + 1;
 % subjects{cnt} = 'meg14_0150_vp8';
@@ -423,35 +428,35 @@ rejecteeg{cnt} = 0;
 % group(cnt) = 2;
 % rejecteeg{cnt} = 0;
 % 
-% cnt = cnt + 1;
-% subjects{cnt} = 'meg14_0184_vp9';
-% dates{cnt} = '140424';
-% blocksin{cnt} = {'vespa_first','vespa_first_1', 'vespa_second', 'vespa_second_1'};
-% blocksout{cnt} = {'run1', 'run1_1', 'run2','run2_2'};
-% badchannels{cnt, 1} = {'0813','1731','1141','2211','1143','1142','2213','2212'}; badchannels{cnt, 2} = {'0813','1141','2211','1731','1143','1142','2213','2212'}; badchannels{cnt, 3} = {'0813','1141','2211','1731','1143','1142','2213','2212'}; badchannels{cnt, 4} = {'0813','1141','2211','1731','1143','1142','2213','2212'}; badchannels{cnt, 5} = {'0813','1141','2211','1731','1143','1142','2213','2212'}; badchannels{cnt, 6} = {'0813','1141','2211','1731','1143','1142','2213','2212'}; badchannels{cnt, 7} = {}; % define bad MEG (not EEG) channels here (if there are any)
-% badeeg{cnt} = {'39'};
-% group(cnt) = 2;
-% rejecteeg{cnt} = 0; 
+cnt = cnt + 1;
+subjects{cnt} = 'meg14_0184_vp9';
+dates{cnt} = '160408';
+blocksin{cnt} = {'vespa_fup_first', 'vespa_fup_first_1', 'vespa_fup_second','vespa_fup_second_1','vespa_fup_nobuttons'}; % vespa_fup_rest; vespa_fup_MMN NB: rest done at end as cHPI not recorded the first time.
+blocksout{cnt} = {'run1', 'nobuttons','nobuttons_second','nobuttons_second_1'};
+badchannels{cnt, 1} = {'0813','0333','0631'}; badchannels{cnt, 2} = {'0813','0333','0631'}; badchannels{cnt, 3} = {'0813','0333','0631'}; badchannels{cnt, 4} = {'0813','0333','0631'}; badchannels{cnt, 5} = {'0813','0333','0631'}; badchannels{cnt, 6} = {'0813','0333','0631'}; badchannels{cnt, 7} = {}; % define bad MEG (not EEG) channels here (if there are any)
+badeeg{cnt} = {'2','29','39','73'};
+group(cnt) = 4;
+rejecteeg{cnt} = 0; 
 % 
-% cnt = cnt + 1;
-% subjects{cnt} = 'meg14_0205_vp10';
-% dates{cnt} = '140502';
-% blocksin{cnt} = {'vespa_first', 'vespa_second','vespa_third'};
-% blocksout{cnt} = {'run1', 'run2','run3'};
-% badchannels{cnt, 1} = {'0813','1731','1812'}; badchannels{cnt, 2} = {'0813','1731','1812'}; badchannels{cnt, 3} = {'0813','1731','1812'}; badchannels{cnt, 4} = {'0813','1731','1812'}; badchannels{cnt, 5} = {'0813','1731','1812'}; badchannels{cnt, 6} = {'0813','1731','1812'}; badchannels{cnt, 7} = {}; % define bad MEG (not EEG) channels here (if there are any)
-% badeeg{cnt} = {'5', '42'};
-% group(cnt) = 2;
-% rejecteeg{cnt} = 0;
+cnt = cnt + 1;
+subjects{cnt} = 'meg14_0205_vp10';
+dates{cnt} = '160425';
+blocksin{cnt} = {'vespa_fup_first', 'vespa_fup_second','vespa_fup_third'};
+blocksout{cnt} = {'run1', 'run2','run3'};
+badchannels{cnt, 1} = {'0813','1412'}; badchannels{cnt, 2} = {'0813','1412'}; badchannels{cnt, 3} = {'0813','1412'}; badchannels{cnt, 4} = {'0813','1412'}; badchannels{cnt, 5} = {'0813','1412'}; badchannels{cnt, 6} = {'0813','1412'}; badchannels{cnt, 7} = {'0813','1412'}; % define bad MEG (not EEG) channels here (if there are any)
+badeeg{cnt} = {};
+group(cnt) = 4;
+rejecteeg{cnt} = 0;
 % 
-% cnt = cnt + 1;
-% subjects{cnt} = 'meg14_0506_vp12';
-% dates{cnt} = '140506';
-% blocksin{cnt} = {'vespa_first_1', 'vespa_second','vespa_third'}; % NB: vespa_first is actually the average file, erroneously named
-% blocksout{cnt} = {'run1', 'run2','run3'};
-% badchannels{cnt, 1} = {'0813','1731','0631'}; badchannels{cnt, 2} = {'0813','1731','0631'}; badchannels{cnt, 3} = {'0813','1731','0631'}; badchannels{cnt, 4} = {'0813','1731','0631'}; badchannels{cnt, 5} = {'0813','1731','0631'}; badchannels{cnt, 6} = {'0813','1731','0631'}; badchannels{cnt, 7} = {}; % define bad MEG (not EEG) channels here (if there are any)
-% badeeg{cnt} = {'30', '40'};
-% group(cnt) = 2;
-% rejecteeg{cnt} = 0;
+cnt = cnt + 1;
+subjects{cnt} = 'meg14_0506_vp12';
+dates{cnt} = '160421';
+blocksin{cnt} = {'vespa_fup_first', 'vespa_fup_second','vespa_fup_third'}; % vespa_fup_rest; vespa_fup_MMN
+blocksout{cnt} = {'run1', 'run2','run3'};
+badchannels{cnt, 1} = {'0333'}; badchannels{cnt, 2} = {'0333'}; badchannels{cnt, 3} = {'0333'}; badchannels{cnt, 4} = {'0333'}; badchannels{cnt, 5} = {'0333'}; badchannels{cnt, 6} = {'0333'}; badchannels{cnt, 7} = {}; % define bad MEG (not EEG) channels here (if there are any)
+badeeg{cnt} = {'4','28','34','46','65','68','74'};
+group(cnt) = 4;
+rejecteeg{cnt} = 0;
 % 
 % % Rejected because left handed
 % % cnt = cnt + 1;
@@ -494,23 +499,23 @@ badeeg{cnt} = {'70','49'};
 group(cnt) = 3;
 rejecteeg{cnt} = 0;
 % 
-% cnt = cnt + 1;
-% subjects{cnt} = 'meg14_0242_vc11';
-% dates{cnt} = '140522';
-% blocksin{cnt} = {'vespa_first', 'vespa_second','vespa_third'}; 
-% blocksout{cnt} = {'run1', 'run2','run3'};
-% badchannels{cnt, 1} = {'0813','1731'}; badchannels{cnt, 2} = {'0813','1731'}; badchannels{cnt, 3} = {'0813','1731'}; badchannels{cnt, 4} = {'0813','1731'}; badchannels{cnt, 5} = {'0813','1731'}; badchannels{cnt, 6} = {'0813','1731'}; badchannels{cnt, 7} = {}; % define bad MEG (not EEG) channels here (if there are any)
-% badeeg{cnt} = {'29','39','69','71'};
-% group(cnt) = 1;
-% rejecteeg{cnt} = 0;
+cnt = cnt + 1;
+subjects{cnt} = 'meg14_0242_vc11';
+dates{cnt} = '160531';
+blocksin{cnt} = {'vespa_fup_first', 'vespa_fup_second','vespa_fup_third','vespa_fup_nobuttons'};  % vespa_fup_rest; vespa_fup_MMN
+blocksout{cnt} = {'run1', 'run2','run3','nobuttons'};
+badchannels{cnt, 1} = {'2113','2333','0331','0813','0333'}; badchannels{cnt, 2} = {'2113','2333','0331','0813','0333'}; badchannels{cnt, 3} = {'2113','2333','0331','0813','0333'}; badchannels{cnt, 4} = {'2113','2333','0331','0813','0333'}; badchannels{cnt, 5} = {'2113','2333','0331','0813','0333'}; badchannels{cnt, 6} = {'2113','2333','0331','0813','0333'}; badchannels{cnt, 7} = {}; % define bad MEG (not EEG) channels here (if there are any)
+badeeg{cnt} = {'51','73'};
+group(cnt) = 3;
+rejecteeg{cnt} = 0;
 % 
-% cnt = cnt + 1;
-% subjects{cnt} = 'meg14_0253_vc12';
-% dates{cnt} = '140529';
-% blocksin{cnt} = {'vespa_first', 'vespa_second','vespa_third'}; 
-% blocksout{cnt} = {'run1', 'run2','run3'};
-% badchannels{cnt, 1} = {'0813','1731'}; badchannels{cnt, 2} = {'0813','1731'}; badchannels{cnt, 3} = {'0813','1731'}; badchannels{cnt, 4} = {'0813','1731'}; badchannels{cnt, 5} = {'0813','1731'}; badchannels{cnt, 6} = {'0813','1731'}; badchannels{cnt, 7} = {}; % define bad MEG (not EEG) channels here (if there are any)
-% badeeg{cnt} = {'30','40'};
-% group(cnt) = 1;
-% rejecteeg{cnt} = 0;
+cnt = cnt + 1;
+subjects{cnt} = 'meg14_0253_vc12';
+dates{cnt} = '160503';
+blocksin{cnt} = {'vespa_fup_first', 'vespa_fup_second','vespa_fup_third','vespa_fup_nobuttons'};  % vespa_fup_rest; vespa_fup_MMN
+blocksout{cnt} = {'run1', 'run2','run3','nobuttons'};
+badchannels{cnt, 1} = {'0813','0333'}; badchannels{cnt, 2} = {'0813','0333'}; badchannels{cnt, 3} = {'0813','0333'}; badchannels{cnt, 4} = {'0813','0333'}; badchannels{cnt, 5} = {'0813','0333'}; badchannels{cnt, 6} = {'0813','0333'}; badchannels{cnt, 7} = {}; % define bad MEG (not EEG) channels here (if there are any)
+badeeg{cnt} = {'37','45','59','72'};
+group(cnt) = 3;
+rejecteeg{cnt} = 0;
 

@@ -1911,7 +1911,7 @@ switch step
         % parameters for SPM function
         S.frequencies = p.freqs;
         S.method = p.method;
-        S.subsample = p.tf.subsample;
+        S.settings.subsample = p.tf.subsample;
         S.timewin = p.timewin;
         if strcmp('morlet',p.method)
             S.settings.ncycles = p.ncycles;

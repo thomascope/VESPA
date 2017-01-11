@@ -242,7 +242,7 @@ end
 % because it doesn't take so long), so re-open a smaller matlab pool with
 % one worker per subject to reduce occupation of the cluster
 
-memoryrequired = num2str(4*size(subjects,1));
+memoryrequired = num2str(4*size(subjects,2));
 
 try
     try
