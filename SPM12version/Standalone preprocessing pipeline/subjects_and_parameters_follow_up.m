@@ -20,7 +20,7 @@ rawpathstem = '/megdata/cbu/vespa/';
 %pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/';
 %pathstem = '/imaging/datapath/';
 %define where your maxfiltered data are, eg
-maxfilteredpathstem = '/imaging/tc02/vespa/preprocess/';
+maxfilteredpathstem = '/imaging/tc02/vespa_followup/preprocess/';
 % maxfilteredpathstem = '/imaging/datapath/
 
 % define conditions
@@ -280,7 +280,7 @@ rejecteeg{cnt} = 0;
 %% Follow up codes
 % 
 cnt = cnt + 1;
-subjects{cnt} = 'meg14_0072_vc1';
+subjects{cnt} = 'meg14_0072_vc1_fup';
 dates{cnt} = '160505';
 blocksin{cnt} = {'vespa_fup_first', 'vespa_fup_second', 'vespa_fup_third', 'vespa_fup_nobuttons'}; % vespa_fup_rest; vespa_fup_MMN;
 blocksout{cnt} = {'run1', 'run2', 'run3','nobuttons'};
@@ -293,7 +293,7 @@ rejecteeg{cnt} = 0;
 %triggers at all. Therefore run 3 is treated as run 1. Sleepy and I pressed
 %the buttons
 cnt = cnt + 1;
-subjects{cnt} = 'meg14_0085_vp1';
+subjects{cnt} = 'meg14_0085_vp1_fup';
 dates{cnt} = '160428';
 blocksin{cnt} = {'vespa_fup_third', 'vespa_fup_fourth'};
 blocksout{cnt} = {'run1', 'run2'};
@@ -303,7 +303,7 @@ group(cnt) = 4;
 rejecteeg{cnt} = 0;
 % 
 cnt = cnt + 1;
-subjects{cnt} = 'meg14_0087_vp2';
+subjects{cnt} = 'meg14_0087_vp2_fup';
 dates{cnt} = '160411';
 blocksin{cnt} = {'vespa_fup_first', 'vespa_fup_second','vespa_fup_third'};  % vespa_fup_rest; vespa_fup_MMN
 blocksout{cnt} = {'run1', 'run2','run3'};
@@ -314,7 +314,7 @@ rejecteeg{cnt} = 0;
 
 %Note did an old version of the experiment (?still OK?)
 cnt = cnt + 1;
-subjects{cnt} = 'meg14_0093_vc2';
+subjects{cnt} = 'meg14_0093_vc2_fup';
 dates{cnt} = '160404';
 blocksin{cnt} = {'vespa_fup_first','vespa_fup_first_1' 'vespa_fup_second','vespa_fup_second_1'};  % vespa_fup_rest; vespa_fup_MMN
 blocksout{cnt} = {'run1', 'run1_1', 'run2', 'run2_1'};
@@ -345,7 +345,7 @@ rejecteeg{cnt} = 0;
 % % rejecteeg{cnt} = 0;
 % 
 cnt = cnt + 1;
-subjects{cnt} = 'meg14_0114_vc4';
+subjects{cnt} = 'meg14_0114_vc4_fup';
 dates{cnt} = '160405';
 blocksin{cnt} = {'vespa_fup_first', 'vespa_fup_second','vespa_fup_third'};  % vespa_fup_rest; vespa_fup_MMN
 blocksout{cnt} = {'run1', 'run2','run3'};
@@ -357,7 +357,7 @@ rejecteeg{cnt} = 0;
 % % VP4 ONLY DID REST, SO NOT REPRESENTED HERE
 % 
 cnt = cnt + 1;
-subjects{cnt} = 'meg14_0121_vp5';
+subjects{cnt} = 'meg14_0121_vp5_fup';
 dates{cnt} = '160509';
 blocksin{cnt} = {'vespa_fup_first','vespa_fup_first_1','vespa_fup_second','vespa_fup_second_1', 'vespa_fup_nobuttons'}; % vespa_fup_rest; vespa_fup_MMN
 blocksout{cnt} = {'run1', 'run1_1', 'run2', 'run2_1', 'nobuttons'};
@@ -378,10 +378,12 @@ rejecteeg{cnt} = 0;
 % rejecteeg{cnt} = 0;
 % 
 cnt = cnt + 1;
-subjects{cnt} = 'meg14_0130_vp6';
+subjects{cnt} = 'meg14_0130_vp6_fup';
 dates{cnt} = '160412';
-blocksin{cnt} = {'vespa_fup_first', 'vespa_fup_second','vespa_fup_second_1','vespa_fup_third'}; % vespa_fup_rest; vespa_fup_MMN
-blocksout{cnt} = {'run1', 'nobuttons', 'nobuttons_second','nobuttons_third'};
+%blocksin{cnt} = {'vespa_fup_first', 'vespa_fup_second','vespa_fup_second_1','vespa_fup_third'}; % vespa_fup_rest; vespa_fup_MMN
+blocksin{cnt} = {'vespa_fup_first','vespa_fup_second_1','vespa_fup_third'}; % vespa_fup_rest; vespa_fup_MMN
+% blocksout{cnt} = {'run1', 'nobuttons', 'nobuttons_second','nobuttons_third'};
+blocksout{cnt} = {'run1', 'nobuttons_second','nobuttons_third'}; % apparently no continuous HPI in nobuttons - won't maxfilter
 badchannels{cnt, 1} = {'2141','0333','1731'}; badchannels{cnt, 2} = {'2141','0333','1731'}; badchannels{cnt, 3} = {'2141','0333','1731'}; badchannels{cnt, 4} = {'2141','0333','1731'}; badchannels{cnt, 5} = {'2141','0333','1731'}; badchannels{cnt, 6} = {'2141','0333','1731'}; badchannels{cnt, 7} = {}; % define bad MEG (not EEG) channels here (if there are any)
 badeeg{cnt} = {'4','6','28','34','43','65','68'};
 group(cnt) = 4;
@@ -398,7 +400,7 @@ rejecteeg{cnt} = 0;
 % rejecteeg{cnt} = 0;
 % 
 cnt = cnt + 1;
-subjects{cnt} = 'meg14_0140_vc6';
+subjects{cnt} = 'meg14_0140_vc6_fup';
 dates{cnt} = '160422';
 blocksin{cnt} = {'vespa_fup_first', 'vespa_fup_second','vespa_fup_third'};  % vespa_fup_rest; vespa_fup_MMN
 blocksout{cnt} = {'run1', 'run2','run3'};
@@ -409,7 +411,7 @@ rejecteeg{cnt} = 0;
 
 %Breathing artifact
 cnt = cnt + 1;
-subjects{cnt} = 'meg14_0434_vc7';
+subjects{cnt} = 'meg14_0434_vc7_fup';
 dates{cnt} = '160429';
 blocksin{cnt} = {'vespa_fup_first', 'vespa_fup_second','vespa_fup_third','vespa_fup_nobuttons'}; % vespa_fup_rest; vespa_fup_MMN
 blocksout{cnt} = {'run1', 'run2','run3','nobuttons'};
@@ -429,9 +431,9 @@ rejecteeg{cnt} = 0;
 % rejecteeg{cnt} = 0;
 % 
 cnt = cnt + 1;
-subjects{cnt} = 'meg14_0184_vp9';
+subjects{cnt} = 'meg14_0184_vp9_fup';
 dates{cnt} = '160408';
-blocksin{cnt} = {'vespa_fup_first', 'vespa_fup_first_1', 'vespa_fup_second','vespa_fup_second_1','vespa_fup_nobuttons'}; % vespa_fup_rest; vespa_fup_MMN NB: rest done at end as cHPI not recorded the first time.
+blocksin{cnt} = {'vespa_fup_first', 'vespa_fup_first_1', 'vespa_fup_second','vespa_fup_second_1'}; % vespa_fup_rest; vespa_fup_MMN NB: rest done at end as cHPI not recorded the first time.
 blocksout{cnt} = {'run1', 'nobuttons','nobuttons_second','nobuttons_second_1'};
 badchannels{cnt, 1} = {'0813','0333','0631'}; badchannels{cnt, 2} = {'0813','0333','0631'}; badchannels{cnt, 3} = {'0813','0333','0631'}; badchannels{cnt, 4} = {'0813','0333','0631'}; badchannels{cnt, 5} = {'0813','0333','0631'}; badchannels{cnt, 6} = {'0813','0333','0631'}; badchannels{cnt, 7} = {}; % define bad MEG (not EEG) channels here (if there are any)
 badeeg{cnt} = {'2','29','39','73'};
@@ -439,7 +441,7 @@ group(cnt) = 4;
 rejecteeg{cnt} = 0; 
 % 
 cnt = cnt + 1;
-subjects{cnt} = 'meg14_0205_vp10';
+subjects{cnt} = 'meg14_0205_vp10_fup';
 dates{cnt} = '160425';
 blocksin{cnt} = {'vespa_fup_first', 'vespa_fup_second','vespa_fup_third'};
 blocksout{cnt} = {'run1', 'run2','run3'};
@@ -449,7 +451,7 @@ group(cnt) = 4;
 rejecteeg{cnt} = 0;
 % 
 cnt = cnt + 1;
-subjects{cnt} = 'meg14_0506_vp12';
+subjects{cnt} = 'meg14_0506_vp12_fup';
 dates{cnt} = '160421';
 blocksin{cnt} = {'vespa_fup_first', 'vespa_fup_second','vespa_fup_third'}; % vespa_fup_rest; vespa_fup_MMN
 blocksout{cnt} = {'run1', 'run2','run3'};
@@ -470,7 +472,7 @@ rejecteeg{cnt} = 0;
 % rejecteeg{cnt} = 0;
 % 
 cnt = cnt + 1;
-subjects{cnt} = 'meg14_0218_vc9';
+subjects{cnt} = 'meg14_0218_vc9_fup';
 dates{cnt} = '160513';
 blocksin{cnt} = {'vespa_fup_first', 'vespa_fup_second','vespa_fup_third','vespa_fup_nobuttons'}; % vespa_fup_rest; vespa_fup_MMN
 blocksout{cnt} = {'run1', 'run2','run3','nobuttons'};
@@ -490,7 +492,7 @@ rejecteeg{cnt} = 0;
 % rejecteeg{cnt} = 1; %Too many bad channels
 % 
 cnt = cnt + 1;
-subjects{cnt} = 'meg14_0234_vc10';
+subjects{cnt} = 'meg14_0234_vc10_fup';
 dates{cnt} = '160526';
 blocksin{cnt} = {'vespa_fup_first', 'vespa_fup_second','vespa_fup_third','vespa_fup_nobuttons'};  % vespa_fup_rest; vespa_fup_MMN
 blocksout{cnt} = {'run1', 'run2','run3','nobuttons'};
@@ -500,7 +502,7 @@ group(cnt) = 3;
 rejecteeg{cnt} = 0;
 % 
 cnt = cnt + 1;
-subjects{cnt} = 'meg14_0242_vc11';
+subjects{cnt} = 'meg14_0242_vc11_fup';
 dates{cnt} = '160531';
 blocksin{cnt} = {'vespa_fup_first', 'vespa_fup_second','vespa_fup_third','vespa_fup_nobuttons'};  % vespa_fup_rest; vespa_fup_MMN
 blocksout{cnt} = {'run1', 'run2','run3','nobuttons'};
@@ -510,7 +512,7 @@ group(cnt) = 3;
 rejecteeg{cnt} = 0;
 % 
 cnt = cnt + 1;
-subjects{cnt} = 'meg14_0253_vc12';
+subjects{cnt} = 'meg14_0253_vc12_fup';
 dates{cnt} = '160503';
 blocksin{cnt} = {'vespa_fup_first', 'vespa_fup_second','vespa_fup_third','vespa_fup_nobuttons'};  % vespa_fup_rest; vespa_fup_MMN
 blocksout{cnt} = {'run1', 'run2','run3','nobuttons'};

@@ -29,11 +29,11 @@ for i = 1:length(windows)
     savepath = ['./Source_Reconstructions/Bars_OPIFG_2016_SPM_' num2str(i)];
     eval(['export_fig ' savepath '.png -transparent'])
     eval(['export_fig ' savepath '.pdf -transparent'])
-    groupdifference_here(filename,[-56 -34 12], 11, 9); %Pre-defined OPIFG region
+    groupdifference_here(filename,[-56 -34 12], 11, 9); %Pre-defined STG region
     savepath = ['./Source_Reconstructions/Bars_STG_2016_SPM_' num2str(i)];
     eval(['export_fig ' savepath '.png -transparent'])
     eval(['export_fig ' savepath '.pdf -transparent'])
-    groupdifference_here(filename,[-46 2 28], 11, 9); %Pre-defined OPIFG region
+    groupdifference_here(filename,[-46 2 28], 11, 9); %Pre-defined Frontal region
     savepath = ['./Source_Reconstructions/Bars_frontal_2016_SPM_' num2str(i)];
     eval(['export_fig ' savepath '.png -transparent'])
     eval(['export_fig ' savepath '.pdf -transparent'])

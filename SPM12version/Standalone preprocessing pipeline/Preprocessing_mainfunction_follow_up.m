@@ -1,59 +1,69 @@
-function Preprocessing_mainfunction(step,prevStep,p,pathstem,maxfilteredpathstem, subjects,subjcnt,dates,blocksin,blocksout,rawpathstem,badeeg,badmeg,runtodo)
+function Preprocessing_mainfunction_follow_up(step,prevStep,p,pathstem,maxfilteredpathstem, subjects,subjcnt,dates,blocksin,blocksout,rawpathstem,badeeg,badmeg,runtodo)
 
 switch prevStep
     % Here you specify the filenames that you search for after each step.
     case 'maxfilter'
-        prevStep = '*ssst.fif';
+        prevStep1 = '*ssst.fif';
         S.outfilestem = [pathstem subjects];
         if ~exist(S.outfilestem,'dir')
             mkdir(S.outfilestem);
         end
         pathstem = maxfilteredpathstem;
     case 'convert'
-        prevStep = 'run*.mat';
+        prevStep1 = 'run*.mat';
     case 'ICA_artifacts'
-        prevStep = 'Mrun*.mat';
+        prevStep1 = 'Mrun*.mat';
     case 'ICA_artifacts_copy'
-        prevStep = 'Mrun*.mat';
+        prevStep1 = 'Mrun*.mat';
     case 'downsample'
-        prevStep = 'd*Mrun*.mat';
+        prevStep1 = 'd*Mrun*.mat';
     case 'epoch'
-        prevStep = 'e*Mrun*.mat';
+        prevStep1 = 'e*Mrun*.mat';
     case 'merge'
-        prevStep = 'c*Mrun*.mat';
+        prevStep1 = 'c*Mrun*.mat';
     case 'rereference'
-        prevStep = 'M*Mrun*.mat';
+        prevStep1 = 'M*Mrun*.mat';
     case 'TF_power'
-        prevStep = 'tf*Mrun*.mat';
+        prevStep1 = 'tf*Mrun*.mat';
     case 'TF_phase'
-        prevStep = 'tph*Mrun*.mat';
+        prevStep1 = 'tph*Mrun*.mat';
     case 'TF_rescale'
-        prevStep = 'r*Mrun*.mat';
+        prevStep1 = 'r*Mrun*.mat';
     case 'filter'
-        prevStep = 'fb*Mrun*.mat';
+        prevStep1 = 'fb*Mrun*.mat';
     case 'secondfilter'
-        prevStep = 'ffb*Mrun*.mat';
+        prevStep1 = 'ffb*Mrun*.mat';
     case 'baseline'
-        prevStep = 'b*Mrun*.mat';
+        prevStep1 = 'b*Mrun*.mat';
     case 'average'
-        prevStep = 'm*Mrun*.mat';
+        prevStep1 = 'm*Mrun*.mat';
     case 'quickaverage'
-        prevStep = 'quick/m*Mrun*.mat';
+        prevStep1 = 'quick/m*Mrun*.mat';
     case 'weight'
-        prevStep = 'w*Mrun*.mat';
+        prevStep1 = 'w*Mrun*.mat';
     case 'combineplanar'
-        prevStep = 'p*Mrun*.mat';
+        prevStep1 = 'p*Mrun*.mat';
     case 'artefact'
-        prevStep = 'a*Mrun*.mat';
+        prevStep1 = 'a*Mrun*.mat';
     case 'blink'
-        prevStep = 'clean*Mrun*.mat';
+        prevStep1 = 'clean*Mrun*.mat';
     case 'image'
-        prevStep = 'trial*Mrun*.img';
+        prevStep1 = 'trial*Mrun*.img';
     case 'smooth'
-        prevStep = 'sm*Mrun*.img';
+        prevStep1 = 'sm*Mrun*.img';
     case 'firstlevel'
-        prevStep = 't*Mrun*.img';
+        prevStep1 = 't*Mrun*.img';
         
+end
+
+try
+    prevStep2 = strrep(prevStep1,'run','nobuttons');
+catch
+    prevStep1 = prevStep;
+    prevStep2 = [prevStep(1:end-6) 'n*.mat'];
+end
+if strcmp(prevStep1,prevStep2)
+    prevStep2 = 'neverfindthis';
 end
 
 switch step
@@ -69,7 +79,7 @@ switch step
             cd(filePath);
             
             % search for input files
-            files = dir(prevStep);
+            files = [dir(prevStep1); dir(prevStep2)];
             
             for f=1:length(files)
                 
@@ -102,7 +112,7 @@ switch step
             cd(filePath);
             
             % search for input files
-            files = dir(prevStep);
+            files = [dir(prevStep1); dir(prevStep2)];
             
             for f=1:length(files)
                 
@@ -157,7 +167,7 @@ switch step
         cd(filePath);
         
         % search for input files
-        files = dir(prevStep);
+        files = [dir(prevStep1); dir(prevStep2)];
         
         for f=1:length(files)
             
@@ -226,7 +236,7 @@ switch step
         cd(filePath);
         
         % search for input files
-        files = dir(prevStep);
+        files = [dir(prevStep1); dir(prevStep2)];
         
         for f=1:length(files)
             
@@ -289,7 +299,7 @@ switch step
             cd(filePath);
             
             % search for input files
-            files = dir(prevStep);
+            files = [dir(prevStep1); dir(prevStep2)];
             
             for f=1:length(files)
                 
@@ -369,8 +379,8 @@ switch step
             cd(filePath);
             
             % search for input files
-            files = dir(prevStep);
-            filesTrlDef = dir('*trlDef.mat');
+            files = [dir(prevStep1); dir(prevStep2)];
+            filesTrlDef = [dir('*trlDef_run*.mat'); dir('*trlDef_nobuttons*.mat')];
             
             for f=1:length(files)
                 
@@ -488,7 +498,7 @@ switch step
             cd(filePath);
             
             % search for input files
-            files = dir(prevStep);
+            files = [dir(prevStep1); dir(prevStep2)];
             
             for f=1:length(files)
                 
@@ -542,8 +552,8 @@ switch step
             cd(filePath);
             
             % search for input files
-            files = dir(prevStep);
-            filesTrlDef = dir('trlDef*.mat');
+            files = [dir(prevStep1); dir(prevStep2)];
+            filesTrlDef = [dir('trlDef_run*.mat'); dir('trlDef_nobuttons*.mat')];
             
             for f=1:length(files)
                 
@@ -661,17 +671,27 @@ switch step
             cd(filePath);
             
             % search for input files
-            files = dir(prevStep);
+            files = [dir(prevStep1); dir(prevStep2)];
             
             try
                 runstodo = runtodo; % If runtodo is defined in inputs
             catch
                 runstodo = 1:length(files);
             end
-            
-            for f=runstodo
+                       
+            for processthisone=runstodo
+                
+                for i = 1:length(files)
+                    rightfile = strfind(files(i).name,[blocksout{subjcnt}{processthisone} '_raw_']);
+                    if ~isempty(rightfile)
+                        f = i;
+                        continue
+                    end
+                end
                 
                 fprintf([ '\n\nProcessing ' files(f).name '...\n\n' ]);
+                
+                % continue % For debugging to check presence of expected files
                 
                 % set input file
                 S.dataset = files(f).name;
@@ -758,8 +778,8 @@ switch step
             cd(filePath);
             
             % search for input files
-            files = dir(prevStep);
-            filesTrlDef = dir('trlDef*.mat');
+            files = [dir(prevStep1); dir(prevStep2)];
+            filesTrlDef = [dir('trlDef_run*.mat'); dir('trlDef_nobuttons*.mat')]; 
             
             for f=1:length(files)
                 
@@ -827,8 +847,8 @@ switch step
             cd(filePath);
             
             % search for input files
-            files = dir(prevStep);
-            filesTrlDef = dir('trlDef*.mat');
+            files = [dir(prevStep1); dir(prevStep2)];
+            filesTrlDef = [dir('trlDef*run*.mat'); dir('trlDef*nobuttons*.mat')];
             
             for f=1:length(files)
                 
@@ -893,8 +913,8 @@ switch step
             cd(filePath);
             
             % search for input files
-            filesdone = dir(['d' prevStep]);    %Check if already done!
-            files = dir(prevStep);
+            filesdone = [dir(['d' prevStep1]); dir(['d' prevStep2])];    %Check if already done!
+            files = [dir(prevStep1); dir(prevStep2)];
             
             
             if isempty(filesdone)
@@ -968,9 +988,9 @@ switch step
             
             % search for input files
             files = [];
-            %files = dir(['f' prevStep]);    %Check if already done!
+            %files = [dir(['f' prevStep1]); dir(['f' prevStep2])];     %Check if already done!
             if isempty(files)
-                files = dir(prevStep);
+                files = [dir(prevStep1); dir(prevStep2)];
                 for f=1:length(files)
                     
                     fprintf([ '\n\nProcessing ' files(f).name '...\n\n' ]);
@@ -1004,7 +1024,7 @@ switch step
             cd(filePath);
             
             % search for input files
-            files = dir(prevStep);
+            files = [dir(prevStep1); dir(prevStep2)];
             
             % set input files for merging (note: spm_eeg_merge requires file
             % names as a character array)
@@ -1049,7 +1069,7 @@ switch step
         % search for input files
         %filesdone = [];    %For debug
         
-        files = dir(prevStep);
+        files = [dir(prevStep1); dir(prevStep2)];
         
         currentDirectory = pwd;
         [~, deepestFolder, ~] = fileparts(currentDirectory);
@@ -1118,8 +1138,8 @@ switch step
         
         % search for input files
         %filesdone = [];    %For debug
-        filesdone = dir(['M' prevStep]);    %Check if already done! In case it crashes after one or two runs, to save you having to repeat everything.
-        files = dir(prevStep);
+        filesdone = [dir(['M' prevStep1]); dir(['M' prevStep2])];    %Check if already done! In case it crashes after one or two runs, to save you having to repeat everything.
+        files = [dir(prevStep1); dir(prevStep2)];
         try
             runstodo = runtodo; % If runtodo is defined in inputs
         catch
@@ -1427,7 +1447,7 @@ switch step
             cd(filePath);
             
             % search for input files
-            files = dir(prevStep);
+            files = [dir(prevStep1); dir(prevStep2)];
             
             for f=1:length(files)
                 
@@ -1480,7 +1500,7 @@ switch step
             cd(filePath);
             
             % search for input files
-            files = dir(prevStep);
+            files = [dir(prevStep1); dir(prevStep2)];
             
             for f=1:length(files)
                 
@@ -1515,7 +1535,7 @@ switch step
             cd(filePath);
             
             % search for input files
-            files = dir(prevStep);
+            files = [dir(prevStep1); dir(prevStep2)];
             
             for f=1:length(files)
                 
@@ -1556,9 +1576,9 @@ switch step
             
             % search for input files
             files = [];
-            %files = dir(['m' prevStep]);    %Check if already done!
+            %files = [dir(['m' prevStep1]); dir(['m' prevStep2])];    %Check if already done!
             if isempty(files)
-                files = dir(prevStep);
+                files = [dir(prevStep1); dir(prevStep2)];
                 
                 for f=1:length(files)
                     
@@ -1609,14 +1629,14 @@ switch step
             
             % search for input files
             files = [];
-            %files = dir(['m' prevStep]);    %Check if already done!
-            donefiles = dir(['m' prevStep]);
+            %files = [dir(['m' prevStep1]); dir(['m' prevStep2])];    %Check if already done!
+            donefiles = [dir(['m' prevStep1]); dir(['m' prevStep2])];
             inprogress = spm_eeg_load(donefiles(1).name);
            
             if isempty(files) && strcmp(inprogress.conditions(1),'Undefined')
                 clear inprogress;
                 fprintf(['\n\nData not yet averaged for ' subjects ' - resuming!\n\n']);
-                files = dir(prevStep);
+                files = [dir(prevStep1); dir(prevStep2)];
                 
                 for f=1:length(files)
                     
@@ -1667,15 +1687,15 @@ switch step
             
             % search for input files
             files = [];
-            %files = dir(['m' prevStep]);    %Check if already done!
-            donefiles = dir(['m' prevStep]);
+            %files = [dir(['m' prevStep1]); dir(['m' prevStep2])];    %Check if already done!
+            donefiles = [dir(['m' prevStep1]); dir(['m' prevStep2])];
             inprogress = spm_eeg_load(donefiles(1).name);
             firstzero = find(squeeze(inprogress(size(inprogress,1),size(inprogress,2),:,size(inprogress,4)))==0,1);
            
             if isempty(files) && ~isempty(firstzero)
                 clear inprogress;
                 fprintf(['\n\nData not yet averaged for ' subjects ' - resuming!\n\n']);
-                files = dir(prevStep);
+                files = [dir(prevStep1); dir(prevStep2)];
                 
                 for f=1:length(files)
                     
@@ -1725,9 +1745,9 @@ switch step
             
             % search for input files
             files = [];
-            %files = dir(['m' prevStep]);    %Check if already done!
+            %files = [dir(['m' prevStep1]); dir(['m' prevStep2])];    %Check if already done!
             if isempty(files)
-                files = dir(prevStep);
+                files = [dir(prevStep1); dir(prevStep2)];
                 
                 for f=1:length(files)
                     
@@ -1770,7 +1790,7 @@ switch step
             cd(filePath);
             
             % search for input files
-            files = dir(prevStep);
+            files = [dir(prevStep1); dir(prevStep2)];
             
             for f=1:length(files)
                 
@@ -1804,7 +1824,7 @@ switch step
             cd(filePath);
             
             % search for input files
-            files = dir(prevStep);
+            files = [dir(prevStep1); dir(prevStep2)];
             
             for f=1:length(files)
                 
@@ -1829,6 +1849,8 @@ switch step
         % set input files for averaging
         controls2average = {};
         patients2average = {};
+        controls_fup_2average = {};
+        patients_fup_2average = {};
         for s=1:size(subjects,2) % for multiple subjects
             
             fprintf([ '\n\nCurrent subject = ' subjects{s} '...\n\n' ]);
@@ -1838,22 +1860,29 @@ switch step
             cd(filePath);
             
             % search for input files
-            files = dir(prevStep);
+            files = [dir(prevStep1); dir(prevStep2)];
             
             fprintf([ '\n\nProcessing ' files.name '...\n\n' ]);
             
             if p.group(s) == 1
-                fprintf([ '\nIdentified as a control. \n' ]);
+                fprintf([ '\nIdentified as a control baseline. \n' ]);
                 controls2average{end+1} = [filePath '/' files.name];
                 
             elseif p.group(s) == 2
-                fprintf([ '\nIdentified as a patient. \n' ]);
+                fprintf([ '\nIdentified as a patient baseline. \n' ]);
                 patients2average{end+1} = [filePath '/' files.name];
+            elseif p.group(s) == 3
+                fprintf([ '\nIdentified as a control followup. \n' ]);
+                controls_fup_2average{end+1} = [filePath '/' files.name];
+                
+            elseif p.group(s) == 4
+                fprintf([ '\nIdentified as a patient followup. \n' ]);
+                patients_fup_2average{end+1} = [filePath '/' files.name];
             end
             
         end
         
-        parfor groups = 1:2
+        parfor groups = 1:4
             if groups == 1
                 
                 S = [];
@@ -1864,18 +1893,18 @@ switch step
                 
                 % setup output filename (have to do this despite what grandmean()
                 % documentation says!)
-                if strncmpi(prevStep,'w',1)
-                    S.outfile = ['controls_weighted_grandmean'];
+                if strncmpi(prevStep1,'w',1)
+                    S.outfile = ['controls_baseline_weighted_grandmean'];
                 else
-                    S.outfile = ['controls_grandmean'];
+                    S.outfile = ['controls_baseline_grandmean'];
                 end
-                if strncmpi(prevStep,'wBc',3)
-                    S.outfile = ['controls_weighted_beamformed_grandmean'];
-                elseif strncmpi(prevStep,'Bc',2)
-                    S.outfile = ['controls_beamformed_grandmean'];
+                if strncmpi(prevStep1,'wBc',3)
+                    S.outfile = ['controls_baseline_weighted_beamformed_grandmean'];
+                elseif strncmpi(prevStep1,'Bc',2)
+                    S.outfile = ['controls_baseline_beamformed_grandmean'];
                 end
                 % main process
-                fprintf('\nAveraging controls\n');
+                fprintf('\nAveraging controls baseline\n');
                 spm_eeg_grandmean_vladedit(S);
                 
             elseif groups == 2
@@ -1888,18 +1917,66 @@ switch step
                 
                 % setup output filename (have to do this despite what grandmean()
                 % documentation says!)
-                if strncmpi(prevStep,'w',1)
-                    S.outfile = ['patients_weighted_grandmean'];
+                if strncmpi(prevStep1,'w',1)
+                    S.outfile = ['patients_baseline_weighted_grandmean'];
                 else
-                    S.outfile = ['patients_grandmean'];
+                    S.outfile = ['patients_baseline_grandmean'];
                 end
-                if strncmpi(prevStep,'wBc',3)
-                    S.outfile = ['patients_weighted_beamformed_grandmean'];
-                elseif strncmpi(prevStep,'Bc',2)
-                    S.outfile = ['patients_beamformed_grandmean'];
+                if strncmpi(prevStep1,'wBc',3)
+                    S.outfile = ['patients_baseline_weighted_beamformed_grandmean'];
+                elseif strncmpi(prevStep1,'Bc',2)
+                    S.outfile = ['patients_baseline_beamformed_grandmean'];
                 end
                 % main process
-                fprintf('\nAveraging patients\n');
+                fprintf('\nAveraging patients baseline\n');
+                spm_eeg_grandmean_vladedit(S);
+                
+            elseif groups == 3
+                
+                S = [];
+                % parameters for SPM function
+                S.weighted = 0;
+                % set input files
+                S.D = char(controls_fup_2average);
+                
+                % setup output filename (have to do this despite what grandmean()
+                % documentation says!)
+                if strncmpi(prevStep1,'w',1)
+                    S.outfile = ['controls_followup_weighted_grandmean'];
+                else
+                    S.outfile = ['controls_followup_grandmean'];
+                end
+                if strncmpi(prevStep1,'wBc',3)
+                    S.outfile = ['controls_followup_weighted_beamformed_grandmean'];
+                elseif strncmpi(prevStep1,'Bc',2)
+                    S.outfile = ['controls_followup_beamformed_grandmean'];
+                end
+                % main process
+                fprintf('\nAveraging controls followup\n');
+                spm_eeg_grandmean_vladedit(S);
+                
+            elseif groups == 4
+                
+                S = [];
+                % parameters for SPM function
+                S.weighted = 0;
+                % set input files
+                S.D = char(patients_fup_2average);
+                
+                % setup output filename (have to do this despite what grandmean()
+                % documentation says!)
+                if strncmpi(prevStep1,'w',1)
+                    S.outfile = ['patients_followup_weighted_grandmean'];
+                else
+                    S.outfile = ['patients_followup_grandmean'];
+                end
+                if strncmpi(prevStep1,'wBc',3)
+                    S.outfile = ['patients_followup_weighted_beamformed_grandmean'];
+                elseif strncmpi(prevStep1,'Bc',2)
+                    S.outfile = ['patients_followup_beamformed_grandmean'];
+                end
+                % main process
+                fprintf('\nAveraging patients followup\n');
                 spm_eeg_grandmean_vladedit(S);
             end
         end
@@ -1934,7 +2011,7 @@ switch step
             cd(filePath);
             
             % search for input files
-            files = dir(prevStep);
+            files = [dir(prevStep1); dir(prevStep2)];
             
             for f=1:length(files)
                 
@@ -1967,7 +2044,7 @@ switch step
             cd(filePath);
             
             % search for input files
-            files = dir(prevStep);
+            files = [dir(prevStep1); dir(prevStep2)];
             
             for f=1:length(files)
                 
@@ -2000,14 +2077,14 @@ switch step
             cd(filePath);
             
             % search for input files
-            different_folder_files = dir(prevStep);
+            different_folder_files = [dir(prevStep1); dir(prevStep2)];
             
             % change to input directory
             filePath = [pathstem subjects];
             cd(filePath);
             
             % search for input files
-            files = dir(prevStep);
+            files = [dir(prevStep1); dir(prevStep2)];
             
             for f=1:length(files)
                 
@@ -2037,7 +2114,7 @@ switch step
             cd(filePath);
             
             % search for input files
-            files = dir(prevStep);
+            files = [dir(prevStep1); dir(prevStep2)];
             
             for f=1:length(files)
                 
@@ -2077,7 +2154,7 @@ switch step
             cd(filePath);
             
             % search for input files
-            files = dir(prevStep);
+            files = [dir(prevStep1); dir(prevStep2)];
             
             for f=1:length(files)
                 
@@ -2164,7 +2241,7 @@ switch step
                 cd(filePath);
                 
                 % search for input files
-                files = dir(prevStep);
+                files = [dir(prevStep1); dir(prevStep2)];
                 
                 fprintf([ '\n\nProcessing ' files.name '...\n\n' ]);
                 
@@ -2291,7 +2368,7 @@ switch step
                 % change to input directory (image folder level)
                 filePath = [pathstem subjects];
                 cd(filePath);
-                foldercomplete = dir(prevStep);
+                foldercomplete = [dir(prevStep1); dir(prevStep2)];
                 
                 if isfield(p, 'BF') && p.BF == 1
                     D = spm_eeg_load(foldercomplete.name);
@@ -2341,7 +2418,7 @@ switch step
                 %                 if strcmp(modality{m},'Source')
                 %
                 %                     % search for input files
-                %                     files = dir(prevStep);
+                %                     files = [dir(prevStep1); dir(prevStep2)];
                 %
                 %                     for f=1:length(files)
                 %
@@ -2368,7 +2445,7 @@ switch step
                 %                         cd(filePath);
                 %
                 %                         % search for input files
-                %                         files = dir(prevStep);
+                %                         files = [dir(prevStep1); dir(prevStep2)];
                 %
                 %                         for f=1:length(files)
                 %
@@ -2408,7 +2485,7 @@ switch step
             cd(filePath);
             
             % search for input files
-            files = dir(prevStep);
+            files = [dir(prevStep1); dir(prevStep2)];
             
             for f=1:length(files)
                 
@@ -2490,7 +2567,7 @@ switch step
                 cd(filePath);
                 
                 % search for input folders
-                foldercomplete = dir(prevStep);
+                foldercomplete = [dir(prevStep1); dir(prevStep2)];
                 
                 %folders = dir('type*');
                 %folders = dir('1D_type*');
@@ -2586,7 +2663,7 @@ switch step
                     filePath = [pathstem subjects];
                     cd(filePath);
                     
-                    files = dir(prevStep);
+                    files = [dir(prevStep1); dir(prevStep2)];
                     
                     for f=1:length(files)
                         

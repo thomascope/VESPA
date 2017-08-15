@@ -291,6 +291,10 @@ plot_betas_thresholded([-246,246],[1:6],[-1 1 -1 1 -1 1],{'T_0017','T_0018'},22,
 
 plot_betas_tf_thresholded([-1.9 1.9], [1:6],[-1 1 -1 1 -1 1],{'T_0018','T_0019'},22,[14 30],'MEGPLANAR',[364 364], [472 600], [868 868]); %The defined time window is where there is no difference in activity.
 
+plot_betas_tf_previsualbaseline_thresholded([-2 2], [1:6],[-1 1 -1 1 -1 1],{'T_0018','T_0019'},22,[14 30],'MEGPLANAR',[364 364], [472 600], [868 868]); %The defined time window is where there is no difference in activity.
+
+plot_betas_tf_previsualbaseline_thresholded([-2 2], [1:6],[-1 1 -1 1 -1 1],{'T_0018','T_0019'},22,[8 14],'MEGPLANAR',[364 364], [472 600], [868 868]); %The defined time window is where there is no difference in activity.
+
 plot_betas_tf_thresholded([-2.3 2.3], [1:6],[-1 1 -1 1 -1 1],{'T_0018','T_0019'},22,[8 14],'MEGPLANAR',[364 364], [472 600], [868 868]); %The defined time window is where there is no difference in activity.
 
 windows = [90 130; 180 240; 270 420; 450 700; 750 900; 90 150; 200 280; 290 440; 450 700; 710 860];
@@ -310,4 +314,6 @@ plot_betas_thresholded([-2.64 2.64],[1:6],[-1 -1 0 0 1 1],{'T_0019','T_0020'},22
 
 %Now look in with the TF baseline corrected to written word
 
-plot_betas_tf_taper_newbaseline([1:6],[1 1 1 1 1 1],{'T_0024','T_0025'},22,[68 90],'MEGPLANAR',[440 740]); %The defined time window is where there is no difference in activity.
+plot_betas_tf_taper_newbaseline([1:6],[1 1 1 1 1 1],{'T_0024','T_0025'},22,[68 90],'MEGPLANAR',[440 740]); 
+
+plot_betas_tf_newbaseline([1:6],[1 1 1 1 1 1],{'F_0015'},22,[12 24],'MEGPLANAR',[800 1000]); 

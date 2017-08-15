@@ -55,7 +55,7 @@ if anovatbl{'Group','pValue'} < 0.05
     tc_sigstar({[1,2]},anovatbl{'Group','pValue'},0.145,0)
 end
 
-%pause
+pause
 
 
 

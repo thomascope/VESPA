@@ -14,9 +14,9 @@ filetypesplit = 'rmtf_ceffbMdMrun1_1_raw_ssst';
 modality = {'MEG' 'MEGPLANAR' 'EEG'};
 imagetype = {'sm_'};
 %p.windows = [-100 800; 90 130; 180 240; 270 420; 450 700;];
-p.windows = [-100 2100];
+p.windows = [-100 1000];
 
-outputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_tf_newbaseline';
+outputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_tf_newbaseline_shortened_withmodel';
 
 %mskname = '/imaging/local/spm/spm8/apriori/grey.nii'; % specify in modality loop below if multiple modalities are being estimated. Don't specify if not needed
 
@@ -40,7 +40,15 @@ cnt = 0;
 % contrasts{cnt}.c = kron(orth(diff(eye(3))')',[1/2 1/2]);
 % contrasts{cnt}.type = 'F';
 
+%% Covariates
+cnt = 0;
+cnt = cnt+1;
+testcovs = load('/imaging/tc02/vespa/MEG_prediction_analysis.mat');
+S.covariates{cnt}.value = [repmat(testcovs.alldata(1:11),6,1);repmat(testcovs.alldata(12:end),6,1)];
+S.covariates{cnt}.name = 'SD of Prime';
+
 %% Contrasts (Combined SPM for patients/controls)
+cnt = 0;
 
 cnt = cnt + 1;
 contrasts{cnt}.name = 'Match-Mismatch(All)';
