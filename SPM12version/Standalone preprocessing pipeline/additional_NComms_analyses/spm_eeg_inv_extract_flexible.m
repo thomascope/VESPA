@@ -120,7 +120,7 @@ pseudoinverse_forward = pinv(gain.G)';
 for this_source = 1:length(svert)
     verticesofinterest = svert{this_source};
     for this_trial = 1:size(chandata,3)
-        projected_data{this_source}(:,:,this_trial) = chandata(:,:,this_trial)'*gain.G(:,verticesofinterest);
+        projected_data{this_source}(:,:,this_trial) = chandata(:,:,this_trial)'*pseudoinverse_forward(:,verticesofinterest);
     end
 end
 

@@ -54,8 +54,8 @@ for t = 1:3
 
     
     for s = 1:length(group)
-        %load([datapathstem 's' num2str(s) '_grangerdata_evokedfilter_' num2str(start_times) '_' num2str(end_times) '_overall']); %For evoked data
-        load([datapathstem 's' num2str(s) '_grangerdata_' num2str(start_times) '_' num2str(end_times) '_overall']); %For timeseries data
+        load([datapathstem 's' num2str(s) '_grangerdata_evokedfilter_' num2str(start_times) '_' num2str(end_times) '_overall']); %For evoked data
+        %load([datapathstem 's' num2str(s) '_grangerdata_' num2str(start_times) '_' num2str(end_times) '_overall']); %For timeseries data
         if rejecteeg{s} == 1 %Biases analysis
             granger_data = nan(size(granger_data));
         end

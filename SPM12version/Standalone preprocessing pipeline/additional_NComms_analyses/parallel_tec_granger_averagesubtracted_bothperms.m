@@ -1,5 +1,7 @@
 % possible fft methods: mtmfft mtmconvol wavelet
-function parallel_tec_granger_source_coherence_unaveraged_tf(s,outdir,start_times,end_times,fft_method,method)
+function parallel_tec_granger_averagesubtracted_bothperms(s,outdir,start_times,end_times,fft_method,method)
+
+subtract_average = 1;
 
 subjects_and_parameters;
 
@@ -8,8 +10,6 @@ if ~exist('outdir','var'); outdir = [pathstem 'extractedsources/']; end
 if ~exist('fft_method','var'); fft_method = 'mtmfft'; end
 if ~exist('method','var'); method = 'granger'; end
 
-All_Conds = conditions; %XXX Guess for now
-
 % matchconds = [2,4,6];
 % mismatchconds = [1,3,5];
 corr_sig_pairs=1:2;  %XXX Check if this is right - original script used a variable called corr_sig_pairs
@@ -17,7 +17,7 @@ corr_sig_pairs=1:2;  %XXX Check if this is right - original script used a variab
 %for s=1:length(subjects)
 
 %S = spm_eeg_load([outdir 'timeseries_for_coherence_s' num2str(s)]);
-S=load([outdir 'timeseries_for_coherence_evoked_s' num2str(s)]);
+S=load([outdir 'timeseries_for_coherence_s' num2str(s)]);
 S=S.D;
 clear D;
 
@@ -35,16 +35,21 @@ nchans = numel(data_sub(:,1,1));
 %end_times = 944;
 ntimes = numel(start_times);
 
-for n = 1:11
+if subtract_average == 1
+    S.data(:,:,:) = S.data(:,:,:) - repmat(mean(S.data(:,:,:),3),[1 1 size(S.data,3)]);
+end
+
+for n = 1:21
     
     nperm = 10;    % number of permutations
     
     nptmp = nperm;
-    if n == 11
+    if n == 21
         nptmp = 1;
     end
     
     %temp_granger_data = nan(nchans,nchans,ntimes,70,2,nptmp);               % XXX why 70 freqs and 2 conditions? % Generate empty matrix to hold all results - from x to x time x freq x condition x number of permutations
+    %temp_granger_data = nan(nchans,nchans,ntimes,91,numel(conditions),nptmp);
     
     All_labels = strvcat(S.trials.label);
     All_Conds = zeros(1,size(All_labels,1));
@@ -53,10 +58,14 @@ for n = 1:11
     end
     
     for p = 1:nptmp
-        randcond = All_Conds(randperm(numel(All_Conds)));
-
-        if n == 11
-            randcond = All_Conds; %Not random in 11th perm
+        
+        if n <= 10
+            randcond = All_Conds(randperm(numel(All_Conds))); %first 100 perms, randomise condition labels 
+        elseif n <= 20
+            randcond_1 = All_Conds(randperm(numel(All_Conds)));  %shuffle trial numbers in 101:200
+            randcond_2 = All_Conds(randperm(numel(All_Conds)));
+        else
+            randcond = All_Conds; %Not random in 21st perm
         end
         
         for t = 1:ntimes
@@ -80,9 +89,21 @@ for n = 1:11
                         ftdata = [];        % create ft data structure
                         
                         %     odata.trial =permute(double(Z{cond}),[3 1 2]);
-
-                        ftdata.trial = permute(double(S.data(chans,tIdx,find(randcond==cond))),[3,1,2]); %Reorder into FT structure
-
+                        
+                        
+                        if n <= 10
+                            ftdata.trial = permute(double(S.data(chans,tIdx,find(randcond==cond))),[3,1,2]); %Reorder into FT structure
+                        elseif n <= 20
+                            ftdata_temp = [];
+                            ftdata_temp.trial1 = permute(double(S.data(chans,tIdx,find(randcond_1==cond))),[3,1,2]); %Reorder into FT structure
+                            ftdata_temp.trial2 = permute(double(S.data(chans,tIdx,find(randcond_2==cond))),[3,1,2]); %Reorder into FT structure
+                            ftdata.trial = [ftdata_temp.trial1(:,1,:),ftdata_temp.trial2(:,2,:)];
+                            clear ftdata_temp
+                        else
+                            ftdata.trial = permute(double(S.data(chans,tIdx,find(randcond==cond))),[3,1,2]); %Reorder into FT structure
+                        end
+                        
+                        
                         for k=1:(length(chans))
                             %ftdata.label{k,1}=['Chan_' num2str(k)];
                             ftdata.label{k,1}=S.channels(k).label;
@@ -101,7 +122,7 @@ for n = 1:11
                         freqmax =  40; %XXX edited from 100 to 40 because of filtering
                         foi     = 0:fstep:freqmax;
                         
-                        % fres    = 4 * ones(size(foi));
+                        %fres    = 4 * ones(size(foi));
                         fres    = 2.5 * ones(size(foi)); %XXX what is this? Frequency smoothing? Answer - yes - +/-
                         
                         fsample = srate;
@@ -191,21 +212,21 @@ for n = 1:11
         end
     end
     foi = foi(2:end);
-    save([outdir 's' num2str(s) '_grangerdata_evokedfilter_' num2str(start_times) '_' num2str(end_times) '_z' num2str(n)],'bipolar_labels','corr_sig_pairs','temp_granger_data','start_times','end_times','foi');
+    save([outdir 's' num2str(s) '_grangerdata_' num2str(start_times) '_' num2str(end_times) '_z' num2str(n)],'bipolar_labels','corr_sig_pairs','temp_granger_data','start_times','end_times','foi');
 end
 %% save results
 
 combined_granger_data = [];
 
-for z = 1:11
+for z = 1:21
     % load (['X:\auditory\Daniyal\ECog Data\288-004\288-004_8_0-8_evoked_grangerdata_shorttimes_',num2str(z),'.mat']);
-    load ([outdir 's' num2str(s) '_grangerdata_evokedfilter_' num2str(start_times) '_' num2str(end_times) '_z' num2str(z)])
+    load ([outdir 's' num2str(s) '_grangerdata_' num2str(start_times) '_' num2str(end_times) '_z' num2str(z)])
     combined_granger_data = cat(6,combined_granger_data,temp_granger_data);
 end
 
 granger_data = combined_granger_data;
 
 % save(['288-004_8_0-8_evoked_grangerdata_shorttimes'],'bipolar_labels','corr_sig_pairs','granger_data','start_times','end_times','foi');
-save([outdir 's' num2str(s) '_grangerdata_evokedfilter_' num2str(start_times) '_' num2str(end_times) '_overall'],'bipolar_labels','corr_sig_pairs','granger_data','start_times','end_times','foi');
+save([outdir 's' num2str(s) '_grangerdata_' num2str(start_times) '_' num2str(end_times) '_overall'],'bipolar_labels','corr_sig_pairs','granger_data','start_times','end_times','foi');
 
 

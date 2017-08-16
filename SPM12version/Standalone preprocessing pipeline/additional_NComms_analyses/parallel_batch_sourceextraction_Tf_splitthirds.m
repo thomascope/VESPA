@@ -1,4 +1,4 @@
-function parallel_batch_sourceextraction_Tf(s)
+function parallel_batch_sourceextraction_Tf_splitthirds(s)
 
 %A new script to extract the source timeseries from existing source
 %reconstructions to satistfy nature comms reviewers
@@ -13,28 +13,28 @@ fft_method = 'mtmfft'; % 'wavelet' for morlet; can leave blank for multitaper.
 %method = 'granger';
 method = 'coh';
 
-%for time = 1:3
-for time = 3
+for time = 1:3
+%for time = 3
 %for time = [1,3]
 %for time = 1
     if time == 3
         tf_pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/'; %For spoken word baseline
         outdir = [pathstem 'extractedsources_tf_icoh/'];
         %outdir = [pathstem 'extractedsources_tf/'];
-        start_times = 32;
-        end_times = 944;
+        start_times = 636;
+        end_times = 900;
     elseif time == 2
-        tf_pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_newbaseline_fixedICA/'; %For written word baseline
-        %outdir = [pathstem 'extractedsources_tf_newinversions_newbaseline_icoh/'];
-        outdir = [pathstem 'extractedsources_tf_newinversions_newbaseline/'];
-        start_times = 32;
-        end_times = 944;
+        tf_pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/'; %For spoken word baseline
+        outdir = [pathstem 'extractedsources_tf_icoh/'];
+        %outdir = [pathstem 'extractedsources_tf/'];
+        start_times =300;
+        end_times = 564;
     else
-        tf_pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_newbaseline_prestimpaddedforgrangernull/'; %For pre-written word baseline
-        %outdir = [pathstem 'extractedsources_tf_newinversions_null_icoh/'];
-        outdir = [pathstem 'extractedsources_tf_newinversions_null/'];
-        start_times = -968;
-        end_times = -56;
+        tf_pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/'; %For spoken word baseline
+        outdir = [pathstem 'extractedsources_tf_icoh/'];
+        %outdir = [pathstem 'extractedsources_tf/'];
+        start_times = 32;
+        end_times = 296;
     end
     
     targetfile = 'fmcfbMdeMrun1_raw_ssst.mat';
