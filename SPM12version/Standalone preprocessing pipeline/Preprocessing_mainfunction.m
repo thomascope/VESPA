@@ -21,6 +21,8 @@ switch prevStep
         prevStep = 'e*Mrun*.mat';
     case 'merge'
         prevStep = 'c*Mrun*.mat';
+    case 'subtractevoked'
+        prevStep = 'ev*Mrun*.mat';
     case 'rereference'
         prevStep = 'M*Mrun*.mat';
     case 'TF_power'
@@ -1906,6 +1908,44 @@ switch step
         
         fprintf('\n\nData grand averaged!\n\n');
         
+    case 'subtractevoked'
+        
+        for s=1:size(subjects,1)
+            
+            fprintf([ '\n\nCurrent subject = ' subjects '...\n\n' ]);
+            
+            % change to input directory
+            filePath = [pathstem subjects];
+            cd(filePath);
+            
+            % search for input files
+            files = dir(prevStep);
+            
+            for f=1:length(files)
+                
+                fprintf([ '\n\nProcessing ' files(f).name '...\n\n' ]);
+                
+                S.D = files(f).name;
+                S.outfile = ['ev' files(f).name];
+                spm_eeg_copy(S);
+                
+                D = spm_eeg_load(S.outfile);
+                
+                newdata = [];
+                for cond = 1:length(D.condlist)
+                    condition_average = mean(D.selectdata([],[],D.condlist{cond}),3);
+                    newdata(:,:,end+1:end+size(D.selectdata([],[],D.condlist{cond}),3)) = D.selectdata([],[],D.condlist{cond}) - repmat(condition_average,[1 1 size(D.selectdata([],[],D.condlist{cond}),3)]);
+                end
+                newdata(:,:,1) = []; %For some reason end+1 indexing with empty third dimension gives zeros in first 'trial'
+                D(:,:,:) = newdata;
+                D.save;
+                
+            end % blocks
+            
+        end % subjects
+        
+        fprintf('\n\nEvoked data subtracted by trial!\n\n');
+    
     case 'TF' % perform time-frequency analysis
         
         % parameters for SPM function
