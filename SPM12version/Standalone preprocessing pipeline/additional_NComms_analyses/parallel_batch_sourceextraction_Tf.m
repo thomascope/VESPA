@@ -132,5 +132,6 @@ for time = 3
 %     
     %parallel_tec_granger_source_coherence_tf(s,outdir)
     %parallel_tec_granger_averagesubtracted_bothperms(s,outdir,start_times,end_times,fft_method,method)
-    parallel_tec_granger_averagesubtracted_bothperms_highfreq(s,outdir,start_times,end_times,fft_method,method)
+    parallel_tec_granger_averagesubtracted_bothperms_highfreq_1000(s,outdir,start_times,end_times,fft_method,method)
+    %parallel_tec_granger_averagenotsubtracted_bothperms_highfreq(s,outdir,start_times,end_times,fft_method,method)
 end

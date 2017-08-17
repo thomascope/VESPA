@@ -1,7 +1,7 @@
 % possible fft methods: mtmfft mtmconvol wavelet
-function parallel_tec_granger_averagesubtracted_bothperms_highfreq(s,outdir,start_times,end_times,fft_method,method)
+function parallel_tec_granger_averagenotsubtracted_bothperms_highfreq(s,outdir,start_times,end_times,fft_method,method)
 
-subtract_average = 1;
+subtract_average = 0;
 
 subjects_and_parameters;
 
@@ -212,7 +212,7 @@ for n = 1:21
         end
     end
     foi = foi(2:end);
-    save([outdir 's' num2str(s) '_grangerdata_highfreq_averagesubtracted_' num2str(start_times) '_' num2str(end_times) '_z' num2str(n)],'bipolar_labels','corr_sig_pairs','temp_granger_data','start_times','end_times','foi');
+    save([outdir 's' num2str(s) '_grangerdata_highfreq_averagenotsubtracted_' num2str(start_times) '_' num2str(end_times) '_z' num2str(n)],'bipolar_labels','corr_sig_pairs','temp_granger_data','start_times','end_times','foi');
 end
 %% save results
 
@@ -220,13 +220,13 @@ combined_granger_data = [];
 
 for z = 1:21
     % load (['X:\auditory\Daniyal\ECog Data\288-004\288-004_8_0-8_evoked_grangerdata_shorttimes_',num2str(z),'.mat']);
-    load ([outdir 's' num2str(s) '_grangerdata_highfreq_averagesubtracted_' num2str(start_times) '_' num2str(end_times) '_z' num2str(z)])
+    load ([outdir 's' num2str(s) '_grangerdata_highfreq_averagenotsubtracted_' num2str(start_times) '_' num2str(end_times) '_z' num2str(z)])
     combined_granger_data = cat(6,combined_granger_data,temp_granger_data);
 end
 
 granger_data = combined_granger_data;
 
 % save(['288-004_8_0-8_evoked_grangerdata_shorttimes'],'bipolar_labels','corr_sig_pairs','granger_data','start_times','end_times','foi');
-save([outdir 's' num2str(s) '_grangerdata_highfreq_averagesubtracted_' num2str(start_times) '_' num2str(end_times) '_overall'],'bipolar_labels','corr_sig_pairs','granger_data','start_times','end_times','foi');
+save([outdir 's' num2str(s) '_grangerdata_highfreq_averagenotsubtracted_' num2str(start_times) '_' num2str(end_times) '_overall'],'bipolar_labels','corr_sig_pairs','granger_data','start_times','end_times','foi');
 
 
