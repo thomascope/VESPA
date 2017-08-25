@@ -106,7 +106,7 @@ p.method = 'morlet'; %method
 p.ncycles = 7; %number of wavelet cycles
 p.phase = 1; %save phase information too? (prefixed with tph)
 p.tf_chans = 'All'; %cell array of channel names. Can include generic wildcards: 'All', 'EEG', 'MEG' etc.
-p.timewin = [-500 2500]; %time window of interest
+p.timewin = [-500 1500]; %time window of interest
 p.preBase_tf = -100; %TF baseline correct period with below (I don't know why this isn't a two element vector - don't blame me.)
 p.postBase_tf = 0;
 p.tf.method = 'LogR'; %'LogR', 'Diff', 'Rel', 'Log', 'Sqrt', 'None'
@@ -147,7 +147,7 @@ parfor cnt = 1:size(subjects,2)
     Preprocessing_mainfunction('subtractevoked','merge',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt,dates,blocksin,blocksout,rawpathstem, badeeg, badchannels, source_directory)
 end
 parfor cnt = 1:size(subjects,2)
-    Preprocessing_mainfunction('TF','merge',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+    Preprocessing_mainfunction('TF','subtractevoked',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
 parfor cnt = 1:size(subjects,2)
     Preprocessing_mainfunction('average','TF_power',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
@@ -155,13 +155,13 @@ end
 
 
 parfor cnt = 1:size(subjects,2)
-    Preprocessing_mainfunction('TF_rescale_differentfolder','mtf_c*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt,dates,blocksin,blocksout,rawpathstem, badeeg, badchannels, source_directory);
+    Preprocessing_mainfunction('TF_rescale_differentfolder','mtf_evc*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt,dates,blocksin,blocksout,rawpathstem, badeeg, badchannels, source_directory);
 end
 Preprocessing_mainfunction('grand_average','TF_rescale',p,pathstem, maxfilteredpathstem, subjects);
 parfor cnt = 1:size(subjects,2)    
    Preprocessing_mainfunction('weight','TF_rescale',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
-Preprocessing_mainfunction('grand_average','wrmtf_c*.mat',p,pathstem, maxfilteredpathstem, subjects);
+Preprocessing_mainfunction('grand_average','wrmtf_evc*.mat',p,pathstem, maxfilteredpathstem, subjects);
 parfor cnt = 1:size(subjects,2)
     Preprocessing_mainfunction('image','TF_rescale',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end

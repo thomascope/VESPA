@@ -67,7 +67,7 @@ plot(D.time,squeeze(mean(mean(abs(All_Ds_demeaned(:,1,:,[2,4,6])),4),1)),'r')
 plot(D.time,squeeze(mean(mean(abs(All_Ds_demeaned(:,2,:,[1,3,5])),4),1)),'b--')
 plot(D.time,squeeze(mean(mean(abs(All_Ds_demeaned(:,2,:,[2,4,6])),4),1)),'b')
 ylim([0 1.6]);
-title('Overall power by source');
+title('Overall power by source and condition');
 legend({'MisMatch Frontal';'Match Frontal';'MisMatch Temporal';'Match Temporal'});
 
 figure
@@ -77,7 +77,7 @@ plot(D.time,squeeze(mean(mean(abs(All_conDs_demeaned(:,1,:,[2,4,6])),4),1)),'r')
 plot(D.time,squeeze(mean(mean(abs(All_conDs_demeaned(:,2,:,[1,3,5])),4),1)),'b--')
 plot(D.time,squeeze(mean(mean(abs(All_conDs_demeaned(:,2,:,[2,4,6])),4),1)),'b')
 ylim([0 1.6]);
-title('Control power by source');
+title('Control power by source and condition');
 legend({'MisMatch Frontal';'Match Frontal';'MisMatch Temporal';'Match Temporal'});
 
 figure
@@ -87,7 +87,7 @@ plot(D.time,squeeze(mean(mean(abs(All_patDs_demeaned(:,1,:,[2,4,6])),4),1)),'r')
 plot(D.time,squeeze(mean(mean(abs(All_patDs_demeaned(:,2,:,[1,3,5])),4),1)),'b--')
 plot(D.time,squeeze(mean(mean(abs(All_patDs_demeaned(:,2,:,[2,4,6])),4),1)),'b')
 ylim([0 1.6]);
-title('Patient power by source');
+title('Patient power by source and condition');
 legend({'MisMatch Frontal';'Match Frontal';'MisMatch Temporal';'Match Temporal'});
 
 figure
@@ -96,7 +96,7 @@ hold on
 plot(D.time,squeeze(mean(mean(abs(All_patDs_demeaned(:,1,:,:)),4),1)),'b--')
 plot(D.time,squeeze(mean(mean(abs(All_conDs_demeaned(:,2,:,:)),4),1)),'r')
 plot(D.time,squeeze(mean(mean(abs(All_patDs_demeaned(:,2,:,:)),4),1)),'b')
-title('By group power by source');
+title('By group overall power by source');
 legend({'Controls Frontal';'Patients Frontal';'Controls Temporal';'Patients Temporal'});
 
 figure

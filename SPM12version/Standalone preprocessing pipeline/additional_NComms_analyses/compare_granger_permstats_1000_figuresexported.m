@@ -1,8 +1,11 @@
+%Latest stats requires Matlab2015a or greater with statistics toolbox
+
 datapathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/extractedsources/';
 
 load([datapathstem 'groups.mat']);
 datapathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/extractedsources_tf/'; %For spoken baseline
 %datapathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/extractedsources_tf_newinversions_newbaseline/'; %For written baseline
+addpath(['/group/language/data/thomascope/vespa/SPM12version/Standalone preprocessing pipeline/tc_source_stats/ojwoodford-export_fig-216b30e'])
 
 averagesubtracted = 1;
 highfreq = 1;
@@ -220,6 +223,29 @@ for t = 1:size(timewins)
                 end
             end
             
+                        
+            figure
+            plot(foi,squeeze(mean(mean(all_granger_data(2,1,:,:,:,:),5),6)),'g','LineWidth',7)
+            hold on
+            plot(foi,squeeze(mean(mean(all_granger_data(1,2,:,:,:,:),5),6)),'b','LineWidth',7)
+            title(['By direction ' analysis_type ' time ' num2str(start_times) '-' num2str(end_times)])
+            legend({'temp-front','front-temp'})
+            for i = 1:35
+                thisarray = [repmat(sort(repmat([1:21],1,6))',2,1),repmat([1:6]',21*2,1),[ones(21*6,1);2*ones(21*6,1)],[reshape(all_granger_data(2,1,:,i,:,:),[126,1]);reshape(all_granger_data(1,2,:,i,:,:),[126,1])]];
+                t1=array2table(thisarray,'VariableNames',{'Subject','Condition','Direction','Response'});
+                thistest = fitglm(t1,'Response ~ Direction + Condition + Subject');
+                p_tf(i) = thistest.Coefficients{4,4};
+                if p_tf(i) < 0.05
+                    if mean(mean(all_granger_data(2,1,:,i,:,:),5),6)>mean(mean(all_granger_data(1,2,:,i,:,:),5),6)
+                        plot(foi(i),0,'g*')
+                    else
+                        plot(foi(i),0,'bx')
+                    end
+                end
+            end
+            savestring = ['All_mean_' analysis_type '_time_' num2str(start_times) '-' num2str(end_times) '.pdf'];
+            eval(['export_fig ' savestring ' -transparent'])
+            
             figure
             plot(foi,squeeze(median(mean(all_granger_data(2,1,:,:,:,:),5),6)),'g','LineWidth',7)
             hold on
@@ -240,6 +266,8 @@ for t = 1:size(timewins)
                     plot(foi(i),0,'bx')
                 end
             end
+            savestring = ['All_median_' analysis_type '_time_' num2str(start_times) '-' num2str(end_times) '.pdf'];
+            eval(['export_fig ' savestring ' -transparent'])
             
             figure
             plot(foi,squeeze(mean(mean(demeaned_all_granger_data(2,1,:,:,:,:),5),6)),'g','LineWidth',7)
@@ -247,8 +275,41 @@ for t = 1:size(timewins)
             plot(foi,squeeze(mean(mean(demeaned_all_granger_data(1,2,:,:,:,:),5),6)),'b','LineWidth',7)
             title(['All demeaned ' analysis_type ' time ' num2str(start_times) '-' num2str(end_times)])
             legend({'temp-front','front-temp'}) %Not yet clear how to do stats on this - XXX
+%             for i = 1:35 %Rough initial parametric stats - better to use permutation
+%                 %[h_tf(i) p_tf(i)] = ttest(mean(demeaned_all_granger_data(2,1,:,i,:,:),5)-mean(demeaned_all_granger_data(1,2,:,i,:,:),5));
+%                 [h_tf(i) p_tf(i)] = ttest(reshape(demeaned_all_granger_data(2,1,:,i,:,:),[126,1]),reshape(demeaned_all_granger_data(1,2,:,i,:,:),[126,1]))
+%                 if h_tf(i) == 1
+%                     if mean(mean(demeaned_all_granger_data(2,1,:,i,:,:),5),6)>mean(mean(demeaned_all_granger_data(1,2,:,i,:,:),5),6)
+%                         plot(foi(i),0,'g*')
+%                     else
+%                         plot(foi(i),0,'bx')
+%                     end
+%                 end
+%             end
+            % Fit GLMs with subject and condition. NB: I know that this
+            % isn't quite right as subject isn't treated as a random
+            % effect, but I can't figure out how to do this and the
+            % Bonferroni correction is stringent and should more than
+            % compensate
+            for i = 1:35
+                thisarray = [repmat(sort(repmat([1:21],1,6))',2,1),repmat([1:6]',21*2,1),[ones(21*6,1);2*ones(21*6,1)],[reshape(demeaned_all_granger_data(2,1,:,i,:,:),[126,1]);reshape(demeaned_all_granger_data(1,2,:,i,:,:),[126,1])]];
+                t1=array2table(thisarray,'VariableNames',{'Subject','Condition','Direction','Response'});
+                thistest = fitglm(t1,'Response ~ Direction + Condition + Subject');
+                p_tf(i) = thistest.Coefficients{4,4};
+                if p_tf(i) < 0.05
+                    if mean(mean(demeaned_all_granger_data(2,1,:,i,:,:),5),6)>mean(mean(demeaned_all_granger_data(1,2,:,i,:,:),5),6)
+                        plot(foi(i),0,'g*')
+                    else
+                        plot(foi(i),0,'bx')
+                    end
+                end
+            end
+            savestring = ['All_demeaned_' analysis_type '_time_' num2str(start_times) '-' num2str(end_times) '.pdf'];
+            eval(['export_fig ' savestring ' -transparent'])
             
-%             figure
+            
+            
+            %             figure
 %             plot(foi,squeeze(mean(mean(demeaned_all_controls_granger_data(2,1,:,:,:,:),5),6)),'g:','LineWidth',7)
 %             hold on
 %             plot(foi,squeeze(mean(mean(demeaned_all_patients_granger_data(2,1,:,:,:,:),5),6)),'g--','LineWidth',7)
@@ -287,26 +348,27 @@ for t = 1:size(timewins)
                     plot(foi(i),0,'bx')
                 end
             end
-            control_test = [];
-            patient_test = [];
-            for i = 2:34 % A little bit of 'frequency smoothing'
-                control_test(i-1,:) = squeeze(mean(mean(all_controls_granger_data(2,1,:,i-1:i+1,:,:),5),4));
-                patient_test(i-1,:) = squeeze(mean(mean(all_patients_granger_data(2,1,:,i-1:i+1,:,:),5),4));
-                [h_tf(i) p_tf(i)] = ttest2(control_test(i-1,:),patient_test(i-1,:));
-                control_test(i-1,:) = squeeze(mean(mean(all_controls_granger_data(1,2,:,i-1:i+1,:,:),5),4));
-                patient_test(i-1,:) = squeeze(mean(mean(all_patients_granger_data(1,2,:,i-1:i+1,:,:),5),4));
-                [h_ft(i) p_ft(i)] = ttest2(control_test(i-1,:),patient_test(i-1,:));
-                
-                
-                if h_tf(i) == 1
-                    plot(foi(i),0,'g*')
-                end
-                if h_ft(i) == 1
-                    plot(foi(i),0,'bx')
-                end
-            end
-            
-            
+%             control_test = [];
+%             patient_test = [];
+%             for i = 2:34 % A little bit of 'frequency smoothing'
+%                 control_test(i-1,:) = squeeze(mean(mean(all_controls_granger_data(2,1,:,i-1:i+1,:,:),5),4));
+%                 patient_test(i-1,:) = squeeze(mean(mean(all_patients_granger_data(2,1,:,i-1:i+1,:,:),5),4));
+%                 [h_tf(i) p_tf(i)] = ttest2(control_test(i-1,:),patient_test(i-1,:));
+%                 control_test(i-1,:) = squeeze(mean(mean(all_controls_granger_data(1,2,:,i-1:i+1,:,:),5),4));
+%                 patient_test(i-1,:) = squeeze(mean(mean(all_patients_granger_data(1,2,:,i-1:i+1,:,:),5),4));
+%                 [h_ft(i) p_ft(i)] = ttest2(control_test(i-1,:),patient_test(i-1,:));
+%                 
+%                 
+%                 if h_tf(i) == 1
+%                     plot(foi(i),0,'g*')
+%                 end
+%                 if h_ft(i) == 1
+%                     plot(foi(i),0,'bx')
+%                 end
+%             end
+            savestring = ['By_group_mean_' analysis_type '_time_' num2str(start_times) '-' num2str(end_times) '.pdf'];
+            eval(['export_fig ' savestring ' -transparent'])
+           
             figure
             hold on
             plot(foi,squeeze(median(mean(all_controls_granger_data(2,1,:,:,:,:),5),6)),'g:','LineWidth',7)
@@ -326,6 +388,32 @@ for t = 1:size(timewins)
                 end
             end
             
+            savestring = ['By_group_median_' analysis_type '_time_' num2str(start_times) '-' num2str(end_times) '.pdf'];
+            eval(['export_fig ' savestring ' -transparent'])
+            
+            
+            figure
+            hold on
+            plot(foi,squeeze(mean(mean(demeaned_all_controls_granger_data(2,1,:,:,:,2:end),5),6)),'g:','LineWidth',7)
+            plot(foi,squeeze(mean(mean(demeaned_all_patients_granger_data(2,1,:,:,:,2:end),5),6)),'g--','LineWidth',7)
+            plot(foi,squeeze(mean(mean(demeaned_all_controls_granger_data(1,2,:,:,:,2:end),5),6)),'b:','LineWidth',7)
+            plot(foi,squeeze(mean(mean(demeaned_all_patients_granger_data(1,2,:,:,:,2:end),5),6)),'b--','LineWidth',7)
+         
+            title(['By group demeaned ' analysis_type ' time ' num2str(start_times) '-' num2str(end_times)])
+             legend({'temp-front control','temp-front patient','front-temp control','front-temp patient'})
+         
+%             con_tf_lowfreq = squeeze(mean(median(mean(all_controls_granger_data(2,1,:,4:5,:,:),5),6),4));
+%             pat_tf_lowfreq = squeeze(mean(median(mean(all_patients_granger_data(2,1,:,4:5,:,:),5),6),4));
+%             con_ft_lowfreq = squeeze(mean(median(mean(all_controls_granger_data(1,2,:,4:5,:,:),5),6),4));
+%             pat_ft_lowfreq = squeeze(mean(median(mean(all_patients_granger_data(1,2,:,4:5,:,:),5),6),4));
+%             
+%             con_tf_highfreq = squeeze(mean(median(mean(all_controls_granger_data(2,1,:,7:10,:,:),5),6),4));
+%             pat_tf_highfreq = squeeze(mean(median(mean(all_patients_granger_data(2,1,:,7:10,:,:),5),6),4));
+%             con_ft_highfreq = squeeze(mean(median(mean(all_controls_granger_data(1,2,:,7:10,:,:),5),6),4));
+%             pat_ft_highfreq = squeeze(mean(median(mean(all_patients_granger_data(1,2,:,7:10,:,:),5),6),4));
+            
+continue
+
             config = figure;
             patfig = figure;
             con_contrastfig = figure;
@@ -679,7 +767,7 @@ for t = 1:size(timewins)
             for i = 1:35 %Rough initial parametric stats - better to use permutation
                 p_tf_c(i) = 1-relRankIn_includeValue_lowerBound(squeeze(mean(all_random_controls_congruency_contrasts(2,1,i,:,:,:),6)),squeeze(mean(all_controls_congruency_contrasts(2,1,:,i,:),5)));
                 p_ft_c(i) = 1-relRankIn_includeValue_lowerBound(squeeze(mean(all_random_controls_congruency_contrasts(1,2,i,:,:,:),6)),squeeze(mean(all_controls_congruency_contrasts(1,2,:,i,:),5)));
-                if p_tf_c(i)<=0.05 || p_ft_p(i)>=0.95
+                if p_tf_c(i)<=0.05 || p_ft_c(i)>=0.95
                     plot(foi(i),0,'go')
                 end
                 if p_ft_c(i)<=0.05 || p_ft_c(i)>=0.95
@@ -714,7 +802,7 @@ for t = 1:size(timewins)
             for i = 1:35 %Rough initial parametric stats - better to use permutation
                 p_tf_c(i) = 1-relRankIn_includeValue_lowerBound(squeeze(median(all_random_controls_congruency_contrasts(2,1,i,:,:,:),6)),squeeze(median(all_controls_congruency_contrasts(2,1,:,i,:),5)));
                 p_ft_c(i) = 1-relRankIn_includeValue_lowerBound(squeeze(median(all_random_controls_congruency_contrasts(1,2,i,:,:,:),6)),squeeze(median(all_controls_congruency_contrasts(1,2,:,i,:),5)));
-                if p_tf_c(i)<=0.05 || p_ft_p(i)>=0.95
+                if p_tf_c(i)<=0.05 || p_ft_c(i)>=0.95
                     plot(foi(i),0,'go')
                 end
                 if p_ft_c(i)<=0.05 || p_ft_c(i)>=0.95
@@ -749,7 +837,7 @@ for t = 1:size(timewins)
             for i = 1:35 %Rough initial parametric stats - better to use permutation
                 p_tf_c(i) = 1-relRankIn_includeValue_lowerBound(squeeze(mean(all_random_controls_interaction_contrasts(2,1,i,:,:,:),6)),squeeze(mean(all_controls_interaction_contrasts(2,1,:,i,:),5)));
                 p_ft_c(i) = 1-relRankIn_includeValue_lowerBound(squeeze(mean(all_random_controls_interaction_contrasts(1,2,i,:,:,:),6)),squeeze(mean(all_controls_interaction_contrasts(1,2,:,i,:),5)));
-                if p_tf_c(i)<=0.05 || p_ft_p(i)>=0.95 || p_tf_c(i)>=0.95
+                if p_tf_c(i)<=0.05 || p_tf_c(i)>=0.95
                     plot(foi(i),0,'go')
                 end
                 if p_ft_c(i)<=0.05 || p_ft_c(i)>=0.95
@@ -784,7 +872,7 @@ for t = 1:size(timewins)
             for i = 1:35 %Rough initial parametric stats - better to use permutation
                 p_tf_c(i) = 1-relRankIn_includeValue_lowerBound(squeeze(mean(all_random_controls_clarity_contrasts(2,1,i,:,:,:),6)),squeeze(mean(all_controls_clarity_contrasts(2,1,:,i,:),5)));
                 p_ft_c(i) = 1-relRankIn_includeValue_lowerBound(squeeze(mean(all_random_controls_clarity_contrasts(1,2,i,:,:,:),6)),squeeze(mean(all_controls_clarity_contrasts(1,2,:,i,:),5)));
-                if p_tf_c(i)<=0.05 || p_ft_p(i)>=0.95 || p_tf_c(i)>=0.95
+                if p_tf_c(i)<=0.05 || p_tf_c(i)>=0.95
                     plot(foi(i),0,'go')
                 end
                 if p_ft_c(i)<=0.05 || p_ft_c(i)>=0.95

@@ -1931,12 +1931,13 @@ switch step
                 
                 D = spm_eeg_load(S.outfile);
                 
-                newdata = [];
+                newdata=nan(size(D));
                 for cond = 1:length(D.condlist)
                     condition_average = mean(D.selectdata([],[],D.condlist{cond}),3);
-                    newdata(:,:,end+1:end+size(D.selectdata([],[],D.condlist{cond}),3)) = D.selectdata([],[],D.condlist{cond}) - repmat(condition_average,[1 1 size(D.selectdata([],[],D.condlist{cond}),3)]);
+                    condition_indices = find(not(cellfun('isempty',strfind(D.conditions,D.condlist{cond}))));
+                    newdata(:,:,condition_indices) = D.selectdata([],[],D.condlist{cond}) - repmat(condition_average,[1 1 size(D.selectdata([],[],D.condlist{cond}),3)]);
                 end
-                newdata(:,:,1) = []; %For some reason end+1 indexing with empty third dimension gives zeros in first 'trial'
+                
                 D(:,:,:) = newdata;
                 D.save;
                 
@@ -2041,6 +2042,7 @@ switch step
             
             % search for input files
             different_folder_files = dir(prevStep);
+            %different_folder_files = dir('mtf_c*dMrun*.mat'); %For hack to allow evoked subtraction
             
             % change to input directory
             filePath = [pathstem subjects];
