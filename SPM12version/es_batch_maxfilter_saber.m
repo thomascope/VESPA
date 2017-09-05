@@ -1,6 +1,6 @@
 %based on script by Jason Taylor (es edit- downsampling turned off)
 
-es_batch_init_all;
+es_batch_init_all_SPM12;
 %do_subjects = []; %define which subjects to maxfilter
 
 %% The rest should not need editing
@@ -12,7 +12,7 @@ end
 
 nr_sbj = length(subject);
 
-try do_subjects,    % if do_subjects not defined, do all subjects
+try, do_subjects,    % if do_subjects not defined, do all subjects
 catch
     do_subjects = [1:nr_sbj];
 end;

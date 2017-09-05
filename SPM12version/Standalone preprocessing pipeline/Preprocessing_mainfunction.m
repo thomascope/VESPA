@@ -2041,6 +2041,7 @@ switch step
             cd(filePath);
             
             % search for input files
+            try
             different_folder_files = dir(prevStep);
             %different_folder_files = dir('mtf_c*dMrun*.mat'); %For hack to allow evoked subtraction
             
@@ -2063,7 +2064,28 @@ switch step
                 spm_eeg_tf_rescale(S);
                 
             end
-            
+            catch
+                different_folder_files = dir('mtf_c*dMrun*.mat'); %For hack to allow evoked subtraction
+                % change to input directory
+                filePath = [pathstem subjects];
+                cd(filePath);
+                
+                % search for input files
+                files = dir(prevStep);
+                
+                for f=1:length(files)
+                    
+                    fprintf([ '\n\nProcessing ' files(f).name '...\n\n' ]);
+                    
+                    % set input file
+                    S.D = files(f).name;
+                    S.Db = [p.source_directory_forrescale subjects '/' different_folder_files(f).name];
+                    
+                    % main process
+                    spm_eeg_tf_rescale(S);
+                    
+                end
+            end
         end % subjects
         
         fprintf('\n\nTime-frequency analysis baseline corrected!\n\n');

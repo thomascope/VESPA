@@ -296,6 +296,7 @@ for t = 1:size(timewins)
                 t1=array2table(thisarray,'VariableNames',{'Subject','Condition','Direction','Response'});
                 thistest = fitglm(t1,'Response ~ Direction + Condition + Subject');
                 p_tf(i) = thistest.Coefficients{4,4};
+                SEM(i) = thistest.Coefficients{4,2};
                 if p_tf(i) < 0.05
                     if mean(mean(demeaned_all_granger_data(2,1,:,i,:,:),5),6)>mean(mean(demeaned_all_granger_data(1,2,:,i,:,:),5),6)
                         plot(foi(i),0,'g*')
@@ -307,7 +308,15 @@ for t = 1:size(timewins)
             savestring = ['All_demeaned_' analysis_type '_time_' num2str(start_times) '-' num2str(end_times) '.pdf'];
             eval(['export_fig ' savestring ' -transparent'])
             
-            
+            figure
+            difference_demeaned = demeaned_all_granger_data(2,1,:,:,:,:)-demeaned_all_granger_data(1,2,:,:,:,:);
+            hold on
+            fill([foi,fliplr(foi)],[squeeze(mean(mean(difference_demeaned(1,1,:,:,:,:),5),6))-SEM';flipud(squeeze(mean(mean(difference_demeaned(1,1,:,:,:,:),5),6))+SEM')]','g');
+            plot(foi,squeeze(mean(mean(difference_demeaned(1,1,:,:,:,:),5),6)),'b','LineWidth',7);
+            ylim([-1 1]);
+            plot([0 40],[0 0],'k--','LineWidth',1);
+            savestring = ['Difference_demeaned_' analysis_type '_time_' num2str(start_times) '-' num2str(end_times) '.pdf'];
+            eval(['export_fig ' savestring ' -transparent'])
             
             %             figure
 %             plot(foi,squeeze(mean(mean(demeaned_all_controls_granger_data(2,1,:,:,:,:),5),6)),'g:','LineWidth',7)
@@ -348,6 +357,8 @@ for t = 1:size(timewins)
                     plot(foi(i),0,'bx')
                 end
             end
+            
+            
 %             control_test = [];
 %             patient_test = [];
 %             for i = 2:34 % A little bit of 'frequency smoothing'
@@ -369,6 +380,31 @@ for t = 1:size(timewins)
             savestring = ['By_group_mean_' analysis_type '_time_' num2str(start_times) '-' num2str(end_times) '.pdf'];
             eval(['export_fig ' savestring ' -transparent'])
            
+            
+                        figure
+            hold on
+            patient_SEMs = std(squeeze(mean(all_patients_granger_data(2,1,:,:,:,2:end),5))')/sqrt(10);
+            control_SEMs = std(squeeze(mean(all_controls_granger_data(2,1,:,:,:,2:end),5))')/sqrt(11);
+            fill([foi,fliplr(foi)],[squeeze(mean(mean(all_controls_granger_data(1,2,:,:,:,2:end),5),6))-control_SEMs';flipud(squeeze(mean(mean(all_controls_granger_data(1,2,:,:,:,2:end),5),6))+control_SEMs')]','c');
+            fill([foi,fliplr(foi)],[squeeze(mean(mean(all_patients_granger_data(1,2,:,:,:,2:end),5),6))-patient_SEMs';flipud(squeeze(mean(mean(all_patients_granger_data(1,2,:,:,:,2:end),5),6))+patient_SEMs')]','m');
+            plot(foi,squeeze(mean(mean(all_controls_granger_data(1,2,:,:,:,2:end),5),6)),'k','LineWidth',7)
+            plot(foi,squeeze(mean(mean(all_patients_granger_data(1,2,:,:,:,2:end),5),6)),'y','LineWidth',7)
+            legend({'temp-front control','temp-front patient','front-temp control','front-temp patient'})
+            title(['By group ' analysis_type ' time ' num2str(start_times) '-' num2str(end_times)])
+            for i = 1:35 %Rough initial parametric stats - better to use permutation
+                [h_tf(i) p_tf(i)] = ttest2(mean(all_controls_granger_data(2,1,:,i,:,:),5),mean(all_patients_granger_data(2,1,:,i,:,:),5));
+                [h_ft(i) p_ft(i)] = ttest2(mean(all_controls_granger_data(1,2,:,i,:,:),5),mean(all_patients_granger_data(1,2,:,i,:,:),5));
+                if h_tf(i) == 1
+                    plot(foi(i),0,'g*')
+                end
+                if h_ft(i) == 1
+                    plot(foi(i),0,'bx')
+                end
+            end
+            savestring = ['By_group_mean_withSEM_' analysis_type '_time_' num2str(start_times) '-' num2str(end_times) '.pdf'];
+            eval(['export_fig ' savestring ' -transparent'])
+           
+            
             figure
             hold on
             plot(foi,squeeze(median(mean(all_controls_granger_data(2,1,:,:,:,:),5),6)),'g:','LineWidth',7)
