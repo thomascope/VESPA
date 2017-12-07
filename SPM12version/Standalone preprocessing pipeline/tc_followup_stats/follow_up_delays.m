@@ -3,6 +3,7 @@ clear all
 addpath('/group/language/data/thomascope/vespa/SPM12version/Standalone preprocessing pipeline/');
 addpath(['/group/language/data/thomascope/vespa/SPM12version/Standalone preprocessing pipeline/tc_source_stats/ojwoodford-export_fig-216b30e'])
 subjects_and_parameters_follow_up_onlyboth
+%subjects_and_parameters_follow_up
 
 pathstem = '/imaging/tc02/vespa_followup/preprocess/SPM12_fullpipeline_tf/';
 imagetype = '/MEGPLANARrmtf_ceffbMdMrun1_raw_ssst';
@@ -24,6 +25,8 @@ consfig = figure;
 patsfig = figure;
 consfig_fup = figure;
 patsfig_fup = figure;
+conscomb = figure('pos',[350 100 400 800]);
+patscomb = figure('pos',[350 100 400 800]);
 for s = 1:length(subjects)
     try
         cd([pathstem subjects{s} imagetype])
@@ -47,7 +50,24 @@ for s = 1:length(subjects)
         imagesc(-flipud(C{thiscon}),[-1.2 1.2])
         colormap('jet')
         %Find max contrast and the index of where within 80% of max contrast
-        all_maxs = max((C{thiscon}));
+        all_maxs = max((C{thiscon}(1:13,:)));
+        abs_max = max(all_maxs);
+        all_times = find(all_maxs>(abs_max*0.8));
+        con_times(thiscon) = min(all_times)*congruency_contrast.mat(2,2)+congruency_contrast.mat(2,4);
+        set(gca,'xtick',[min(all_times)],'xticklabel',num2str(con_times(thiscon)))
+        set(gca,'ytick',[1 39],'yticklabel',[80 2])
+        set(gcf,'color','w');
+        xlim([start_vox size(C{thiscon},2)])
+        %Now re-plot side by side
+        figure(conscomb)
+        subplot(9,2,2*(thiscon-1)+1);
+        [rows, ~, ~] = size(C{thiscon});
+        newHeight = [1 3 * rows];
+        %imshow(-flipud(C{thiscon}), 'YData', newHeight);
+        imagesc(-flipud(C{thiscon}),[-1.2 1.2])
+        colormap('jet')
+        %Find max contrast and the index of where within 80% of max contrast
+        all_maxs = max((C{thiscon}(1:13,:)));
         abs_max = max(all_maxs);
         all_times = find(all_maxs>(abs_max*0.8));
         con_times(thiscon) = min(all_times)*congruency_contrast.mat(2,2)+congruency_contrast.mat(2,4);
@@ -67,7 +87,7 @@ for s = 1:length(subjects)
         imagesc(-flipud(P{thispat}),[-1.2 1.2])
         colormap('jet')
         %Find max contrast and the index of where within 80% of max contrast
-        all_maxs = max((P{thispat}));
+        all_maxs = max((P{thispat}(1:13,:)));
         abs_max = max(all_maxs);
         all_times = find(all_maxs>(abs_max*0.8));
         pat_times(thispat) = min(all_times)*congruency_contrast.mat(2,2)+congruency_contrast.mat(2,4);
@@ -75,6 +95,25 @@ for s = 1:length(subjects)
         set(gca,'ytick',[1 39],'yticklabel',[80 2])
         set(gcf,'color','w');
         xlim([start_vox size(P{thispat},2)])
+        %Now re-plot side by side
+        figure(patscomb)
+        subplot(9,2,2*(thispat-1)+1);
+        [rows, ~, ~] = size(P{thispat});
+        newHeight = [1 3 * rows];
+        %imshow(flipud(P{thispat}), 'YData', newHeight);
+        imagesc(-flipud(P{thispat}),[-1.2 1.2])
+        colormap('jet')
+        %Find max contrast and the index of where within 80% of max contrast
+        all_maxs = max((P{thispat}(1:13,:)));
+        abs_max = max(all_maxs);
+        all_times = find(all_maxs>(abs_max*0.8));
+        pat_times(thispat) = min(all_times)*congruency_contrast.mat(2,2)+congruency_contrast.mat(2,4);
+        set(gca,'xtick',[min(all_times)],'xticklabel',num2str(pat_times(thispat)))
+        set(gca,'ytick',[1 39],'yticklabel',[80 2])
+        set(gcf,'color','w');
+        xlim([start_vox size(P{thispat},2)])
+        
+        
     elseif group(s) == 3
         thiscon_fup = thiscon_fup+1;
         C_fup{thiscon_fup} = spm_read_vols(spm_vol('congruency_contrast.nii'));
@@ -86,7 +125,24 @@ for s = 1:length(subjects)
         imagesc(-flipud(C_fup{thiscon_fup}),[-1.2 1.2])
         colormap('jet')
         %Find max contrast and the index of where within 80% of max contrast
-        all_maxs = max((C_fup{thiscon_fup}));
+        all_maxs = max((C_fup{thiscon_fup}(1:13,:)));
+        abs_max = max(all_maxs);
+        all_times = find(all_maxs>(abs_max*0.8));
+        con_times_fup(thiscon_fup) = min(all_times)*congruency_contrast.mat(2,2)+congruency_contrast.mat(2,4);
+        set(gca,'xtick',[min(all_times)],'xticklabel',num2str(con_times_fup(thiscon_fup)))
+        set(gca,'ytick',[1 39],'yticklabel',[80 2])
+        set(gcf,'color','w');
+        xlim([start_vox size(C_fup{thiscon_fup},2)])
+        %Now re-plot side by side
+        figure(conscomb)
+        subplot(9,2,2*(thiscon_fup-1)+2);
+        [rows, ~, ~] = size(C_fup{thiscon_fup});
+        newHeight = [1 3 * rows];
+        %imshow(flipud(C_fup{thispat}), 'YData', newHeight);
+        imagesc(-flipud(C_fup{thiscon_fup}),[-1.2 1.2])
+        colormap('jet')
+        %Find max contrast and the index of where within 80% of max contrast
+        all_maxs = max((C_fup{thiscon_fup}(1:13,:)));
         abs_max = max(all_maxs);
         all_times = find(all_maxs>(abs_max*0.8));
         con_times_fup(thiscon_fup) = min(all_times)*congruency_contrast.mat(2,2)+congruency_contrast.mat(2,4);
@@ -104,8 +160,25 @@ for s = 1:length(subjects)
         %imshow(flipud(P_fup{thispat}), 'YData', newHeight);
         imagesc(-flipud(P_fup{thispat_fup}),[-1.2 1.2])
         colormap('jet')
+        %Find max contrast and the index of where within 80% of max contrast at <=28Hz
+        all_maxs = max((P_fup{thispat_fup}(1:13,:)));
+        abs_max = max(all_maxs);
+        all_times = find(all_maxs>(abs_max*0.8));
+        pat_times_fup(thispat_fup) = min(all_times)*congruency_contrast.mat(2,2)+congruency_contrast.mat(2,4);
+        set(gca,'xtick',[min(all_times)],'xticklabel',num2str(pat_times_fup(thispat_fup)))
+        set(gca,'ytick',[1 39],'yticklabel',[80 2])
+        set(gcf,'color','w');
+        xlim([start_vox size(P_fup{thispat_fup},2)])
+        %Now re-plot side by side
+        figure(patscomb)
+        subplot(9,2,2*(thispat_fup-1)+2);
+        [rows, ~, ~] = size(P_fup{thispat_fup});
+        newHeight = [1 3 * rows];
+        %imshow(flipud(P_fup{thispat}), 'YData', newHeight);
+        imagesc(-flipud(P_fup{thispat_fup}),[-1.2 1.2])
+        colormap('jet')
         %Find max contrast and the index of where within 80% of max contrast
-        all_maxs = max((P_fup{thispat_fup}));
+        all_maxs = max((P_fup{thispat_fup}(1:13,:)));
         abs_max = max(all_maxs);
         all_times = find(all_maxs>(abs_max*0.8));
         pat_times_fup(thispat_fup) = min(all_times)*congruency_contrast.mat(2,2)+congruency_contrast.mat(2,4);
@@ -121,14 +194,18 @@ end
 
 cd(thisdir)
 
-figure(consfig)
-export_fig 'All_control_baseline_TFs.pdf' -transparent
-figure(patsfig)
-export_fig 'All_patient_baseline_TFs.pdf' -transparent
-figure(consfig)
-export_fig 'All_control_fup_TFs.pdf' -transparent
-figure(patsfig)
-export_fig 'All_patient_fup_TFs.pdf' -transparent
+% figure(consfig)
+% export_fig 'All_control_baseline_TFs.pdf' -transparent
+% figure(patsfig)
+% export_fig 'All_patient_baseline_TFs.pdf' -transparent
+% figure(consfig)
+% export_fig 'All_control_fup_TFs.pdf' -transparent
+% figure(patsfig)
+% export_fig 'All_patient_fup_TFs.pdf' -transparent
+figure(conscomb)
+export_fig 'Compared_control_fup_TFs.pdf' -transparent
+figure(patscomb)
+export_fig 'Compared_patient_fup_TFs.pdf' -transparent
 
 cd ..
 
@@ -144,7 +221,7 @@ cd ..
 %     1.9396
 %     1.6079
 %     1.6246];
-% 
+%
 % % %New Bayesian model outputs
 % % controlpriorsd = [
 % %     1.2558
@@ -158,7 +235,7 @@ cd ..
 % %     1.6211
 % %     1.6079
 % %     1.4622];
-% 
+%
 % patientpriorsd = [    0.2085
 %     0.0773
 %     2.2592
@@ -169,8 +246,8 @@ cd ..
 %     0.5099
 %     0.1870
 %     1.5687];
-% 
-% 
+%
+%
 % patientpriorsd = [    0.2085
 %     0.0773
 %     2.2592
@@ -182,7 +259,7 @@ cd ..
 %     1.5687
 %     0.1870
 %     ];
-% 
+%
 % %
 % % %New Bayesian model outputs
 % % patientpriorsd = [
@@ -196,7 +273,7 @@ cd ..
 % %     0.5099
 % %     0.1681
 % %     1.5509];
-% 
+%
 % [PearsonsR, p] = corr([con_times,pat_times]',[controlpriorsd;patientpriorsd])
 % [SpearmansR, p_s] = corr([con_times,pat_times]',[controlpriorsd;patientpriorsd],'type','Spearman')
 

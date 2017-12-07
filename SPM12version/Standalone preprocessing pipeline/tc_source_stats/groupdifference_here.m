@@ -4,6 +4,16 @@
 %STG significant region or 
 % [h p anovatbl] = groupdifference_here(filename,[-50 12 20], 11, 9) for
 % IFG significant region inputting current SPM or the path to SPM
+% For nature comms stats navigate to :
+%And run:
+%timewins = {'90_150','200_280','290_440','450_700','710_860'}
+% for i = 1:5
+% [h p anovatbl] = groupdifference_here(['./' timewins{i} '/SPM.mat'],[-56 -34 12], 11, 9)
+%pause
+% [h p anovatbl] = groupdifference_here(['./' timewins{i} '/SPM.mat'],[-46 2 28], 11, 9)
+%pause
+% end
+
 function [h,p,anovatbl] = groupdifference_here(SPM, location, ngroup1, ngroup2)
 
 if strcmp(class(SPM),'char');
@@ -55,7 +65,7 @@ if anovatbl{'Group','pValue'} < 0.05
     tc_sigstar({[1,2]},anovatbl{'Group','pValue'},0.145,0)
 end
 
-pause
+%pause
 
 
 

@@ -24,7 +24,7 @@
 
 %% Set up global variables
 
-subjects_and_parameters_follow_up;
+subjects_and_parameters_follow_up_bysession;
 pathstem = '/imaging/tc02/vespa_followup/preprocess/SPM12_fullpipeline_tf/';
 source_directory = '/imaging/tc02/vespa_followup/preprocess/SPM12_fullpipeline/';
 
@@ -135,34 +135,34 @@ else
 end
 
 workersrequested = size(subjects,2);
-try
-    currentdr = pwd;
-    cd('/group/language/data/thomascope/vespa/SPM12version/')
-    workerpool = cbupool(workersrequested);
-    workerpool.ResourceTemplate=['-l nodes=^N^,mem=' memoryrequired 'GB,walltime=168:00:00'];
-    matlabpool(workerpool)
-    cd(currentdr)
-catch
-    try
-        cd('/group/language/data/thomascope/vespa/SPM12version/')
-        matlabpool 'close'
-        workerpool = cbupool(workersrequested);
-        workerpool.ResourceTemplate=['-l nodes=^N^,mem=' memoryrequired 'GB,walltime=168:00:00'];
-        matlabpool(workerpool)
-        cd(currentdr)
-    catch
-        try
-            cd('/group/language/data/thomascope/vespa/SPM12version/')
-            workerpool = cbupool(workersrequested);
-            matlabpool(workerpool)
-            cd(currentdr)
-        catch
-            cd(currentdr)
-            fprintf([ '\n\nUnable to open up a cluster worker pool - opening a local cluster instead' ]);
-            matlabpool(12)
-        end
-    end
-end
+% try
+%     currentdr = pwd;
+%     cd('/group/language/data/thomascope/vespa/SPM12version/')
+%     workerpool = cbupool(workersrequested);
+%     workerpool.ResourceTemplate=['-l nodes=^N^,mem=' memoryrequired 'GB,walltime=168:00:00'];
+%     matlabpool(workerpool)
+%     cd(currentdr)
+% catch
+%     try
+%         cd('/group/language/data/thomascope/vespa/SPM12version/')
+%         matlabpool 'close'
+%         workerpool = cbupool(workersrequested);
+%         workerpool.ResourceTemplate=['-l nodes=^N^,mem=' memoryrequired 'GB,walltime=168:00:00'];
+%         matlabpool(workerpool)
+%         cd(currentdr)
+%     catch
+%         try
+%             cd('/group/language/data/thomascope/vespa/SPM12version/')
+%             workerpool = cbupool(workersrequested);
+%             matlabpool(workerpool)
+%             cd(currentdr)
+%         catch
+%             cd(currentdr)
+%             fprintf([ '\n\nUnable to open up a cluster worker pool - opening a local cluster instead' ]);
+%             matlabpool(12)
+%         end
+%     end
+% end
 
 
 %Preprocessing pipeline below. This should be fully modular and intuitive.
@@ -260,39 +260,39 @@ try
 catch
     fprintf([ '\n\nUnable to open up a worker pool - running serially rather than in parallel' ]);
 end
+% parfor cnt = 1:size(subjects,2)
+%     Preprocessing_mainfunction_follow_up('ICA_artifacts_copy','ICA_artifacts',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt,dates,blocksin,blocksout,rawpathstem, badeeg, badchannels, source_directory)
+% end
+% parfor cnt = 1:size(subjects,2)
+%     Preprocessing_mainfunction_follow_up('downsample','ICA_artifacts_copy',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+% end
+% parfor cnt = 1:size(subjects,2)
+%     Preprocessing_mainfunction_follow_up('rereference','downsample',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+% end
+% parfor cnt = 1:size(subjects,2)
+%     Preprocessing_mainfunction_follow_up('baseline','rereference',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+% end
+% parfor cnt = 1:size(subjects,2)
+%     Preprocessing_mainfunction_follow_up('filter','baseline',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+% end
+% 
+% %to filter at 50Hz too.
+% p.filter = 'stop';
+% p.freq = [48 52];
+% parfor cnt = 1:size(subjects,2)
+%     Preprocessing_mainfunction_follow_up('filter','filter',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+% end
+% parfor cnt = 1:size(subjects,2)
+%    Preprocessing_mainfunction_follow_up('epoch','secondfilter',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt,dates,blocksin,blocksout,rawpathstem, badeeg);
+% end
 parfor cnt = 1:size(subjects,2)
-    Preprocessing_mainfunction_follow_up('ICA_artifacts_copy','ICA_artifacts',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt,dates,blocksin,blocksout,rawpathstem, badeeg, badchannels, source_directory)
+    Preprocessing_mainfunction_follow_up('merge_withsession','epoch',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
 parfor cnt = 1:size(subjects,2)
-    Preprocessing_mainfunction_follow_up('downsample','ICA_artifacts_copy',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+    Preprocessing_mainfunction_follow_up('sort','merge_withsession',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
 parfor cnt = 1:size(subjects,2)
-    Preprocessing_mainfunction_follow_up('rereference','downsample',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-end
-parfor cnt = 1:size(subjects,2)
-    Preprocessing_mainfunction_follow_up('baseline','rereference',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-end
-parfor cnt = 1:size(subjects,2)
-    Preprocessing_mainfunction_follow_up('filter','baseline',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-end
-
-%to filter at 50Hz too.
-p.filter = 'stop';
-p.freq = [48 52];
-parfor cnt = 1:size(subjects,2)
-    Preprocessing_mainfunction_follow_up('filter','filter',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-end
-parfor cnt = 1:size(subjects,2)
-   Preprocessing_mainfunction_follow_up('epoch','secondfilter',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt,dates,blocksin,blocksout,rawpathstem, badeeg);
-end
-parfor cnt = 1:size(subjects,2)
-    Preprocessing_mainfunction_follow_up('merge','epoch',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-end
-parfor cnt = 1:size(subjects,2)
-    Preprocessing_mainfunction_follow_up('sort','merge',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-end
-parfor cnt = 1:size(subjects,2)
-    Preprocessing_mainfunction_follow_up('average','merge',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+    Preprocessing_mainfunction_follow_up('average','merge_withsession',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
 % parfor cnt = 1:size(subjects,2)
 %     Preprocessing_mainfunction_follow_up('filter','average',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
@@ -335,7 +335,7 @@ end
 
 %Time frequency analysis
 parfor cnt = 1:size(subjects,2)
-    Preprocessing_mainfunction_follow_up('TF','merge',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+    Preprocessing_mainfunction_follow_up('TF','merge_withsession',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
 parfor cnt = 1:size(subjects,2)
     Preprocessing_mainfunction_follow_up('average','TF_power',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
@@ -350,13 +350,13 @@ end
 p.robust = 1; % just in case we want to do any more averaging later
 %TF_rescale to baseline correct the induced power data only
 parfor cnt = 1:size(subjects,2)
-    Preprocessing_mainfunction_follow_up('TF_rescale','mtf_c*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+    Preprocessing_mainfunction_follow_up('TF_rescale','mtf_z*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
 Preprocessing_mainfunction_follow_up('grand_average','TF_rescale',p,pathstem, maxfilteredpathstem, subjects);
 parfor cnt = 1:size(subjects,2)    
    Preprocessing_mainfunction_follow_up('weight','TF_rescale',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
-Preprocessing_mainfunction_follow_up('grand_average','wrmtf_c*.mat',p,pathstem, maxfilteredpathstem, subjects);
+Preprocessing_mainfunction_follow_up('grand_average','wrmtf_z*.mat',p,pathstem, maxfilteredpathstem, subjects);
 parfor cnt = 1:size(subjects,2)
     Preprocessing_mainfunction_follow_up('image','TF_rescale',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end

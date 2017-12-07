@@ -1,5 +1,5 @@
 % possible fft methods: mtmfft mtmconvol wavelet
-function parallel_tec_granger_averagesubtracted_bothperms_highfreq(s,outdir,start_times,end_times,fft_method,method)
+function parallel_tec_granger_averagesubtracted_bothperms_highfreq_1000(s,outdir,start_times,end_times,fft_method,method)
 
 subtract_average = 1;
 
