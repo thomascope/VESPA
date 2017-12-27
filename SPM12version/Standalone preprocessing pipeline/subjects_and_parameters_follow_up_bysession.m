@@ -29,6 +29,11 @@ conditions = {'Mismatch_4_run' 'Match_4_run' 'Mismatch_8_run' 'Match_8_run' 'Mis
 contrast_labels = {'Run Sum all conditions'; 'Run Match-MisMatch'; 'Run Clear minus Unclear'; 'Run Gradient difference M-MM'; 'Nobuttons Sum all conditions';'Nobuttons Match-MisMatch'; 'Nobuttons Clear minus Unclear'; 'Nobuttons Gradient difference M-MM'; 'Buttons by congruency interaction'};
 contrast_weights = [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0; -1, 1, -1, 1, -1, 1, 0, 0, 0, 0, 0, 0; -1, -1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0; -1, 1, 0, 0, 1, -1, 0, 0, 0, 0, 0, 0; 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1; 0, 0, 0, 0, 0, 0, -1, 1, -1, 1, -1, 1; 0, 0, 0, 0, 0, 0, -1, -1, 0, 0, 1, 1; 0, 0, 0, 0, 0, 0, -1, 1, 0, 0, 1, -1; -1, 1, -1, 1, -1, 1, 1, -1, 1, -1, 1, -1];    
 
+conditions_alt = {'Mismatch_4' 'Match_4' 'Mismatch_8' 'Match_8' 'Mismatch_16' 'Match_16'};
+
+contrast_labels_alt = {'Sum all conditions';'Match-MisMatch'; 'Clear minus Unclear'; 'Gradient difference M-MM'};
+contrast_weights_alt = [1, 1, 1, 1, 1, 1; -1, 1, -1, 1, -1, 1; -1, -1, 0, 0, 1, 1; -1, 1, 0, 0, 1, -1];    
+
 % define subjects and blocks (group(cnt) = 1 for controls initial visit, group(cnt) = 2 for patients initial visit, group(cnt) = 3 for controls follow up, group(cnt) = 4 for patients follow up)
 cnt = 0;
 

@@ -39,6 +39,7 @@ p.ref_chans = {'EOG061','EOG062','ECG063'}; %Reference channels in your montage 
 
 % cell array of experimental conditions (used by 'definetrials','convert+epoch' and 'sort' steps)
 p.conditions = conditions;
+p.conditions_alt = conditions_alt;
 
 %p.montage_fname = 'es_montage_MEG.mat'; % channel montage (used by 'convert','convert+epoch','artifact_ft','rereference' steps)
 %p.montage_fname = 'es_montage_MEGPLANAR.mat'; % channel montage (used by 'convert','convert+epoch','artifact_ft','rereference' steps)
@@ -81,6 +82,8 @@ p.freq = 100; % filter cutoff (Hz)
 % for computing contrasts of grand averaged MEEG data
 p.contrast_labels = contrast_labels;
 p.contrast_weights = contrast_weights;
+p.contrast_labels_alt = contrast_labels_alt;
+p.contrast_weights_alt = contrast_weight_alt;
 
 % for image smoothing
 p.xSmooth = 10; % smooth for x dimension (mm)
@@ -260,117 +263,118 @@ try
 catch
     fprintf([ '\n\nUnable to open up a worker pool - running serially rather than in parallel' ]);
 end
+% % parfor cnt = 1:size(subjects,2)
+% %     Preprocessing_mainfunction_follow_up('ICA_artifacts_copy','ICA_artifacts',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt,dates,blocksin,blocksout,rawpathstem, badeeg, badchannels, source_directory)
+% % end
+% % parfor cnt = 1:size(subjects,2)
+% %     Preprocessing_mainfunction_follow_up('downsample','ICA_artifacts_copy',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+% % end
+% % parfor cnt = 1:size(subjects,2)
+% %     Preprocessing_mainfunction_follow_up('rereference','downsample',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+% % end
+% % parfor cnt = 1:size(subjects,2)
+% %     Preprocessing_mainfunction_follow_up('baseline','rereference',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+% % end
+% % parfor cnt = 1:size(subjects,2)
+% %     Preprocessing_mainfunction_follow_up('filter','baseline',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+% % end
+% % 
+% % %to filter at 50Hz too.
+% % p.filter = 'stop';
+% % p.freq = [48 52];
+% % parfor cnt = 1:size(subjects,2)
+% %     Preprocessing_mainfunction_follow_up('filter','filter',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+% % end
+% % parfor cnt = 1:size(subjects,2)
+% %    Preprocessing_mainfunction_follow_up('epoch','secondfilter',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt,dates,blocksin,blocksout,rawpathstem, badeeg);
+% % end
 % parfor cnt = 1:size(subjects,2)
-%     Preprocessing_mainfunction_follow_up('ICA_artifacts_copy','ICA_artifacts',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt,dates,blocksin,blocksout,rawpathstem, badeeg, badchannels, source_directory)
+%     Preprocessing_mainfunction_follow_up('merge_withsession','epoch',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 % end
 % parfor cnt = 1:size(subjects,2)
-%     Preprocessing_mainfunction_follow_up('downsample','ICA_artifacts_copy',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+%     Preprocessing_mainfunction_follow_up('sort','merge_withsession',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 % end
 % parfor cnt = 1:size(subjects,2)
-%     Preprocessing_mainfunction_follow_up('rereference','downsample',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+%     Preprocessing_mainfunction_follow_up('average','merge_withsession',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 % end
-% parfor cnt = 1:size(subjects,2)
-%     Preprocessing_mainfunction_follow_up('baseline','rereference',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-% end
-% parfor cnt = 1:size(subjects,2)
-%     Preprocessing_mainfunction_follow_up('filter','baseline',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-% end
+% % parfor cnt = 1:size(subjects,2)
+% %     Preprocessing_mainfunction_follow_up('filter','average',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+% % end
+% % parfor cnt = 1:size(subjects,2) 
+% %     Preprocessing_mainfunction_follow_up('combineplanar','fmceffbMdMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+% % end
+% % 
+% % Preprocessing_mainfunction_follow_up('grand_average','pfmceffbMdMr*.mat',p,pathstem, maxfilteredpathstem, subjects);
+% % % This saves the grand unweighted average file for each group in the folder of the
+% % % first member of that group. For convenience, you might want to move them
+% % % to separate folders.
+% % 
+% % parfor cnt = 1:size(subjects,2)    
+% %    Preprocessing_mainfunction_follow_up('weight','pfmceffbMdMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+% % end
+% % 
+% % Preprocessing_mainfunction_follow_up('grand_average','wpfmceffbMdMr*.mat',p,pathstem, maxfilteredpathstem, subjects);
+% % % This saves the grand weighted average file for each group in the folder of the
+% % % first member of that group. For convenience, you might want to move them
+% % % to separate folders.
+% % parfor cnt = 1:size(subjects,2)
+% %     Preprocessing_mainfunction_follow_up('image','fmceffbMdMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+% % end
+% % parfor cnt = 1:size(subjects,2)
+% %     % The input for smoothing should be the same as the input used to make
+% %     % the image files.
+% %     Preprocessing_mainfunction_follow_up('smooth','fmceffbMdMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+% % end
+% % for cnt = 1
+% %     % The input for smoothing should be the same as the input used to make
+% %     % the image files. Only need to do this for a single subject
+% %     Preprocessing_mainfunction_follow_up('mask','fmceffbMdMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+% % end  
 % 
-% %to filter at 50Hz too.
-% p.filter = 'stop';
-% p.freq = [48 52];
+% % now, if you want to simplify, you can move all of the smoothed nifti images into folders marked
+% % controls/patients, either manually or with copyniftitofolder.py (you will
+% % need to change the paths and search characteristics appropriately).
+% % Alternatively, you can use recursive search in your analysis scripts
+% 
+% %Time frequency analysis
 % parfor cnt = 1:size(subjects,2)
-%     Preprocessing_mainfunction_follow_up('filter','filter',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+%     Preprocessing_mainfunction_follow_up('TF','merge_withsession',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 % end
 % parfor cnt = 1:size(subjects,2)
-%    Preprocessing_mainfunction_follow_up('epoch','secondfilter',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt,dates,blocksin,blocksout,rawpathstem, badeeg);
+%     Preprocessing_mainfunction_follow_up('average','tf_z*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 % end
 parfor cnt = 1:size(subjects,2)
-    Preprocessing_mainfunction_follow_up('merge_withsession','epoch',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+    Preprocessing_mainfunction_follow_up('resume_average','tf_z*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
-parfor cnt = 1:size(subjects,2)
-    Preprocessing_mainfunction_follow_up('sort','merge_withsession',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-end
-parfor cnt = 1:size(subjects,2)
-    Preprocessing_mainfunction_follow_up('average','merge_withsession',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-end
-% parfor cnt = 1:size(subjects,2)
-%     Preprocessing_mainfunction_follow_up('filter','average',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-% end
-% parfor cnt = 1:size(subjects,2) 
-%     Preprocessing_mainfunction_follow_up('combineplanar','fmceffbMdMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-% end
-% 
-% Preprocessing_mainfunction_follow_up('grand_average','pfmceffbMdMr*.mat',p,pathstem, maxfilteredpathstem, subjects);
-% % This saves the grand unweighted average file for each group in the folder of the
-% % first member of that group. For convenience, you might want to move them
-% % to separate folders.
-% 
-% parfor cnt = 1:size(subjects,2)    
-%    Preprocessing_mainfunction_follow_up('weight','pfmceffbMdMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-% end
-% 
-% Preprocessing_mainfunction_follow_up('grand_average','wpfmceffbMdMr*.mat',p,pathstem, maxfilteredpathstem, subjects);
-% % This saves the grand weighted average file for each group in the folder of the
-% % first member of that group. For convenience, you might want to move them
-% % to separate folders.
-% parfor cnt = 1:size(subjects,2)
-%     Preprocessing_mainfunction_follow_up('image','fmceffbMdMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-% end
-% parfor cnt = 1:size(subjects,2)
-%     % The input for smoothing should be the same as the input used to make
-%     % the image files.
-%     Preprocessing_mainfunction_follow_up('smooth','fmceffbMdMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-% end
-% for cnt = 1
-%     % The input for smoothing should be the same as the input used to make
-%     % the image files. Only need to do this for a single subject
-%     Preprocessing_mainfunction_follow_up('mask','fmceffbMdMr*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-% end  
 
-% now, if you want to simplify, you can move all of the smoothed nifti images into folders marked
-% controls/patients, either manually or with copyniftitofolder.py (you will
-% need to change the paths and search characteristics appropriately).
-% Alternatively, you can use recursive search in your analysis scripts
 
-%Time frequency analysis
-parfor cnt = 1:size(subjects,2)
-    Preprocessing_mainfunction_follow_up('TF','merge_withsession',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-end
-parfor cnt = 1:size(subjects,2)
-    Preprocessing_mainfunction_follow_up('average','TF_power',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-end
-% for cnt = 1:size(subjects,2)
-%     Preprocessing_mainfunction_follow_up('resume_average','TF_power',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-% end
-p.robust = 0; %robust averaging doesn't work for phase data
-parfor cnt = 1:size(subjects,2)
-    Preprocessing_mainfunction_follow_up('average','TF_phase',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-end
-p.robust = 1; % just in case we want to do any more averaging later
 %TF_rescale to baseline correct the induced power data only
 parfor cnt = 1:size(subjects,2)
     Preprocessing_mainfunction_follow_up('TF_rescale','mtf_z*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
-Preprocessing_mainfunction_follow_up('grand_average','TF_rescale',p,pathstem, maxfilteredpathstem, subjects);
+Preprocessing_mainfunction_follow_up('grand_average','rmtf_z*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects);
 parfor cnt = 1:size(subjects,2)    
-   Preprocessing_mainfunction_follow_up('weight','TF_rescale',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+   Preprocessing_mainfunction_follow_up('weight','rmtf_z*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
 Preprocessing_mainfunction_follow_up('grand_average','wrmtf_z*.mat',p,pathstem, maxfilteredpathstem, subjects);
 parfor cnt = 1:size(subjects,2)
-    Preprocessing_mainfunction_follow_up('image','TF_rescale',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+    Preprocessing_mainfunction_follow_up('image','rmtf_z*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
 parfor cnt = 1:size(subjects,2)
     % The input for smoothing should be the same as the input used to make
     % the image files.
-    Preprocessing_mainfunction_follow_up('smooth','TF_rescale',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+    Preprocessing_mainfunction_follow_up('smooth','rmtf_z*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
 for cnt = 1
     % The input for smoothing should be the same as the input used to make
     % the image files. Only need to do this for a single subject
-    Preprocessing_mainfunction_follow_up('mask','TF_rescale',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+    Preprocessing_mainfunction_follow_up('mask','rmtf_z*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
-
+p.robust = 0; %robust averaging doesn't work for phase data
+parfor cnt = 1:size(subjects,2)
+    Preprocessing_mainfunction_follow_up('average','tph_z*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+end
+p.robust = 1; % just in case we want to do any more averaging later
 % %% New test section to contrast extracted LFPs from beaformer. Need to have run LCMV_source_extraction_2016 for this to work
 % 
 % 

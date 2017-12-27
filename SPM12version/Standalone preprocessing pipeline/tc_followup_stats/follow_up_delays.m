@@ -12,8 +12,8 @@ imagetype_split = '/MEGPLANARrmtf_ceffbMdMrun1_1_raw_ssst';
 % imagetype_split = '/EEGrmtf_ceffbMdMrun1_1_raw_ssst';
 % imagetype = '/MEGrmtf_ceffbMdMrun1_raw_ssst';
 % imagetype_split = '/MEGrmtf_ceffbMdMrun1_1_raw_ssst';
-fnames = char('sm_condition_Match_4.nii','sm_condition_Match_8.nii','sm_condition_Match_16.nii','sm_condition_Mismatch_4.nii','sm_condition_Mismatch_8.nii','sm_condition_Mismatch_16.nii');
-%fnames = char('condition_Match_4.nii','condition_Match_8.nii','condition_Match_16.nii','condition_Mismatch_4.nii','condition_Mismatch_8.nii','condition_Mismatch_16.nii');
+%fnames = char('sm_condition_Match_4.nii','sm_condition_Match_8.nii','sm_condition_Match_16.nii','sm_condition_Mismatch_4.nii','sm_condition_Mismatch_8.nii','sm_condition_Mismatch_16.nii');
+fnames = char('condition_Match_4.nii','condition_Match_8.nii','condition_Match_16.nii','condition_Mismatch_4.nii','condition_Mismatch_8.nii','condition_Mismatch_16.nii');
 
 thisdir = [pwd '/ss_tf'];
 
