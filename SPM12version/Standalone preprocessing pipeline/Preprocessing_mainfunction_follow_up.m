@@ -2261,7 +2261,7 @@ switch step
         
     case 'image' % assumes merged files (i.e. one per subject)
         
-        %warning off MATLAB:TriScatteredInterp:DupPtsAvValuesWarnId % XXX ZZZ Dirty hack to suppress a warning message I don't understand.  Help resquested from SPM list.
+        %warning off MATLAB:TriScatteredInterp:DupPtsAvValuesWarnId % XXX ZZZ Dirty hack to suppress a warning message I don't understand.  Help requested from SPM list.
         %UPDATE: This warning was because the planar gradiometers need to be
         %combined before image formation in evoked data. If you get it,
         %better to use combine planar function.

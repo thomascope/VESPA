@@ -83,7 +83,7 @@ p.freq = 100; % filter cutoff (Hz)
 p.contrast_labels = contrast_labels;
 p.contrast_weights = contrast_weights;
 p.contrast_labels_alt = contrast_labels_alt;
-p.contrast_weights_alt = contrast_weight_alt;
+p.contrast_weights_alt = contrast_weights_alt;
 
 % for image smoothing
 p.xSmooth = 10; % smooth for x dimension (mm)
@@ -352,11 +352,11 @@ end
 parfor cnt = 1:size(subjects,2)
     Preprocessing_mainfunction_follow_up('TF_rescale','mtf_z*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
-Preprocessing_mainfunction_follow_up('grand_average','rmtf_z*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects);
-parfor cnt = 1:size(subjects,2)    
-   Preprocessing_mainfunction_follow_up('weight','rmtf_z*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
-end
-Preprocessing_mainfunction_follow_up('grand_average','wrmtf_z*.mat',p,pathstem, maxfilteredpathstem, subjects);
+% Preprocessing_mainfunction_follow_up('grand_average','rmtf_z*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects);
+% parfor cnt = 1:size(subjects,2)    
+%    Preprocessing_mainfunction_follow_up('weight','rmtf_z*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
+% end
+% Preprocessing_mainfunction_follow_up('grand_average','wrmtf_z*.mat',p,pathstem, maxfilteredpathstem, subjects);
 parfor cnt = 1:size(subjects,2)
     Preprocessing_mainfunction_follow_up('image','rmtf_z*dMrun*.mat',p,pathstem, maxfilteredpathstem, subjects{cnt},cnt);
 end
