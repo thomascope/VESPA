@@ -6,10 +6,10 @@ subjects_and_parameters_follow_up_onlyboth
 %subjects_and_parameters_follow_up
 
 pathstem = '/imaging/tc02/vespa_followup/preprocess/SPM12_fullpipeline_tf/';
-imagetype = '/MEGPLANARrmtf_zeffbMdMrun1_raw_ssst';
-imagetype_split = '/MEGPLANARrmtf_zeffbMdMrun1_1_raw_ssst';
-% imagetype = '/EEGrmtf_ceffbMdMrun1_raw_ssst';
-% imagetype_split = '/EEGrmtf_ceffbMdMrun1_1_raw_ssst';
+% imagetype = '/MEGPLANARrmtf_zeffbMdMrun1_raw_ssst';
+% imagetype_split = '/MEGPLANARrmtf_zeffbMdMrun1_1_raw_ssst';
+imagetype = '/EEGrmtf_zeffbMdMrun1_raw_ssst';
+imagetype_split = '/EEGrmtf_zeffbMdMrun1_1_raw_ssst';
 % imagetype = '/MEGrmtf_ceffbMdMrun1_raw_ssst';
 % imagetype_split = '/MEGrmtf_ceffbMdMrun1_1_raw_ssst';
 %fnames = char('sm_condition_Match_4.nii','sm_condition_Match_8.nii','sm_condition_Match_16.nii','sm_condition_Mismatch_4.nii','sm_condition_Mismatch_8.nii','sm_condition_Mismatch_16.nii');
@@ -199,7 +199,11 @@ for s = 1:length(subjects)
         xlim([start_vox size(P_fup{thispat_fup},2)])
         %Now re-plot side by side
         figure(patscomb)
-        subplot(9,3,3*(thispat_fup-1)+2);
+        if thispat_fup == 1 %account for the fact that the first patient didn't press the buttons but naming convention not yet set up
+            subplot(9,3,3*(thispat_fup-1)+3);
+        else
+            subplot(9,3,3*(thispat_fup-1)+2);
+        end
         [rows, ~, ~] = size(P_fup{thispat_fup});
         newHeight = [1 3 * rows];
         %imshow(flipud(P_fup{thispat}), 'YData', newHeight);
@@ -252,8 +256,10 @@ cd(thisdir)
 % figure(patsfig)
 % export_fig 'All_patient_fup_TFs.pdf' -transparent
 figure(conscomb)
+drawnow
 export_fig 'Separated_control_fup_TFs.pdf' -transparent
 figure(patscomb)
+drawnow
 export_fig 'Separated_patient_fup_TFs.pdf' -transparent
 
 cd ..
