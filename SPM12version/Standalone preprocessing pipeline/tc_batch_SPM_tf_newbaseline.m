@@ -16,7 +16,7 @@ imagetype = {'sm_'};
 %p.windows = [-100 800; 90 130; 180 240; 270 420; 450 700;];
 p.windows = [-100 1000];
 
-outputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_tf_newbaseline_shortened_withmodel';
+outputstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_tf_newbaseline_shortened_withmodel';
 
 %mskname = '/imaging/local/spm/spm8/apriori/grey.nii'; % specify in modality loop below if multiple modalities are being estimated. Don't specify if not needed
 
@@ -43,7 +43,7 @@ cnt = 0;
 %% Covariates
 cnt = 0;
 cnt = cnt+1;
-testcovs = load('/imaging/tc02/vespa/MEG_prediction_analysis.mat');
+testcovs = load('/imaging/mlr/users/tc02/vespa/MEG_prediction_analysis.mat');
 S.covariates{cnt}.value = [repmat(testcovs.alldata(1:11),6,1);repmat(testcovs.alldata(12:end),6,1)];
 S.covariates{cnt}.name = 'SD of Prime';
 

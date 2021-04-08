@@ -16,15 +16,15 @@ cfg.threshold = [1.65 3.15]; %p=0.05
 
 for i = 1:length(windows)
   
-    jp_spm8_surfacerender2_version_tc(['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/' num2str(windows(i,1)) '_' num2str(windows(i,2)) '/spmT_0003.nii'],'jet',cfg)
+    jp_spm8_surfacerender2_version_tc(['/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/' num2str(windows(i,1)) '_' num2str(windows(i,2)) '/spmT_0003.nii'],'jet',cfg)
     savepath = ['./Source_Reconstructions/Controls_2016_SPM_' num2str(i)];
     eval(['export_fig ' savepath '.png -transparent -m2.5'])
     
-    jp_spm8_surfacerender2_version_tc(['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/' num2str(windows(i,1)) '_' num2str(windows(i,2)) '/spmT_0004.nii'],'jet',cfg)
+    jp_spm8_surfacerender2_version_tc(['/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/' num2str(windows(i,1)) '_' num2str(windows(i,2)) '/spmT_0004.nii'],'jet',cfg)
     savepath = ['./Source_Reconstructions/Patients_2016_SPM_' num2str(i)];
     eval(['export_fig ' savepath '.png -transparent -m2.5'])
     
-    filename = ['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/' num2str(windows(i,1)) '_' num2str(windows(i,2)) '/SPM.mat'];
+    filename = ['/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/' num2str(windows(i,1)) '_' num2str(windows(i,2)) '/SPM.mat'];
     groupdifference_here(filename,[-50 12 20], 11, 9); %Pre-defined OPIFG region
     savepath = ['./Source_Reconstructions/Bars_OPIFG_2016_SPM_' num2str(i)];
     eval(['export_fig ' savepath '.png -transparent'])
@@ -42,19 +42,19 @@ end
 
 cfg.normalise = 0;
 cfg.threshold = [1.65 3.15]; %p=0.05
-jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/spmT_0002.nii','jet',cfg)
+jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/spmT_0002.nii','jet',cfg)
 export_fig ./Source_Reconstructions/Combined_2016_SPM_Overall_1.png -transparent -m2.5
 
 
-jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/spmT_0003.nii','jet',cfg)
+jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/spmT_0003.nii','jet',cfg)
 export_fig ./Source_Reconstructions/Controls_2016_SPM_Overall_1.png -transparent -m2.5 
 
 
-jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/spmT_0004.nii','jet',cfg)
+jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/spmT_0004.nii','jet',cfg)
 export_fig ./Source_Reconstructions/Patients_2016_SPM_Overall_1.png -transparent -m2.5
 
 
-filename = ['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/SPM.mat'];
+filename = ['/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/SPM.mat'];
 groupdifference_here(filename,[-50 12 20], 11, 9); %Pre-defined OPIFG region
 savepath = ['./Source_Reconstructions/Bars_OPIFG_2016_SPM_overall.png'];
 eval(['export_fig ' savepath '.png -transparent'])
@@ -63,7 +63,7 @@ groupdifference_here(filename,[-56 -34 12], 11, 9); %Pre-defined OPIFG region
 savepath = ['./Source_Reconstructions/Bars_STG_2016_SPM_overall.png'];
 eval(['export_fig ' savepath '.png -transparent'])
 eval(['export_fig ' savepath '.pdf -transparent'])
-filename = ['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/SPM.mat'];
+filename = ['/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/SPM.mat'];
 groupdifference_here(filename,[-46 2 28], 11, 9); %Max frontal group difference 
 savepath = ['./Source_Reconstructions/Bars_frontal_2016_SPM_overall.png'];
 eval(['export_fig ' savepath '.png -transparent'])
@@ -347,7 +347,7 @@ imwrite(imagearray,savepath,'png')
 
 for i = 1:length(windows)
   
-    filename = ['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/' num2str(windows(i,1)) '_' num2str(windows(i,2)) '/SPM.mat'];
+    filename = ['/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/' num2str(windows(i,1)) '_' num2str(windows(i,2)) '/SPM.mat'];
     groupdifference_here_scaled(filename,[-50 12 20], 11, 9, [0.05 0.1]); %Pre-defined OPIFG region
     savepath = ['./Source_Reconstructions/Bars_OPIFG_2016_SPM_' num2str(i) '_scaled'];
     eval(['export_fig ' savepath '.png -transparent'])
@@ -363,7 +363,7 @@ for i = 1:length(windows)
         
 end
 
-filename = ['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/SPM.mat'];
+filename = ['/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/SPM.mat'];
 groupdifference_here_scaled(filename,[-50 12 20], 11, 9, [0.05 0.1]); %Pre-defined OPIFG region
 savepath = ['./Source_Reconstructions/Bars_OPIFG_2016_SPM_overall_scaled'];
 eval(['export_fig ' savepath '.png -transparent'])
@@ -372,7 +372,7 @@ groupdifference_here_scaled(filename,[-56 -34 12], 11, 9, [0.1 0.25]); %Pre-defi
 savepath = ['./Source_Reconstructions/Bars_STG_2016_SPM_overall_scaled'];
 eval(['export_fig ' savepath '.png -transparent'])
 eval(['export_fig ' savepath '.pdf -transparent'])
-filename = ['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/SPM.mat'];
+filename = ['/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/SPM.mat'];
 groupdifference_here_scaled(filename,[-46 2 28], 11, 9, [0.05 0.1]); %Max frontal group difference 
 savepath = ['./Source_Reconstructions/Bars_frontal_2016_SPM_overall_scaled'];
 eval(['export_fig ' savepath '.png -transparent'])
@@ -655,26 +655,26 @@ imwrite(imagearray,savepath,'png')
 
 
 
-% jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/90_130/spmT_0003.nii','jet',cfg)
+% jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/90_130/spmT_0003.nii','jet',cfg)
 % export_fig ./Source_Reconstructions/Controls_2016_SPM_1.png -transparent -m2.5
-% jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/180_240/spmT_0003.nii','jet',cfg)
+% jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/180_240/spmT_0003.nii','jet',cfg)
 % export_fig ./Source_Reconstructions/Controls_2016_SPM_2.png -transparent -m2.5
-% jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/270_420/spmT_0003.nii','jet',cfg)
+% jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/270_420/spmT_0003.nii','jet',cfg)
 % export_fig ./Source_Reconstructions/Controls_2016_SPM_3.png -transparent -m2.5
-% jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/450_700/spmT_0003.nii','jet',cfg)
+% jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/450_700/spmT_0003.nii','jet',cfg)
 % export_fig ./Source_Reconstructions/Controls_2016_SPM_4.png -transparent -m2.5
-% jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/750_900/spmT_0003.nii','jet',cfg)
+% jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/750_900/spmT_0003.nii','jet',cfg)
 % export_fig ./Source_Reconstructions/Controls_2016_SPM_5.png -transparent -m2.5
 % 
-% jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/90_130/spmT_0004.nii','jet',cfg)
+% jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/90_130/spmT_0004.nii','jet',cfg)
 % export_fig ./Source_Reconstructions/Patients_2016_SPM_1.png -transparent -m2.5
-% jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/180_240/spmT_0004.nii','jet',cfg)
+% jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/180_240/spmT_0004.nii','jet',cfg)
 % export_fig ./Source_Reconstructions/Patients_2016_SPM_2.png -transparent -m2.5
-% jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/270_420/spmT_0004.nii','jet',cfg)
+% jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/270_420/spmT_0004.nii','jet',cfg)
 % export_fig ./Source_Reconstructions/Patients_2016_SPM_3.png -transparent -m2.5
-% jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/450_700/spmT_0004.nii','jet',cfg)
+% jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/450_700/spmT_0004.nii','jet',cfg)
 % export_fig ./Source_Reconstructions/Patients_2016_SPM_4.png -transparent -m2.5
-% jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/750_900/spmT_0004.nii','jet',cfg)
+% jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/750_900/spmT_0004.nii','jet',cfg)
 % export_fig ./Source_Reconstructions/Patients_2016_SPM_5.png -transparent -m2.5
 % 
 cfg.normalise = 0;
@@ -682,15 +682,15 @@ cfg.threshold = [1.65 3.15]; %p=0.05
 
 for i = 1:length(windows)
   
-    jp_spm8_surfacerender2_version_tc(['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/' num2str(windows(i,1)) '_' num2str(windows(i,2)) '/spmT_0007.nii'],'jet',cfg)
+    jp_spm8_surfacerender2_version_tc(['/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/' num2str(windows(i,1)) '_' num2str(windows(i,2)) '/spmT_0007.nii'],'jet',cfg)
     savepath = ['./Source_Reconstructions/Combined_2016_SPM_16-4_' num2str(i)];
     eval(['export_fig ' savepath '.png -transparent -m2.5'])
 %     
-%     jp_spm8_surfacerender2_version_tc(['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/' num2str(windows(i,1)) '_' num2str(windows(i,2)) '/spmT_0008.nii'],'jet',cfg)
+%     jp_spm8_surfacerender2_version_tc(['/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/' num2str(windows(i,1)) '_' num2str(windows(i,2)) '/spmT_0008.nii'],'jet',cfg)
 %     savepath = ['./Source_Reconstructions/Controls_2016_SPM_16-4_' num2str(i)];
 %     eval(['export_fig ' savepath '.png -transparent -m2.5'])
 %     
-%     jp_spm8_surfacerender2_version_tc(['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/' num2str(windows(i,1)) '_' num2str(windows(i,2)) '/spmT_0009.nii'],'jet',cfg)
+%     jp_spm8_surfacerender2_version_tc(['/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/' num2str(windows(i,1)) '_' num2str(windows(i,2)) '/spmT_0009.nii'],'jet',cfg)
 %     savepath = ['./Source_Reconstructions/Patients_2016_SPM_16-4_' num2str(i)];
 %     eval(['export_fig ' savepath '.png -transparent -m2.5'])
 
@@ -699,15 +699,15 @@ end
 
 cfg.normalise = 0;
 cfg.threshold = [1.65 3.15]; %p=0.05
-jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/spmT_0007.nii','jet',cfg)
+jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/spmT_0007.nii','jet',cfg)
 export_fig ./Source_Reconstructions/Combined_2016_SPM_16-4_Overall_1.png -transparent -m2.5
 
 
-jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/spmT_0008.nii','jet',cfg)
+jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/spmT_0008.nii','jet',cfg)
 export_fig ./Source_Reconstructions/Controls_2016_SPM_16-4_Overall_1.png -transparent -m2.5 
 
 
-jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/spmT_0009.nii','jet',cfg)
+jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/spmT_0009.nii','jet',cfg)
 export_fig ./Source_Reconstructions/Patients_2016_SPM_16-4_Overall_1.png -transparent -m2.5
 
 % 
@@ -807,11 +807,11 @@ cfg.threshold = [1.65 3.15]; %p=0.05
 
 for i = 1:length(windows)
   
-    jp_spm8_surfacerender2_version_tc(['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/' num2str(windows(i,1)) '_' num2str(windows(i,2)) '/spmT_0008.nii'],'jet',cfg)
+    jp_spm8_surfacerender2_version_tc(['/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/' num2str(windows(i,1)) '_' num2str(windows(i,2)) '/spmT_0008.nii'],'jet',cfg)
     savepath = ['./Source_Reconstructions/Controls_2016_SPM_16-4_' num2str(i)];
     eval(['export_fig ' savepath '.png -transparent -m2.5'])
     
-    jp_spm8_surfacerender2_version_tc(['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/' num2str(windows(i,1)) '_' num2str(windows(i,2)) '/spmT_0009.nii'],'jet',cfg)
+    jp_spm8_surfacerender2_version_tc(['/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/' num2str(windows(i,1)) '_' num2str(windows(i,2)) '/spmT_0009.nii'],'jet',cfg)
     savepath = ['./Source_Reconstructions/Patients_2016_SPM_16-4_' num2str(i)];
     eval(['export_fig ' savepath '.png -transparent -m2.5'])
 
@@ -902,15 +902,15 @@ imwrite(imagearray,savepath,'png')
 
 cfg.normalise = 0;
 cfg.threshold = [1.65 3.15]; %p=0.05
-jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/spmT_0007.nii','jet',cfg)
+jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/spmT_0007.nii','jet',cfg)
 export_fig ./Source_Reconstructions/Combined_2016_SPM_16-4_Overall_1.png -transparent -m2.5
 
 
-jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/spmT_0008.nii','jet',cfg)
+jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/spmT_0008.nii','jet',cfg)
 export_fig ./Source_Reconstructions/Controls_2016_SPM_16-4_Overall_1.png -transparent -m2.5 
 
 
-jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/spmT_0009.nii','jet',cfg)
+jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_5/stats/spmT_0009.nii','jet',cfg)
 export_fig ./Source_Reconstructions/Patients_2016_SPM_16-4_Overall_1.png -transparent -m2.5
 
 % 
@@ -928,7 +928,7 @@ cfg.threshold = [3.18 4.61]; %p=0.001
 bf_windows = {'early','mid','late'};
 for i = bf_windows
   
-    jp_spm8_surfacerender2_version_tc(['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/final_LCMV_trunkated_restricted/stats/' char(i) '/spmT_0005.nii'],'jet',cfg)
+    jp_spm8_surfacerender2_version_tc(['/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/final_LCMV_trunkated_restricted/stats/' char(i) '/spmT_0005.nii'],'jet',cfg)
     savepath = ['./Source_Reconstructions/BF_contrast_2016_' char(i)];
     eval(['export_fig ' savepath '.png -transparent -m2.5'])
     
@@ -946,7 +946,7 @@ cfg.threshold = [3.18 4.61]; %p=0.001
 bf_windows = {'early','mid','late'};
 for i = bf_windows
   
-    jp_spm8_surfacerender2_version_tc(['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/final_eLORETA_trunkated_restricted/stats/' char(i) '/spmT_0005.nii'],'jet',cfg)
+    jp_spm8_surfacerender2_version_tc(['/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/final_eLORETA_trunkated_restricted/stats/' char(i) '/spmT_0005.nii'],'jet',cfg)
     savepath = ['./Source_Reconstructions/BF_eLORETA_contrast_2016_' char(i)];
     eval(['export_fig ' savepath '.png -transparent -m2.5'])
     

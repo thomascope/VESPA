@@ -5,27 +5,27 @@ jobfile = {'/group/language/data/thomascope/vespa/SPM12version/Standalone prepro
 jobs = repmat(jobfile, 1, nrun);
 inputs = cell(1, nrun);
 datadir_early = {                                              
-                                                '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0072_vc1/'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0093_vc2/'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0096_vc3/'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0114_vc4/'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0320_vc5/'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0140_vc6/'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0434_vc7/'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0218_vc9/'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0234_vc10/'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0242_vc11/'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0253_vc12/'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0085_vp1/'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0087_vp2/'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0121_vp5/'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0130_vp6/'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0135_vp7/'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0150_vp8/'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0184_vp9/'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0205_vp10/'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0222_vp11/'
-                                                 '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0506_vp12/'};
+                                                '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0072_vc1/'
+                                                 '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0093_vc2/'
+                                                 '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0096_vc3/'
+                                                 '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0114_vc4/'
+                                                 '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0320_vc5/'
+                                                 '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0140_vc6/'
+                                                 '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0434_vc7/'
+                                                 '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0218_vc9/'
+                                                 '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0234_vc10/'
+                                                 '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0242_vc11/'
+                                                 '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0253_vc12/'
+                                                 '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0085_vp1/'
+                                                 '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0087_vp2/'
+                                                 '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0121_vp5/'
+                                                 '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0130_vp6/'
+                                                 '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0135_vp7/'
+                                                 '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0150_vp8/'
+                                                 '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0184_vp9/'
+                                                 '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0205_vp10/'
+                                                 '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0222_vp11/'
+                                                 '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/testbeamforming/originaltimes_final_LCMV_trunkated_broadspectrum/180_240/meg14_0506_vp12/'};
 
 
 for crun = 1:nrun

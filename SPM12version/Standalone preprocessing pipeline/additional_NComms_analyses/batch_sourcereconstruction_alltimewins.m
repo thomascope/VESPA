@@ -55,13 +55,13 @@ for vprime = [5]
     
     for timewin = 1:3
         if timewin == 3
-            pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/'; %For spoken word baseline
+            pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/'; %For spoken word baseline
             woi = [35 950];
         elseif timewin == 2
-            pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_newbaseline_fixedICA/'; %For written word baseline
+            pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_tf_newbaseline_fixedICA/'; %For written word baseline
             woi = [35 950];
         else
-            pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_newbaseline_prestimpaddedforgrangernull/'; %For pre-written word baseline
+            pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_tf_newbaseline_prestimpaddedforgrangernull/'; %For pre-written word baseline
             woi = [-965 -50];
         end
         
@@ -259,7 +259,7 @@ end
 %     end
 %
 %     %outputstem = '/imaging/es03/P3E1/sourceimages2/';
-%     outputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/source/';
+%     outputstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/source/';
 %
 %     parfor im=1:length(imagetype)
 %
@@ -327,7 +327,7 @@ end
 %         end
 %
 %     %inputstem = '/imaging/es03/P3E1/sourceimages2/';
-%     inputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/source/';
+%     inputstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/source/';
 %
 %     parfor im=1:length(imagetype)
 %
@@ -412,7 +412,7 @@ end
 %      end
 %
 %     %outputstem = '/imaging/es03/P3E1/sourceimages2/';
-%     inputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/source/';
+%     inputstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/source/';
 %
 %     parfor im=1:length(imagetype)
 %
@@ -506,7 +506,7 @@ end
 %         end
 %
 %     %inputstem = '/imaging/es03/P3E1/sourceimages2/';
-%     inputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/source/';
+%     inputstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/source/';
 %
 %     parfor im=1:length(imagetype)
 %
@@ -602,7 +602,7 @@ end
 %         end
 %
 %     %outputstem = '/imaging/es03/P3E1/sourceimages2/';
-%     outputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/source/';
+%     outputstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/source/';
 %
 %     parfor s=1:length(subjects)
 %         s

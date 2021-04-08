@@ -25,9 +25,9 @@
 %% Set up global variables
 
 subjects_and_parameters; 
-pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_evokedsubtracted_prestimcorrected_fixedICA/';
-source_directory = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/';
-p.source_directory_forrescale = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_newbaseline_fixedICA/';
+pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_tf_evokedsubtracted_prestimcorrected_fixedICA/';
+source_directory = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/';
+p.source_directory_forrescale = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_tf_newbaseline_fixedICA/';
 
 %% Specify preprocessing parameters
 

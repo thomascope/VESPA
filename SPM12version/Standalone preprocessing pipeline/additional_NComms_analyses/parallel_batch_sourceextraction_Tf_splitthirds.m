@@ -7,7 +7,7 @@ function parallel_batch_sourceextraction_Tf_splitthirds(s)
 
 addpath('/group/language/data/thomascope/vespa/SPM12version/Standalone preprocessing pipeline/')
 subjects_and_parameters;
-pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/';
+pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/';
 
 fft_method = 'mtmfft'; % 'wavelet' for morlet; can leave blank for multitaper.
 %method = 'granger';
@@ -18,19 +18,19 @@ for time = 1:3
 %for time = [1,3]
 %for time = 1
     if time == 3
-        tf_pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/'; %For spoken word baseline
+        tf_pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/'; %For spoken word baseline
         outdir = [pathstem 'extractedsources_tf_icoh/'];
         %outdir = [pathstem 'extractedsources_tf/'];
         start_times = 636;
         end_times = 900;
     elseif time == 2
-        tf_pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/'; %For spoken word baseline
+        tf_pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/'; %For spoken word baseline
         outdir = [pathstem 'extractedsources_tf_icoh/'];
         %outdir = [pathstem 'extractedsources_tf/'];
         start_times =300;
         end_times = 564;
     else
-        tf_pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/'; %For spoken word baseline
+        tf_pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/'; %For spoken word baseline
         outdir = [pathstem 'extractedsources_tf_icoh/'];
         %outdir = [pathstem 'extractedsources_tf/'];
         start_times = 32;

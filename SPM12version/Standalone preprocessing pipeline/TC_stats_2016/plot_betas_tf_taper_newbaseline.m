@@ -17,7 +17,7 @@
 %MEGMAG (left posterior)
 
 function plot_betas_tf_taper_newbaseline(whichbetas,contrast,statspm,nsubj,frequency,modality,varargin)
-pathstem = ['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_tf_taper_quick_newbaselinesm_/combined_-100_2100_' modality];
+pathstem = ['/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_tf_taper_quick_newbaselinesm_/combined_-100_2100_' modality];
 
 Y = cell(1,length(whichbetas));
 for i = 1:length(whichbetas)

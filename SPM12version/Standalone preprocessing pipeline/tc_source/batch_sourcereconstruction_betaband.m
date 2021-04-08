@@ -12,7 +12,7 @@
 for val = [5,6,7,1,2,3]
     
     subjects_and_parameters;
-    pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/';
+    pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/';
 
 
     if val == 1 || val == 2 || val == 3
@@ -174,7 +174,7 @@ for val = [5,6,7,1,2,3]
     
     
     %outputstem = '/imaging/es03/P3E1/sourceimages2/';
-    outputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/tc_fixedloadproblem_inducedbeta_MNI_source/';
+    outputstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/tc_fixedloadproblem_inducedbeta_MNI_source/';
     
     parfor im=1:length(imagetype)
         
@@ -227,7 +227,7 @@ for val = [5,6,7,1,2,3]
         };
     
     %inputstem = '/imaging/es03/P3E1/sourceimages2/';
-    inputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/tc_fixedloadproblem_inducedbeta_MNI_source/';
+    inputstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/tc_fixedloadproblem_inducedbeta_MNI_source/';
     
     parfor im=1:length(imagetype)
         
@@ -305,7 +305,7 @@ for val = [5,6,7,1,2,3]
     
     
     %outputstem = '/imaging/es03/P3E1/sourceimages2/';
-    outputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/tc_fixedloadproblem_inducedbeta_MNI_source/';
+    outputstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/tc_fixedloadproblem_inducedbeta_MNI_source/';
     
     parfor im=1:length(imagetype)
         
@@ -391,7 +391,7 @@ for val = [5,6,7,1,2,3]
         };
     
     %inputstem = '/imaging/es03/P3E1/sourceimages2/';
-    inputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/tc_fixedloadproblem_inducedbeta_MNI_source/';
+    inputstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/tc_fixedloadproblem_inducedbeta_MNI_source/';
     
     parfor im=1:length(imagetype)
         
@@ -479,7 +479,7 @@ for val = [5,6,7,1,2,3]
         };
     
     %outputstem = '/imaging/es03/P3E1/sourceimages2/';
-    outputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/tc_fixedloadproblem_inducedbeta_MNI_source/';
+    outputstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/tc_fixedloadproblem_inducedbeta_MNI_source/';
     
     parfor s=1:length(subjects)
         s

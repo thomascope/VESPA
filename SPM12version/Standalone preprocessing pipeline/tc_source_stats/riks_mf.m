@@ -7,8 +7,8 @@ clc
 dat_wd = '/megdata/cbu/ftd/';
 %dat_wd2_1 = '/megdata/cbu/no_name/';
 %cbu_code2_1 = 'meg15_0161';
-bas_wd1 = '/imaging/hp02/pnfa_mmn/maxfilter/ftd'; % <-- change to yours
-bas_wd2 = '/imaging/hp02/pnfa_mmn/maxfilter/pca'; % <-- change to yours
+bas_wd1 = '/imaging/rowe/archive/users/hp02/pnfa_mmn/maxfilter/ftd'; % <-- change to yours
+bas_wd2 = '/imaging/rowe/archive/users/hp02/pnfa_mmn/maxfilter/pca'; % <-- change to yours
 
 %groups = {
 %    'CamCAN'
@@ -137,7 +137,7 @@ maxfstr = '!/neuro/bin/util/maxfilter-2.2';
 
 addpath(genpath('/imaging/local/meg_misc'))
 addpath(genpath('/neuro/meg_pd_1.2/'))
-addpath(genpath('/imaging/hp02/mmn_08/analysis_spm/new_spm_functions'))
+addpath(genpath('/imaging/rowe/archive/users/hp02/mmn_08/analysis_spm/new_spm_functions'))
 
 % files where MF2.2 fails when mvcomp included (for some reason) - so turned off below
 %mvcomp_fail = zeros(5,50,3,2);

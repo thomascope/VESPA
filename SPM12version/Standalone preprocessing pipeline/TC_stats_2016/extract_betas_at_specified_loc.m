@@ -1,5 +1,5 @@
 function [R, p] = extract_betas_at_specified_loc(freq,time,SPM,type)
-%[PearsonsR, p] = extract_betas_at_specified_loc(24,992,'/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_tf_newbaseline_shortenedsm_/combined_-100_1000_MEGPLANAR/SPM.mat')
+%[PearsonsR, p] = extract_betas_at_specified_loc(24,992,'/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_tf_newbaseline_shortenedsm_/combined_-100_1000_MEGPLANAR/SPM.mat')
 
 if ~exist('type','var')
     type = 'Pearson'

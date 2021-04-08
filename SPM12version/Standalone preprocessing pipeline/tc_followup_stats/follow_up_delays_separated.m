@@ -5,7 +5,7 @@ addpath(['/group/language/data/thomascope/vespa/SPM12version/Standalone preproce
 subjects_and_parameters_follow_up_onlyboth
 %subjects_and_parameters_follow_up
 
-pathstem = '/imaging/tc02/vespa_followup/preprocess/SPM12_fullpipeline_tf/';
+pathstem = '/imaging/mlr/users/tc02/vespa_followup/preprocess/SPM12_fullpipeline_tf/';
 % imagetype = '/MEGPLANARrmtf_zeffbMdMrun1_raw_ssst';
 % imagetype_split = '/MEGPLANARrmtf_zeffbMdMrun1_1_raw_ssst';
 imagetype = '/EEGrmtf_zeffbMdMrun1_raw_ssst';

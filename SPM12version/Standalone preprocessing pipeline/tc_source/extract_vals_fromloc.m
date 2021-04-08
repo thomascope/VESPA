@@ -16,7 +16,7 @@ function values = extract_vals_fromloc(val,contrast,location);
 
 addpath('/group/language/data/thomascope/vespa/SPM12version/Standalone preprocessing pipeline');
 subjects_and_parameters;
-pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/';
+pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/';
 
 if val == 1 || val == 2 || val == 3
     invtype = 'MSPgroup'; % label for inversion

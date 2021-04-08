@@ -1,4 +1,4 @@
- subjfolder = sprintf('/imaging/tc02/vespa/preprocess/%s/MMN+Rest',subjects{ss});
+ subjfolder = sprintf('/imaging/mlr/users/tc02/vespa/preprocess/%s/MMN+Rest',subjects{ss});
     cd(subjfolder)
     
     

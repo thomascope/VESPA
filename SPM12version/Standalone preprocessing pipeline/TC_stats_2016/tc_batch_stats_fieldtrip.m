@@ -5,8 +5,8 @@
 
 subjects_and_parameters;
 
-outpathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/';
-pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/';
+outpathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/';
+pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/';
 ft_dir = [outpathstem 'fieldtrip/'];
 filename = 'wrmtf*.mat';
 

@@ -12,8 +12,8 @@ addpath('/group/language/data/ediz.sohoglu/matlab/utilities/');
 addpath('/opt/neuromag/meg_pd_1.2/');
 
 % define paths
-rawpathstem = '/imaging/tc02/vespa/preprocess/';
-bwd = '/imaging/tc02/vespa/preprocess/MMN/'; % your path to where you want files to be saved
+rawpathstem = '/imaging/mlr/users/tc02/vespa/preprocess/';
+bwd = '/imaging/mlr/users/tc02/vespa/preprocess/MMN/'; % your path to where you want files to be saved
 
 % define subjects and blocks
 cnt = 0;

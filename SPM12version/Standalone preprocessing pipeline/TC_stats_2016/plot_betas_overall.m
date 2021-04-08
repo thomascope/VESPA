@@ -18,11 +18,11 @@
 
 function plot_betas_overall(modality,varargin)
 hold on
-pathstem = ['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_2sm_/combined_-100_900_' modality];
+pathstem = ['/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_2sm_/combined_-100_900_' modality];
 
 
-data{1} = spm_eeg_load('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/meg14_0072_vc1/controls_weighted_grandmean.mat');
-data{2} = spm_eeg_load('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/meg14_0085_vp1/patients_weighted_grandmean.mat');
+data{1} = spm_eeg_load('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/meg14_0072_vc1/controls_weighted_grandmean.mat');
+data{2} = spm_eeg_load('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/meg14_0085_vp1/patients_weighted_grandmean.mat');
 
 controltoplot = rms(data{1}(data{1}.selectchannels(modality),:,1));
 

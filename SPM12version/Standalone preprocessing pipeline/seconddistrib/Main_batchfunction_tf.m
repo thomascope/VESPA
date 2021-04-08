@@ -25,7 +25,7 @@
 %% Set up global variables
 
 subjects_and_parameters; 
-pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_thirdICA/';
+pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_tf_thirdICA/';
 
 %% Specify preprocessing parameters
 

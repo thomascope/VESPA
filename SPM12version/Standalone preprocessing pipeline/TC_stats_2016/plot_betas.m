@@ -18,7 +18,7 @@
 
 function plot_betas(whichbetas,contrast,statspm,nsubj,location,modality,varargin)
 
-pathstem = ['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_2sm_/combined_-100_900_' modality];
+pathstem = ['/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_2sm_/combined_-100_900_' modality];
 
 Y = cell(1,length(whichbetas));
 for i = 1:length(whichbetas)

@@ -7,27 +7,27 @@ cfg.threshold = [2 40];
 addpath([pwd '/ojwoodford-export_fig-216b30e'])
 
 %Render effect of prime congruency
-jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/es_source/fmcfbMdeMrun1_raw_ssst_5_t90_130_f1_40*/GA_Match-MisMatch.nii','jet',cfg)
+jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/es_source/fmcfbMdeMrun1_raw_ssst_5_t90_130_f1_40*/GA_Match-MisMatch.nii','jet',cfg)
 export_fig thresholded_draft_reconstructions_2_1.png -transparent
-jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/es_source/fmcfbMdeMrun1_raw_ssst_5_t180_240_f1_40*/GA_Match-MisMatch.nii','jet',cfg)
+jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/es_source/fmcfbMdeMrun1_raw_ssst_5_t180_240_f1_40*/GA_Match-MisMatch.nii','jet',cfg)
 export_fig thresholded_draft_reconstructions_2_2.png -transparent
-jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/es_source/fmcfbMdeMrun1_raw_ssst_5_t270_420_f1_40*/GA_Match-MisMatch.nii','jet',cfg)
+jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/es_source/fmcfbMdeMrun1_raw_ssst_5_t270_420_f1_40*/GA_Match-MisMatch.nii','jet',cfg)
 export_fig thresholded_draft_reconstructions_2_3.png -transparent
-jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/es_source/fmcfbMdeMrun1_raw_ssst_5_t450_700_f1_40*/GA_Match-MisMatch.nii','jet',cfg)
+jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/es_source/fmcfbMdeMrun1_raw_ssst_5_t450_700_f1_40*/GA_Match-MisMatch.nii','jet',cfg)
 export_fig thresholded_draft_reconstructions_2_4.png -transparent
-jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/es_source/fmcfbMdeMrun1_raw_ssst_5_t750_900_f1_40*/GA_Match-MisMatch.nii','jet',cfg)
+jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/es_source/fmcfbMdeMrun1_raw_ssst_5_t750_900_f1_40*/GA_Match-MisMatch.nii','jet',cfg)
 export_fig thresholded_draft_reconstructions_2_5.png -transparent
 
 %Render effect of sensory detail
-jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/es_source/fmcfbMdeMrun1_raw_ssst_5_t90_130_f1_40*/GA_Clear minus Unclear.nii','jet',cfg)
+jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/es_source/fmcfbMdeMrun1_raw_ssst_5_t90_130_f1_40*/GA_Clear minus Unclear.nii','jet',cfg)
 export_fig thresholded_draft_reconstructions_2_6.png -transparent
-jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/es_source/fmcfbMdeMrun1_raw_ssst_5_t180_240_f1_40*/GA_Clear minus Unclear.nii','jet',cfg)
+jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/es_source/fmcfbMdeMrun1_raw_ssst_5_t180_240_f1_40*/GA_Clear minus Unclear.nii','jet',cfg)
 export_fig thresholded_draft_reconstructions_2_7.png -transparent
-jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/es_source/fmcfbMdeMrun1_raw_ssst_5_t270_420_f1_40*/GA_Clear minus Unclear.nii','jet',cfg)
+jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/es_source/fmcfbMdeMrun1_raw_ssst_5_t270_420_f1_40*/GA_Clear minus Unclear.nii','jet',cfg)
 export_fig thresholded_draft_reconstructions_2_8.png -transparent
-jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/es_source/fmcfbMdeMrun1_raw_ssst_5_t450_700_f1_40*/GA_Clear minus Unclear.nii','jet',cfg)
+jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/es_source/fmcfbMdeMrun1_raw_ssst_5_t450_700_f1_40*/GA_Clear minus Unclear.nii','jet',cfg)
 export_fig thresholded_draft_reconstructions_2_9.png -transparent
-jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/es_source/fmcfbMdeMrun1_raw_ssst_5_t750_900_f1_40*/GA_Clear minus Unclear.nii','jet',cfg)
+jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/es_source/fmcfbMdeMrun1_raw_ssst_5_t750_900_f1_40*/GA_Clear minus Unclear.nii','jet',cfg)
 export_fig thresholded_draft_reconstructions_2_10.png -transparent
 
 %export_fig thresholded_draft_reconstructions_2.png -transparent

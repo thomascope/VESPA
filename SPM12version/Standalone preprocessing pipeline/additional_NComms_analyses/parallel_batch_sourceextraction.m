@@ -7,7 +7,7 @@ function parallel_batch_sourceextraction(s)
 
 addpath('/group/language/data/thomascope/vespa/SPM12version/Standalone preprocessing pipeline/')
 subjects_and_parameters;
-pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/';
+pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/';
 
 targetfile = 'fmcfbMdeMrun1_raw_ssst.mat';
 targetfilesplit = 'fmcfbMdeMrun1_1_raw_ssst.mat';

@@ -7,7 +7,7 @@ end
 %% Average source images across time-windows
 %es_batch_init;
 subjects_and_parameters
-pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/';
+pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/';
 
 %%
 
@@ -27,7 +27,7 @@ imagetype_split = {
              ['cfbMdeMrun1_1_raw_ssst_' num2str(val) '_t750_900_f16_31*'];
             };
 %outputstem = '/imaging/es03/P3E1/sourceimages2_averagetime/'; 
-outputstem = ['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/tc_source_tf_restricted_withcorrectedMNI/reconstruction_' num2str(val) '/']; 
+outputstem = ['/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/tc_source_tf_restricted_withcorrectedMNI/reconstruction_' num2str(val) '/']; 
 
 for s=1:length(subjects)
     

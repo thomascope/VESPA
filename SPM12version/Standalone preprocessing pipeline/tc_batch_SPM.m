@@ -16,7 +16,7 @@ imagetype = {'sm_'};
 %p.windows = [-100 900; 90 130; 180 240; 270 420; 450 700; 750 900];
 p.windows = [-100 900; 250 600];
 
-outputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_2';
+outputstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_2';
 
 %mskname = '/imaging/local/spm/spm8/apriori/grey.nii'; % specify in modality loop below if multiple modalities are being estimated. Don't specify if not needed
 

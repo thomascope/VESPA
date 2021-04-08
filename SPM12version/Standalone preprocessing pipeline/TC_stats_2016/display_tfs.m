@@ -43,9 +43,9 @@
 % end
 
 %% Make image from the weighted grandmeans file (should be pretty much the same as above)
-D = spm_eeg_load('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/meg14_0072_vc1/controls_weighted_grandmean.mat');
+D = spm_eeg_load('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/meg14_0072_vc1/controls_weighted_grandmean.mat');
 bothsets{1} = D;
-D = spm_eeg_load('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/meg14_0085_vp1/patients_weighted_grandmean.mat');
+D = spm_eeg_load('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/meg14_0085_vp1/patients_weighted_grandmean.mat');
 bothsets{2} = D;
 addpath(['/group/language/data/thomascope/vespa/SPM12version/Standalone preprocessing pipeline/tc_source_stats/ojwoodford-export_fig-216b30e'])
 for i = 1:2
@@ -90,9 +90,9 @@ for i = 1:2
 end
 
 %% Make total image from the weighted grandmeans file
-D = spm_eeg_load('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/meg14_0072_vc1/controls_weighted_grandmean.mat');
+D = spm_eeg_load('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/meg14_0072_vc1/controls_weighted_grandmean.mat');
 bothsets{1} = D;
-D = spm_eeg_load('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/meg14_0085_vp1/patients_weighted_grandmean.mat');
+D = spm_eeg_load('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/meg14_0085_vp1/patients_weighted_grandmean.mat');
 bothsets{2} = D;
 addpath(['/group/language/data/thomascope/vespa/SPM12version/Standalone preprocessing pipeline/tc_source_stats/ojwoodford-export_fig-216b30e'])
 for i = 1:2

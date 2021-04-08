@@ -8,7 +8,7 @@ addpath(genpath('/imaging/local/spm/spm8'));
 addpath(genpath('/imaging/local/software/mne'));
 
 % File Containing CHANNEL INFORMATION for MEG and EEG (e.g. '/imaging/meg.ryan/Batch/chan_select_MEG_EEG_STI101.mat')
-chanfile = '/imaging/tc02/vespa/preprocess/es_montage_all.mat'; % change to your where channel.mat is located
+chanfile = '/imaging/mlr/users/tc02/vespa/preprocess/es_montage_all.mat'; % change to your where channel.mat is located
 
 %% Define EVENT INFO
 
@@ -51,7 +51,7 @@ TransDefaultFlag = 1;
 %% loop over subjects:
 parfor ss = 1:nr_sbjs,
     % Cd to current subject directory
-    subjfolder = sprintf('/imaging/tc02/vespa/preprocess/%s/MMN+Rest',subjects{ss});
+    subjfolder = sprintf('/imaging/mlr/users/tc02/vespa/preprocess/%s/MMN+Rest',subjects{ss});
     cd(subjfolder)
     
     

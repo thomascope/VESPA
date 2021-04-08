@@ -5,7 +5,7 @@ function scales = fieldtrip_topoplot_highlight(timewindow,contrastnumber,locatio
 
 timewindow = timewindow/1000; %time window input in ms, but fieldtrip needs it in seconds
 
-%Y1_data = spm_vol(spm_vol(['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_2sm_/combined_-100_900_MEGCOMB/con_0018.img']));
+%Y1_data = spm_vol(spm_vol(['/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_2sm_/combined_-100_900_MEGCOMB/con_0018.img']));
 %
 %x_loc = round((location(1)-Y1_data.mat(1,4))/Y1_data.mat(1,1));
 %y_loc = round((location(2)-Y1_data.mat(2,4))/Y1_data.mat(2,2));
@@ -14,8 +14,8 @@ timewindow = timewindow/1000; %time window input in ms, but fieldtrip needs it i
 %This doesn't work at the minute as SPM and fieldtrip are deformed from
 %each other. I need to work on this further.
 
-data{1} = spm_eeg_load('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/meg14_0072_vc1/controls_weighted_grandmean.mat');
-data{2} = spm_eeg_load('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/meg14_0085_vp1/patients_weighted_grandmean.mat');
+data{1} = spm_eeg_load('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/meg14_0072_vc1/controls_weighted_grandmean.mat');
+data{2} = spm_eeg_load('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/meg14_0085_vp1/patients_weighted_grandmean.mat');
 
 addpath /imaging/local/software/fieldtrip/fieldtrip-current
 rmpath('/imaging/local/software/spm_cbu_svn/releases/spm12_latest/external/fieldtrip/')

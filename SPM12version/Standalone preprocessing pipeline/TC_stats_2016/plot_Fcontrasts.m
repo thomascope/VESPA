@@ -4,7 +4,7 @@
 
 function test_plot(spm1,spm2,statspm,nsubj,location,modality)
 
-pathstem = ['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_2sm_/combined_-100_900_' modality];
+pathstem = ['/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_2sm_/combined_-100_900_' modality];
 
 if strncmp(spm1,'con',3)
     Y1=spm_read_vols(spm_vol([pathstem '/' spm1 '.img']));

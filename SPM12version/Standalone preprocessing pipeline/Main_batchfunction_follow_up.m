@@ -25,7 +25,7 @@
 %% Set up global variables
 
 subjects_and_parameters_follow_up;
-pathstem = '/imaging/tc02/vespa_followup/preprocess/SPM12_fullpipeline/';
+pathstem = '/imaging/mlr/users/tc02/vespa_followup/preprocess/SPM12_fullpipeline/';
 
 %% Specify preprocessing parameters
 

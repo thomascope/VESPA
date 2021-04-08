@@ -7,20 +7,20 @@ function scratch(s)
 
 addpath('/group/language/data/thomascope/vespa/SPM12version/Standalone preprocessing pipeline/')
 subjects_and_parameters;
-pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/';
+pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/';
 
 fft_method = 'mtmfft'; % 'wavelet' for morlet XXX crashes - needs work; can leave blank for multitaper.
 method = 'coh';
 
 for time = 1
     if time == 3
-        tf_pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/'; %For spoken word baseline
+        tf_pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/'; %For spoken word baseline
         outdir = [pathstem 'extractedsources_tf_icoh/'];
     elseif time == 2
-        tf_pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_newbaseline_fixedICA/'; %For written word baseline
+        tf_pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_tf_newbaseline_fixedICA/'; %For written word baseline
         outdir = [pathstem 'extractedsources_tf_newbaseline_icoh/'];
     else
-        tf_pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_newbaseline_prestimpaddedforgrangernull/'; %For pre-written word baseline
+        tf_pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_tf_newbaseline_prestimpaddedforgrangernull/'; %For pre-written word baseline
         outdir = [pathstem 'extractedsources_tf_null_icoh/'];
     end
     

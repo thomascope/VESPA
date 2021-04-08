@@ -29,7 +29,7 @@ for i=1:1,                      % final index should be number of subjects
     %% Applying MaxFilter 2.2
     
     infname = ['/megdata/cbu/vespa/' ccid_1{i} '/rest_raw.fif']; % e.g. specifying input filename for Thomas
-    outfstem = ['/imaging/tc02/vespa/preprocess/' ccid_1{i} '_rest']; % specifying output filestem
+    outfstem = ['/imaging/mlr/users/tc02/vespa/preprocess/' ccid_1{i} '_rest']; % specifying output filestem
     [p fstem ext] = fileparts(infname);
     posfname = [outfstem '_headposition.pos']; % specifying head position filename
     hptxtfname = [outfstem '_headpoints.txt']; % specifying head points text file

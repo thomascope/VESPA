@@ -1,7 +1,7 @@
 %% Initialise path and subject definitions
 
 %subjects_and_parameters_follow_up; 
-pathstem = '/imaging/tc02/vespa_followup/preprocess/SPM12_fullpipeline/';
+pathstem = '/imaging/mlr/users/tc02/vespa_followup/preprocess/SPM12_fullpipeline/';
 % 
 % conditions = {'Mismatch_4' 'Match_4' 'Mismatch_8' 'Match_8' 'Mismatch_16' 'Match_16'};
 % 
@@ -17,7 +17,7 @@ imagetype = {'sm_'};
 %p.windows = [-100 900; 90 130; 180 240; 270 420; 450 700; 750 900];
 p.windows = [-100 950; 270 420];
 
-outputstem = '/imaging/tc02/vespa_followup/preprocess/SPM12_fullpipeline/stats';
+outputstem = '/imaging/mlr/users/tc02/vespa_followup/preprocess/SPM12_fullpipeline/stats';
 
 %mskname = '/imaging/local/spm/spm8/apriori/grey.nii'; % specify in modality loop below if multiple modalities are being estimated. Don't specify if not needed
 

@@ -13,7 +13,7 @@
 for val = [1,5,6,7,2,3]
     
     subjects_and_parameters;
-    pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_thirdICA/';
+    pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_tf_thirdICA/';
 
 
     if val == 1 || val == 2 || val == 3
@@ -175,7 +175,7 @@ imagetype_split = {
     
     
     %outputstem = '/imaging/es03/P3E1/sourceimages2/';
-    outputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/tc_inducedbeta_third_ICA_source/';
+    outputstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/tc_inducedbeta_third_ICA_source/';
     
     parfor im=1:length(imagetype)
         
@@ -225,7 +225,7 @@ imagetype_split = {
             };
     
     %inputstem = '/imaging/es03/P3E1/sourceimages2/';
-    inputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/tc_inducedbeta_third_ICA_source/';
+    inputstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/tc_inducedbeta_third_ICA_source/';
     
     parfor im=1:length(imagetype)
         
@@ -300,7 +300,7 @@ imagetype_split = {
     
     
     %outputstem = '/imaging/es03/P3E1/sourceimages2/';
-    outputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/tc_inducedbeta_third_ICA_source/';
+    outputstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/tc_inducedbeta_third_ICA_source/';
     
     parfor im=1:length(imagetype)
         
@@ -383,7 +383,7 @@ imagetype_split = {
             };
     
     %inputstem = '/imaging/es03/P3E1/sourceimages2/';
-    inputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/tc_inducedbeta_third_ICA_source/';
+    inputstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/tc_inducedbeta_third_ICA_source/';
     
     parfor im=1:length(imagetype)
         
@@ -468,7 +468,7 @@ imagetype_split = {
             };
     
     %outputstem = '/imaging/es03/P3E1/sourceimages2/';
-    outputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/tc_inducedbeta_third_ICA_source/';
+    outputstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/tc_inducedbeta_third_ICA_source/';
     
     parfor s=1:length(subjects)
         s

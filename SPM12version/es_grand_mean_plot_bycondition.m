@@ -4,8 +4,8 @@
 %% Single subject ERP analysis (averaging over conditions)
 
 % parameters
-patientfile2plot = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_newICA/Grand Averages/patients_weighted_grandmean.mat';
-controlfile2plot = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_newICA/Grand Averages/controls_weighted_grandmean.mat';
+patientfile2plot = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_newICA/Grand Averages/patients_weighted_grandmean.mat';
+controlfile2plot = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_newICA/Grand Averages/controls_weighted_grandmean.mat';
 % file2plot = 'fmcfbMdspm8_run1_raw_ssst.mat';
 modality = {'MEG' 'MEGPLANAR' 'EEG'};
 plotRange = [-100 950]; % total time range to plot
@@ -929,7 +929,7 @@ end
 % windows = [80 120; 170 230; 260 420; 450 700;];
 % highlightchannel = {};
 % limits = [-5e-14 5e-14];
-% imgdir = '/imaging/tc02/vespa/stats_test_learning_covariate_extraSmooth_sm_trial*/';
+% imgdir = '/imaging/mlr/users/tc02/vespa/stats_test_learning_covariate_extraSmooth_sm_trial*/';
 % imgs = {'Post-Pre.img'};
 % p = 1;
 % df = [1 95];
@@ -940,7 +940,7 @@ end
 % windows = [80 120; 170 230; 260 420; 450 700;];
 % highlightchannel = {};
 % limits = [-4e-13 4e-13];
-% imgdir = '/imaging/tc02/vespa/stats_test_learning_covariate_extraSmooth_sm_trial*/';
+% imgdir = '/imaging/mlr/users/tc02/vespa/stats_test_learning_covariate_extraSmooth_sm_trial*/';
 % imgs = {'Post-Pre.img'};
 % p = 1;
 % df = [1 95];
@@ -951,7 +951,7 @@ end
 % windows = [80 120; 170 230; 260 420; 450 700;];
 % highlightchannel = {};
 % limits = [-1.5e-6 1.5e-6];
-% imgdir = '/imaging/tc02/vespa/stats_test_learning_covariate_extraSmooth_sm_trial*/';
+% imgdir = '/imaging/mlr/users/tc02/vespa/stats_test_learning_covariate_extraSmooth_sm_trial*/';
 % imgs = {'Post-Pre.img'};
 % p = 1;
 % df = [1 95];
@@ -962,7 +962,7 @@ end
 % windows = [80 120; 170 230; 260 420; 450 700;];
 % highlightchannel = {};
 % limits = [-7e-14 7e-14];
-% imgdir = '/imaging/tc02/vespa/stats_train_learning_covariate_extraSmooth_sm_trial*/';
+% imgdir = '/imaging/mlr/users/tc02/vespa/stats_train_learning_covariate_extraSmooth_sm_trial*/';
 % imgs = {'Matching-Mismatching.img'};
 % p = 1;
 % df = [1 95];
@@ -972,7 +972,7 @@ end
 % windows = [312 792; 232 800;];
 % highlightchannel = {};
 % limits = [-.75e-12 .75e-12];
-% imgdir = '/imaging/tc02/vespa/stats_train_learning_covariate_extraSmooth_sm_trial*/';
+% imgdir = '/imaging/mlr/users/tc02/vespa/stats_train_learning_covariate_extraSmooth_sm_trial*/';
 % imgs = {'Matching-Mismatching_51_24_484.nii' 'Matching-Mismatching_-47_8_572.nii'};
 % p = 1;
 % df = [1 95];
@@ -982,7 +982,7 @@ con2plot = {'Train_Match-Mismatch'};
 windows = [396 760; 208 800; 148 800;];
 highlightchannel = {};
 limits = [-2e-6 2e-6];
-imgdir = '/imaging/tc02/vespa/stats_train_learning_covariate_extraSmooth_sm_trial*/';
+imgdir = '/imaging/mlr/users/tc02/vespa/stats_train_learning_covariate_extraSmooth_sm_trial*/';
 imgs = {'Matching-Mismatching_60_-25_588.nii' 'Matching-Mismatching_-4_-19_644.nii' 'Matching-Mismatching_-51_-9_568.nii'};
 p = 1;
 df = [1 95];
@@ -993,7 +993,7 @@ df = [1 95];
 % windows = [80 120; 170 230; 260 420; 450 700;];
 % highlightchannel = {};
 % limits = [-3e-14 3e-14];
-% imgdir = '/imaging/tc02/vespa/stats_train_learning_covariate_extraSmooth_sm_trial*/';
+% imgdir = '/imaging/mlr/users/tc02/vespa/stats_train_learning_covariate_extraSmooth_sm_trial*/';
 % imgs = {'Sensory_detail.img'};
 % p = 1;
 % df = [2 95];
@@ -1003,7 +1003,7 @@ df = [1 95];
 % windows = [524 800; 232 332;];
 % highlightchannel = {};
 % limits = [-.75e-12 .75e-12];
-% imgdir = '/imaging/tc02/vespa/stats_train_learning_covariate_extraSmooth_sm_trial*/';
+% imgdir = '/imaging/mlr/users/tc02/vespa/stats_train_learning_covariate_extraSmooth_sm_trial*/';
 % imgs = {'Sensory_detail_26_18_748.nii' 'Sensory_detail_-47_8_256.nii'};
 % p = 1;
 % df = [2 95];
@@ -1013,7 +1013,7 @@ df = [1 95];
 % windows = [604 744; 556 632; 548 752; 108 204;];
 % highlightchannel = {};
 % limits = [-2e-6 2e-6];
-% imgdir = '/imaging/tc02/vespa/stats_train_learning_covariate_extraSmooth_sm_trial*/';
+% imgdir = '/imaging/mlr/users/tc02/vespa/stats_train_learning_covariate_extraSmooth_sm_trial*/';
 % imgs = {'Sensory_detail_21_50_676.nii' 'Sensory_detail_30_-46_612.nii' 'Sensory_detail_55_18_636.nii' 'Sensory_detail_-4_-25_168.nii'};
 % p = 1;
 % df = [2 95];
@@ -1131,44 +1131,44 @@ end
 
 % M-MM
 % imgs = {
-%         '/imaging/tc02/vespa/stats_Train_Match-Mismatch_cfmcfbMdspm8_01_preTest_raw_ssst_2_t80_120_f1_40*_ttest/Source/spmT_0001.img';
-%         '/imaging/tc02/vespa/stats_Train_Match-Mismatch_cfmcfbMdspm8_01_preTest_raw_ssst_2_t170_230_f1_40*_ttest/Source/spmT_0001.img';
-%         '/imaging/tc02/vespa/stats_Train_Match-Mismatch_cfmcfbMdspm8_01_preTest_raw_ssst_2_t260_420_f1_40*_ttest/Source/spmT_0001.img';
-%         '/imaging/tc02/vespa/stats_Train_Match-Mismatch_cfmcfbMdspm8_01_preTest_raw_ssst_2_t450_700_f1_40*_ttest/Source/spmT_0001.img';
+%         '/imaging/mlr/users/tc02/vespa/stats_Train_Match-Mismatch_cfmcfbMdspm8_01_preTest_raw_ssst_2_t80_120_f1_40*_ttest/Source/spmT_0001.img';
+%         '/imaging/mlr/users/tc02/vespa/stats_Train_Match-Mismatch_cfmcfbMdspm8_01_preTest_raw_ssst_2_t170_230_f1_40*_ttest/Source/spmT_0001.img';
+%         '/imaging/mlr/users/tc02/vespa/stats_Train_Match-Mismatch_cfmcfbMdspm8_01_preTest_raw_ssst_2_t260_420_f1_40*_ttest/Source/spmT_0001.img';
+%         '/imaging/mlr/users/tc02/vespa/stats_Train_Match-Mismatch_cfmcfbMdspm8_01_preTest_raw_ssst_2_t450_700_f1_40*_ttest/Source/spmT_0001.img';
 %        };
 %
 % imgs2 = {
-%         '/imaging/tc02/vespa/stats_Train_Match-Mismatch_cfmcfbMdspm8_01_preTest_raw_ssst_2_t80_120_f1_40*_ttest/Source/spmT_0002.img';
-%         '/imaging/tc02/vespa/stats_Train_Match-Mismatch_cfmcfbMdspm8_01_preTest_raw_ssst_2_t170_230_f1_40*_ttest/Source/spmT_0002.img';
-%         '/imaging/tc02/vespa/stats_Train_Match-Mismatch_cfmcfbMdspm8_01_preTest_raw_ssst_2_t260_420_f1_40*_ttest/Source/spmT_0002.img';
-%         '/imaging/tc02/vespa/stats_Train_Match-Mismatch_cfmcfbMdspm8_01_preTest_raw_ssst_2_t450_700_f1_40*_ttest/Source/spmT_0002.img';
+%         '/imaging/mlr/users/tc02/vespa/stats_Train_Match-Mismatch_cfmcfbMdspm8_01_preTest_raw_ssst_2_t80_120_f1_40*_ttest/Source/spmT_0002.img';
+%         '/imaging/mlr/users/tc02/vespa/stats_Train_Match-Mismatch_cfmcfbMdspm8_01_preTest_raw_ssst_2_t170_230_f1_40*_ttest/Source/spmT_0002.img';
+%         '/imaging/mlr/users/tc02/vespa/stats_Train_Match-Mismatch_cfmcfbMdspm8_01_preTest_raw_ssst_2_t260_420_f1_40*_ttest/Source/spmT_0002.img';
+%         '/imaging/mlr/users/tc02/vespa/stats_Train_Match-Mismatch_cfmcfbMdspm8_01_preTest_raw_ssst_2_t450_700_f1_40*_ttest/Source/spmT_0002.img';
 %        };
 
 % % 12-3ch
 % imgs = {
-%         '/imaging/tc02/vespa/stats_Train_12-3_cfmcfbMdspm8_01_preTest_raw_ssst_2_t80_120_f1_40*_ttest/Source/spmT_0001.img';
-%         '/imaging/tc02/vespa/stats_Train_12-3_cfmcfbMdspm8_01_preTest_raw_ssst_2_t170_230_f1_40*_ttest/Source/spmT_0001.img';
-%         '/imaging/tc02/vespa/stats_Train_12-3_cfmcfbMdspm8_01_preTest_raw_ssst_2_t260_420_f1_40*_ttest/Source/spmT_0001.img';
-%         '/imaging/tc02/vespa/stats_Train_12-3_cfmcfbMdspm8_01_preTest_raw_ssst_2_t450_700_f1_40*_ttest/Source/spmT_0001.img';
+%         '/imaging/mlr/users/tc02/vespa/stats_Train_12-3_cfmcfbMdspm8_01_preTest_raw_ssst_2_t80_120_f1_40*_ttest/Source/spmT_0001.img';
+%         '/imaging/mlr/users/tc02/vespa/stats_Train_12-3_cfmcfbMdspm8_01_preTest_raw_ssst_2_t170_230_f1_40*_ttest/Source/spmT_0001.img';
+%         '/imaging/mlr/users/tc02/vespa/stats_Train_12-3_cfmcfbMdspm8_01_preTest_raw_ssst_2_t260_420_f1_40*_ttest/Source/spmT_0001.img';
+%         '/imaging/mlr/users/tc02/vespa/stats_Train_12-3_cfmcfbMdspm8_01_preTest_raw_ssst_2_t450_700_f1_40*_ttest/Source/spmT_0001.img';
 %        };
 %
 % imgs2 = {
-%         '/imaging/tc02/vespa/stats_Train_12-3_cfmcfbMdspm8_01_preTest_raw_ssst_2_t80_120_f1_40*_ttest/Source/spmT_0002.img';
-%         '/imaging/tc02/vespa/stats_Train_12-3_cfmcfbMdspm8_01_preTest_raw_ssst_2_t170_230_f1_40*_ttest/Source/spmT_0002.img';
-%         '/imaging/tc02/vespa/stats_Train_12-3_cfmcfbMdspm8_01_preTest_raw_ssst_2_t260_420_f1_40*_ttest/Source/spmT_0002.img';
-%         '/imaging/tc02/vespa/stats_Train_12-3_cfmcfbMdspm8_01_preTest_raw_ssst_2_t450_700_f1_40*_ttest/Source/spmT_0002.img';
+%         '/imaging/mlr/users/tc02/vespa/stats_Train_12-3_cfmcfbMdspm8_01_preTest_raw_ssst_2_t80_120_f1_40*_ttest/Source/spmT_0002.img';
+%         '/imaging/mlr/users/tc02/vespa/stats_Train_12-3_cfmcfbMdspm8_01_preTest_raw_ssst_2_t170_230_f1_40*_ttest/Source/spmT_0002.img';
+%         '/imaging/mlr/users/tc02/vespa/stats_Train_12-3_cfmcfbMdspm8_01_preTest_raw_ssst_2_t260_420_f1_40*_ttest/Source/spmT_0002.img';
+%         '/imaging/mlr/users/tc02/vespa/stats_Train_12-3_cfmcfbMdspm8_01_preTest_raw_ssst_2_t450_700_f1_40*_ttest/Source/spmT_0002.img';
 %        };
 
 % Positive
 imgs = {
-    '/imaging/tc02/vespa/stats_Train_12-3_cfmcfbMdspm8_01_preTest_raw_ssst_2_t232_332_f1_40*_ttest/Source/spmT_0001.img';
-    '/imaging/tc02/vespa/stats_Train_Match-Mismatch_cfmcfbMdspm8_01_preTest_raw_ssst_2_t148_232_f1_40*_ttest/Source/spmT_0001.img';
+    '/imaging/mlr/users/tc02/vespa/stats_Train_12-3_cfmcfbMdspm8_01_preTest_raw_ssst_2_t232_332_f1_40*_ttest/Source/spmT_0001.img';
+    '/imaging/mlr/users/tc02/vespa/stats_Train_Match-Mismatch_cfmcfbMdspm8_01_preTest_raw_ssst_2_t148_232_f1_40*_ttest/Source/spmT_0001.img';
     };
 
 % Negative
 % imgs = {
-%         '/imaging/tc02/vespa/stats_Train_12-3_cfmcfbMdspm8_01_preTest_raw_ssst_2_t108_204_f1_40*_ttest/Source/spmT_0002.img';
-%         '/imaging/tc02/vespa/stats_Train_Match-Mismatch_cfmcfbMdspm8_01_preTest_raw_ssst_2_t232_800_f1_40*_ttest/Source/spmT_0002.img';
+%         '/imaging/mlr/users/tc02/vespa/stats_Train_12-3_cfmcfbMdspm8_01_preTest_raw_ssst_2_t108_204_f1_40*_ttest/Source/spmT_0002.img';
+%         '/imaging/mlr/users/tc02/vespa/stats_Train_Match-Mismatch_cfmcfbMdspm8_01_preTest_raw_ssst_2_t232_800_f1_40*_ttest/Source/spmT_0002.img';
 %       };
 
 %cmap = 'hot';

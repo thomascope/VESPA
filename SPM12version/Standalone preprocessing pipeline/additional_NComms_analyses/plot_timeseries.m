@@ -1,4 +1,4 @@
-datapathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/extractedsources/';
+datapathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/extractedsources/';
 thispath = pwd;
 cd(datapathstem)
 %load([datapathstem 'groups.mat']);

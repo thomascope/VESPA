@@ -32,8 +32,8 @@ p.windows = [-100 900];
 channels = {'MEG0211' 'MEG1321' 'MEG1641' 'MEG0243' 'MEG0132' 'EEG047' 'EEG009' 'EEG019' 'EEG032' 'EEG031' 'MEG1621' 'MEG2231' 'MEG2221' 'MEG0243' 'MEG2312' 'MEG2433' 'EEG017' 'EEG065' 'EEG032'};
 
 
-pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/';
-outputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_best_sensor_combinedplanar';
+pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/';
+outputstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_best_sensor_combinedplanar';
 
 %mskname = '/imaging/local/spm/spm8/apriori/grey.nii'; % specify in modality loop below if multiple modalities are being estimated. Don't specify if not needed
 

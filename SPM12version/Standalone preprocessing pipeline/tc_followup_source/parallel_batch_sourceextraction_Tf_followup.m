@@ -8,7 +8,7 @@ function parallel_batch_sourceextraction_Tf_followup(s)
 addpath('/group/language/data/thomascope/vespa/SPM12version/Standalone preprocessing pipeline/')
 addpath('/group/language/data/thomascope/vespa/SPM12version/Standalone preprocessing pipeline/additional_NComms_analyses')
 subjects_and_parameters_follow_up;
-pathstem = '/imaging/tc02/vespa_followup/preprocess/SPM12_fullpipeline/';
+pathstem = '/imaging/mlr/users/tc02/vespa_followup/preprocess/SPM12_fullpipeline/';
 
 fft_method = 'mtmfft'; % 'wavelet' for morlet; can leave blank for multitaper.
 %method = 'granger';
@@ -19,19 +19,19 @@ for time = 3
 %for time = [1,3]
 %for time = 1
     if time == 3
-        tf_pathstem = '/imaging/tc02/vespa_followup/preprocess/SPM12_fullpipeline_tf/'; %For spoken word baseline
+        tf_pathstem = '/imaging/mlr/users/tc02/vespa_followup/preprocess/SPM12_fullpipeline_tf/'; %For spoken word baseline
         outdir = [pathstem 'extractedsources_tf_icoh/'];
         %outdir = [pathstem 'extractedsources_tf/'];
         start_times = 32;
         end_times = 944;
     elseif time == 2
-        tf_pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_newbaseline_fixedICA/'; %For written word baseline
+        tf_pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_tf_newbaseline_fixedICA/'; %For written word baseline
         %outdir = [pathstem 'extractedsources_tf_newinversions_newbaseline_icoh/'];
         outdir = [pathstem 'extractedsources_tf_newinversions_newbaseline/'];
         start_times = 32;
         end_times = 944;
     else
-        tf_pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_newbaseline_prestimpaddedforgrangernull/'; %For pre-written word baseline
+        tf_pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_tf_newbaseline_prestimpaddedforgrangernull/'; %For pre-written word baseline
         %outdir = [pathstem 'extractedsources_tf_newinversions_null_icoh/'];
         outdir = [pathstem 'extractedsources_tf_newinversions_null/'];
         start_times = -968;

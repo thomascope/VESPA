@@ -3,7 +3,7 @@ function parallel_tec_granger_source_coherence_tf(s,outdir)
 
 subjects_and_parameters;
 
-pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/';
+pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/';
 if ~exist('outdir','var'); outdir = [pathstem 'extractedsources/']; end
 
 All_Conds = conditions; %XXX Guess for now

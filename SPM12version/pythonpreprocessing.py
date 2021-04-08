@@ -9,7 +9,7 @@ import sys
 sys.path.append('/imaging/local/software/mne_python/latest_v0.8')
 import mne
 
-raw = mne.io.Raw('/imaging/tc02/vespa/preprocess/meg14_0135_vp7/run1_raw_ssst.fif')
+raw = mne.io.Raw('/imaging/mlr/users/tc02/vespa/preprocess/meg14_0135_vp7/run1_raw_ssst.fif')
 
 events = mne.find_events(raw, stim_channel='STI101', min_duration=0.002)
 

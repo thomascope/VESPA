@@ -13,8 +13,8 @@ addpath('/opt/neuromag/meg_pd_1.2/');
 
 % define paths
 rawpathstem = '/megdata/cbu/vespa/';
-pathstem = '/imaging/tc02/vespa/preprocess/SPM12/';
-maxfilteredpathstem = '/imaging/tc02/vespa/preprocess/';
+pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12/';
+maxfilteredpathstem = '/imaging/mlr/users/tc02/vespa/preprocess/';
 
 % define conditions
 conditions = {'Mismatch_4' 'Match_4' 'Mismatch_8' 'Match_8' 'Mismatch_16' 'Match_16'};

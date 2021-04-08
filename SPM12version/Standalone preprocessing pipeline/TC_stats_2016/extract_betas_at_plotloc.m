@@ -1,6 +1,6 @@
 %Procedure:
 %Open SPM results
-%(/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_tf_newbaseline_shortenedsm_/combined_-100_1000_MEGPLANAR)
+%(/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_tf_newbaseline_shortenedsm_/combined_-100_1000_MEGPLANAR)
 %Go to unwhitened effects of interest - find peak location
 %Plot - contrast estimates and 90%CI - Unwhitened effects of interest
 %Run this file

@@ -19,8 +19,8 @@ for vprime = [5]
     val = vprime;
     addpath('/group/language/data/thomascope/vespa/SPM12version/Standalone preprocessing pipeline');
     subjects_and_parameters_follow_up;
-    pathstem = '/imaging/tc02/vespa_followup/preprocess/SPM12_fullpipeline/';
-    %pathstem = '/imaging/tc02/vespa/preprocess/testinversion/';
+    pathstem = '/imaging/mlr/users/tc02/vespa_followup/preprocess/SPM12_fullpipeline/';
+    %pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/testinversion/';
     
     if vprime == 1 || vprime == 2 || vprime == 3
         invtype = 'MSPgroup'; % label for inversion
@@ -258,7 +258,7 @@ for vprime = [5]
     end
     
     %outputstem = '/imaging/es03/P3E1/sourceimages2/';
-    outputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/source/';
+    outputstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/source/';
     
     parfor im=1:length(imagetype)
         
@@ -336,7 +336,7 @@ for vprime = [5]
     end
     
     %inputstem = '/imaging/es03/P3E1/sourceimages2/';
-    inputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/source/';
+    inputstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/source/';
     
     parfor im=1:length(imagetype)
         
@@ -431,7 +431,7 @@ for vprime = [5]
     end
     
     %outputstem = '/imaging/es03/P3E1/sourceimages2/';
-    inputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/source/';
+    inputstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/source/';
     
     parfor im=1:length(imagetype)
         
@@ -535,7 +535,7 @@ for vprime = [5]
     end
     
     %inputstem = '/imaging/es03/P3E1/sourceimages2/';
-    inputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/source/';
+    inputstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/source/';
     
     parfor im=1:length(imagetype)
         
@@ -641,7 +641,7 @@ for vprime = [5]
     end
     
     %outputstem = '/imaging/es03/P3E1/sourceimages2/';
-    outputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/source/';
+    outputstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/source/';
     
     parfor s=1:length(subjects)
         s

@@ -5,7 +5,7 @@ subtract_average = 0;
 
 subjects_and_parameters;
 
-pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/';
+pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/';
 if ~exist('outdir','var'); outdir = [pathstem 'extractedsources/']; end
 if ~exist('fft_method','var'); fft_method = 'mtmfft'; end
 if ~exist('method','var'); method = 'granger'; end

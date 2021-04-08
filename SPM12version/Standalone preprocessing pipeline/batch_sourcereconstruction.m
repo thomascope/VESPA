@@ -149,7 +149,7 @@ imagetype_split = {
         
         
 %outputstem = '/imaging/es03/P3E1/sourceimages2/';
-outputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/es_source/';
+outputstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/es_source/';
 
 parfor im=1:length(imagetype)
         
@@ -202,7 +202,7 @@ imagetype_split = {
             };
         
 %inputstem = '/imaging/es03/P3E1/sourceimages2/';
-inputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/es_source/';
+inputstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/es_source/';
 
 parfor im=1:length(imagetype)
     
@@ -256,7 +256,7 @@ imagetype_split = {
             };
         
 %outputstem = '/imaging/es03/P3E1/sourceimages2/';
-outputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/es_source/';
+outputstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/es_source/';
 
 parfor s=1:length(subjects)
     s

@@ -1,7 +1,7 @@
 % based on script by Jason Taylor
 clear subject blocksin blocksout badchannels;
 
-pathstem = '/imaging/tc02/vespa/preprocess/'; % for output data
+pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/'; % for output data
 rawpathstem = '/megdata/cbu/vespa/';  % input data
 
 % Define data for individual subjects as follows:

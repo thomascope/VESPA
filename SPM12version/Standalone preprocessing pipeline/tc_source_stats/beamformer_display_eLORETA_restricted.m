@@ -7,15 +7,15 @@ cfg.threshold = [3.09 9];
 addpath([pwd '/ojwoodford-export_fig-216b30e'])
 
 %Render Patients>Controls
-jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/testbeamforming/eLORETA_restricted_planaronly/early/spmT_0001.nii','jet',cfg)
+jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/testbeamforming/eLORETA_restricted_planaronly/early/spmT_0001.nii','jet',cfg)
 export_fig thresholded_draft_beamformer_eLORETA_restricted_1.png -transparent
-jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/testbeamforming/eLORETA_restricted_planaronly/late/spmT_0001.nii','jet',cfg)
+jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/testbeamforming/eLORETA_restricted_planaronly/late/spmT_0001.nii','jet',cfg)
 export_fig thresholded_draft_beamformer_eLORETA_restricted_2.png -transparent
 
 % %Render Controls>Patients
-% jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/testbeamforming/eLORETA_restricted_planaronly/early/spmT_0002.nii','jet',cfg)
+% jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/testbeamforming/eLORETA_restricted_planaronly/early/spmT_0002.nii','jet',cfg)
 % export_fig thresholded_draft_beamformer_eLORETA_restricted_1.png -transparent
-% jp_spm8_surfacerender2_version_tc('/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/testbeamforming/eLORETA_restricted_planaronly/late/spmT_0002.nii','jet',cfg)
+% jp_spm8_surfacerender2_version_tc('/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/testbeamforming/eLORETA_restricted_planaronly/late/spmT_0002.nii','jet',cfg)
 % export_fig thresholded_draft_beamformer_eLORETA_restricted_2.png -transparent
 
 %export_fig thresholded_draft_reconstructions_msp.png -transparent

@@ -14,7 +14,7 @@ ICAFiltPars = [0.1 40]
 % […load up your SPM continuous file, eg D = spm_eeg_load(‘filename.mat’)…]
 
 %test single rest file
-D = spm_eeg_convert('/imaging/tc02/vespa/preprocess/no_name/MMN+rest/mmn_raw_ssst.fif');
+D = spm_eeg_convert('/imaging/mlr/users/tc02/vespa/preprocess/no_name/MMN+rest/mmn_raw_ssst.fif');
 ref_chans = {'EOG061','EOG062','ECG063'} %,'MISC001','MISC002','MISC003'};
 refs = []; % Reference signal for correlating with ICs
 for a = 1:length(ref_chans)

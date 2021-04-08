@@ -10,7 +10,7 @@ end
 %es_batch_init;
 addpath('/group/language/data/thomascope/vespa/SPM12version/Standalone preprocessing pipeline')
 subjects_and_parameters
-pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/';
+pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/';
 
 for i = subjectstoexclude %Exclude every mention of this subject ;)
     group(~cellfun('isempty',regexpi(subjects,i))) = [];
@@ -55,7 +55,7 @@ imagetype_split = {
     ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t750_900_f1_40*'];
     };
 %outputstem = '/imaging/es03/P3E1/sourceimages2_averagetime/'; 
-outputstem = ['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_' num2str(val) '/']; 
+outputstem = ['/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/batch_source_5/reconstruction_' num2str(val) '/']; 
 
 for s=1:length(subjects)
     

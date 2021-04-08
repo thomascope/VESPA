@@ -1,7 +1,7 @@
 % Subject and file details
 subjects_and_parameters;
 
-pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/';
+pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/';
 outdir = [pathstem 'extractedsources/'];
 
 matchconds = [2,4,6];

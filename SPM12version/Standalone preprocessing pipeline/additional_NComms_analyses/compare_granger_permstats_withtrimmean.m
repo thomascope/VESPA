@@ -1,8 +1,8 @@
-datapathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/extractedsources/';
+datapathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/extractedsources/';
 
 load([datapathstem 'groups.mat']);
-datapathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/extractedsources_tf/'; %For spoken baseline
-%datapathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/extractedsources_tf_newinversions_newbaseline/'; %For written baseline
+datapathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/extractedsources_tf/'; %For spoken baseline
+%datapathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/extractedsources_tf_newinversions_newbaseline/'; %For written baseline
 
 averagesubtracted = 1;
 highfreq = 1;
@@ -19,9 +19,9 @@ switch(analysis_type)
         datapathstem = [datapathstem(1:end-1) '_icoh/'];
 end
 
-addpath('/imaging/tc02/toolboxes/rsatoobox/Engines/')
+addpath('/imaging/mlr/users/tc02/toolboxes/rsatoobox/Engines/')
 
-% datapathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/extractedsources_tf_null/'; %For null baseline
+% datapathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/extractedsources_tf_null/'; %For null baseline
 %
 % start_times = -968;
 % end_times = -56;

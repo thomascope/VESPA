@@ -23,7 +23,7 @@ time_windows = [850 900];
 %              ['fmcfbMdeMrun1_1_raw_ssst_' num2str(val) '_t750_900_f1_40*'];
 %             };
 % %outputstem = '/imaging/es03/P3E1/sourceimages2_averagetime/'; 
-% outputstem = ['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/tc_beamform/']; 
+% outputstem = ['/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/tc_beamform/']; 
 % 
 % for s=1:length(subjects)
 %     
@@ -69,7 +69,7 @@ time_windows = [850 900];
 
 % inputstem = '/imaging/es03/P3E1/sourceimages2_averagetime/';
 % outputstem = '/imaging/es03/P3E1/stats2_source_averagetime/';
-inputstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/newbaseline_tf_source/final_eLORETA_trunkated_restricted/';
+inputstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/newbaseline_tf_source/final_eLORETA_trunkated_restricted/';
 outputstem = [inputstem 'stats/'];
 %mskname = [];
 mskname = '/imaging/local/spm/spm8/apriori/grey.nii'; % set to [] if not needed

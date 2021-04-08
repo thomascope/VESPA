@@ -17,10 +17,10 @@ addpath('/opt/neuromag/meg_pd_1.2/');
 rawpathstem = '/megdata/cbu/vespa/';
 %rawpathstem = '/megdata/datapath/thisdataname/';
 %define where you want to put your data, e.g.
-%pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline/';
+%pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline/';
 %pathstem = '/imaging/datapath/';
 %define where your maxfiltered data are, eg
-maxfilteredpathstem = '/imaging/tc02/vespa/preprocess/';
+maxfilteredpathstem = '/imaging/mlr/users/tc02/vespa/preprocess/';
 % maxfilteredpathstem = '/imaging/datapath/
 
 % define conditions

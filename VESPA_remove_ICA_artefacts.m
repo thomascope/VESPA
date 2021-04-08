@@ -17,7 +17,7 @@ ICAFiltPars = [40] %if try to bandpass, often fails even with dimension reductio
 
 %test single rest file
 modalities = {'MEGMAG' 'MEGPLANAR' 'EEG'};
-D = spm_eeg_load('/imaging/tc02/vespa/preprocess/no_name/spm8_rest_raw_ssst.mat');
+D = spm_eeg_load('/imaging/mlr/users/tc02/vespa/preprocess/no_name/spm8_rest_raw_ssst.mat');
 ref_chans = {'EOG061','EOG062','ECG063'} %,'MISC001','MISC002','MISC003'};
 refs = []; % Reference signal for correlating with ICs
 for a = 1:length(ref_chans)

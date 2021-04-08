@@ -18,7 +18,7 @@
 
 function plot_betas_tf_nonewplot(whichbetas,contrast,statspm,nsubj,frequency,modality,plotnum,varargin)
 hold on
-pathstem = ['/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_tfsm_/combined_-100_950_' modality];
+pathstem = ['/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_fixedICA/stats_tfsm_/combined_-100_950_' modality];
 
 Y = cell(1,length(whichbetas));
 for i = 1:length(whichbetas)

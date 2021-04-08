@@ -25,8 +25,8 @@
 %% Set up global variables
 
 subjects_and_parameters; 
-pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_newbaseline_fixedICA/';
-source_directory = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/';
+pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_tf_newbaseline_fixedICA/';
+source_directory = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_tf_fixedICA/';
 
 %% Specify preprocessing parameters
 
@@ -262,7 +262,7 @@ end
 %%Now to do the higher frequencies with multitapers! - If you want to do
 %this, you must copy the merged files, to another folder appended with '_taper' and re-run from
 %the appropriate step above
-source_directory = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_newbaseline_fixedICA/';
+source_directory = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_tf_newbaseline_fixedICA/';
 pathstem = [pathstem(1:end-1) '_newbaseline_taper/'] ; 
 p.method = 'mtmconvol'; 
 p.freqs = [30:2:90]; 

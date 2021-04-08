@@ -2,7 +2,7 @@ addpath('/group/language/data/thomascope/vespa/SPM12version/Standalone preproces
 addpath(['/group/language/data/thomascope/vespa/SPM12version/Standalone preprocessing pipeline/tc_source_stats/ojwoodford-export_fig-216b30e'])
 subjects_and_parameters
 
-pathstem = '/imaging/tc02/vespa/preprocess/SPM12_fullpipeline_tf_prestimcorrected_fixedICA/';
+pathstem = '/imaging/mlr/users/tc02/vespa/preprocess/SPM12_fullpipeline_tf_prestimcorrected_fixedICA/';
 imagetype = '/MEGPLANARrmtf_ceffbMdMrun1_raw_ssst';
 imagetype_split = '/MEGPLANARrmtf_ceffbMdMrun1_1_raw_ssst';
 fnames = char('sm_condition_Match_4.nii','sm_condition_Match_8.nii','sm_condition_Match_16.nii','sm_condition_Mismatch_4.nii','sm_condition_Mismatch_8.nii','sm_condition_Mismatch_16.nii');

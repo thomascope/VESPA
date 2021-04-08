@@ -1,6 +1,6 @@
 % parameters
-%file2plot = ['/imaging/tc02/vespa/preprocess/MMN/Grand means/ControlGM.mat ';'/imaging/tc02/vespa/preprocess/MMN/Grand means/patientsgm.mat'];
-file2plot = {'/imaging/tc02/vespa/preprocess/MMN/Firstpreprocess/controlgrandmean.mat ';'/imaging/tc02/vespa/preprocess/MMN/Firstpreprocess/patientgrandmean.mat'};
+%file2plot = ['/imaging/mlr/users/tc02/vespa/preprocess/MMN/Grand means/ControlGM.mat ';'/imaging/mlr/users/tc02/vespa/preprocess/MMN/Grand means/patientsgm.mat'];
+file2plot = {'/imaging/mlr/users/tc02/vespa/preprocess/MMN/Firstpreprocess/controlgrandmean.mat ';'/imaging/mlr/users/tc02/vespa/preprocess/MMN/Firstpreprocess/patientgrandmean.mat'};
 chanlabel = {'MEG' 'MEGPLANAR' 'EEG'}; % Plot selected channels or modality (if modality, can choose to plot rms or all channels- see rms variable below)
 %con2plot = conditions;
 %con_labels = {'standard','deviant','location','intensity','duration','gap','frequency','location_L','frequency_high','intensity_high','location_R','intensity_low','frequency_low'};
